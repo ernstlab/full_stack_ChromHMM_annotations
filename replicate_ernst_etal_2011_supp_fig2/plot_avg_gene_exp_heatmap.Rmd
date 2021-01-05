@@ -1,0 +1,249 @@
+---
+title: "replicate_supp_fig2_jason2011_paper"
+author: "Ha Vu"
+date: "5/18/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(pheatmap)
+library(RColorBrewer)
+```
+Meta data about cell types and states
+```{r}
+# METADATA ABOUT MARKS' CELL TYPE
+metadata_fn <- '/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/ROADMAP_metadata_july2013.csv'
+metadata <- as.data.frame(read.csv(metadata_fn, sep = ","))
+metadata <- metadata %>% select("Epigenome.ID..EID.", "GROUP", "COLOR", "TYPE", "Epigenome.name..from.EDACC.Release.9.directory.", "ANATOMY", "TYPE") %>% rename("CT_NAME" = "Epigenome.ID..EID.") %>% rename("Epig_name" = "Epigenome.name..from.EDACC.Release.9.directory.")
+metadata <- metadata[!apply(is.na(metadata) | metadata == "", 1, all),]
+# metadata has CT_NAME, GROUP, COLOR
+all_cell_groups <- as.character(unique(metadata$metada.GROUP))
+# ANNOTATIONS OF THE STATES
+state_annot_fn <- '/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/figures/supp_excel/state_annotations_processed.csv'
+read_state_annot_df <- function(state_annot_fn){
+	annot_df <- as.data.frame(read.csv(state_annot_fn, header = TRUE, stringsAsFactors = FALSE))
+	tryCatch({
+		annot_df <- annot_df %>% rename('state_type' = 'Group')
+		}, error = function (e) {message("tried to change column names in annot_df and nothing worth worrying happened")})
+	annot_df <- annot_df %>% arrange(state_order_by_group) # order rows based on the index that we get from state_order_by_group column
+	return(annot_df)	
+}
+calculate_gap_rows_among_state_groups <- function(state_annot_df){
+	state_group_ordered_by_appearance <- unique(state_annot_df$state_type) # list of different state groups, ordered by how they appear in the heatmap from top to bottom
+	count_df <- state_annot_df %>% count(state_type)
+	count_df <- count_df[match(state_group_ordered_by_appearance, count_df$state_type),] # order the rows such that the state_type are ordered based on state_group_ordered_by_appearance
+	results <- cumsum(count_df$n) # cumulative sum of the count for groups of states, which will be used to generate the gaps between rows of the heatmaps
+	return(results)
+}
+STATE_COLOR_DICT = c('quescient' = "#ffffff", "HET" = '#b19cd9', 'acetylations' = '#fffacd', 'enhancers'= '#FFA500', 'ct_spec enhancers' = '#FFA500', 'transcription' = '#006400', 'weak transcription' = '#228B22', 'weak enhancers' = '#ffff00', 'transcribed and enhancer' = '#ADFF2F', 'exon' = '#3cb371', 'promoters' = '#ff4500', 'TSS' = '#FF0000', 'weak promoters' = '#800080', 'polycomb repressed' = '#C0C0C0', 'others' = '#fff5ee', 'znf' = '#7fffd4', 'DNase' = '#fff44f')
+CELL_GROUP_COLOR_CODE = c('Neurosph'= '#FFD924', 'HSC & B-cell'= '#678C69', 'Mesench'= '#B65C73', 'Brain'= '#C5912B', 'Adipose'= '#AF5B39', 'Thymus'= '#DAB92E', 'Sm. Muscle'= '#F182BC', 'IMR90'= '#E41A1C', 'Myosat'= '#E67326', 'iPSC'= '#69608A', 'Muscle'= '#C2655D', 'Digestive'= '#C58DAA', 'ESC'= '#924965', 'Epithelial'= '#FF9D0C', 'Heart'= '#D56F80', 'ENCODE2012'= '#000000', 'ES-deriv'= '#4178AE', 'Other'= '#999999', 'Blood & T-cell'= '#55A354', 'NA' = 'black')
+```
+Create a smooth version of the plots of average_expression_per_cell type
+```{r}
+create_smooth_avg_exp_tss_relative_one_ct <- function(ct_name){
+  input_folder <- '/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/replicate_supp_fig2_ernst_etal_2011/ct_avg_gExp_tss_relative/'
+  output_folder <- '/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/replicate_supp_fig2_ernst_etal_2011/smooth_ct_avg_gEXp_tss_relative/'
+  dir.create(output_folder)
+  input_fn <- file.path(input_folder, paste0(ct_name, "_avg_exp_tss_relative.gz"))
+  save_fig_fn <- file.path(output_folder, paste0(ct_name, "_avg_exp_tss_relative.png"))
+  avg_exp_df <- read.csv(input_fn, sep = '\t')
+  avg_exp_df <- as.data.frame(t(avg_exp_df))
+  avg_exp_df <- log(avg_exp_df + 1)
+  num_smooth <- 10
+  total_smooth <- num_smooth * 2 + 1
+  new_df <- as.data.frame(matrix(nrow = nrow(avg_exp_df), ncol = ncol(avg_exp_df) - 2 * num_smooth))
+  rownames(new_df) <- rownames(avg_exp_df)
+  sum_current_pos <- rowSums(avg_exp_df[,1:(num_smooth * 2 + 1)])
+  avg_current_pos <- sum_current_pos / total_smooth
+  new_df[,1] <- avg_current_pos
+  for (add_colI in seq(total_smooth + 1, ncol(avg_exp_df))){
+    delete_colI <- add_colI - total_smooth
+    sum_current_pos <- sum_current_pos + avg_exp_df[,add_colI] - avg_exp_df[,delete_colI]
+    avg_current_pos <- sum_current_pos / total_smooth
+    new_df[,delete_colI + 1] <- avg_current_pos
+  }
+  print(min(new_df))
+  print(max(new_df))
+  break_list <- seq (0, 1.5, by = 0.05)
+  # now arrange the states based on the state_index_by_group column in the state_annot_fn
+  state_annot_fn <- '/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/figures/supp_excel/state_annotations_processed.csv'
+	state_annot_df <- read_state_annot_df(state_annot_fn)
+	new_df <- new_df %>% slice(state_annot_df$state)
+	rownames(new_df) <- state_annot_df$mneumonics
+	# create the df for annotationof rows in our heatmap
+	rownames(state_annot_df) <- state_annot_df$mneumonics
+	state_annot_df <- state_annot_df %>% select(state_type)
+	gap_row_indices <- calculate_gap_rows_among_state_groups(state_annot_df)
+  pheatmap(new_df, breaks = break_list, color = colorRampPalette(rev(brewer.pal(n = 7, name = "RdYlBu")))(length(break_list)), annotation_row = state_annot_df, annotation_colors = list(state_type = STATE_COLOR_DICT), gaps_row = gap_row_indices, fontsize = 5, cluster_rows = FALSE, cluster_cols = FALSE, show_colnames = FALSE, filename = save_fig_fn) 
+  return(new_df)
+}
+```
+
+Get one cell type avg expression as a function of TSS first
+```{r}
+draw_avg_exp_tss_relative_one_ct <- function(ct_name){
+  input_folder <- '/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/replicate_supp_fig2_ernst_etal_2011/ct_avg_gExp_tss_relative/'
+  output_folder <- '/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/replicate_supp_fig2_ernst_etal_2011/fig_ct_avg_gExp_tss_relative/'
+  dir.create(output_folder)
+  input_fn <- file.path(input_folder, paste0(ct_name, "_avg_exp_tss_relative.gz"))
+  save_fig_fn <- file.path(output_folder, paste0(ct_name, "_avg_exp_tss_relative.png"))
+  avg_exp_df <- read.csv(input_fn, sep = '\t')
+  avg_exp_df <- as.data.frame(t(avg_exp_df))
+  avg_exp_df <- log(avg_exp_df + 0.1)
+  break_list <- seq (-2.7, 4.8, by = 0.1)
+  pheatmap(avg_exp_df, breaks = break_list, color = colorRampPalette(rev(brewer.pal(n = 7, name = "RdYlBu")))(length(break_list)), fontsize = 5, cluster_rows = FALSE, cluster_cols = FALSE, show_colnames = FALSE, filename = save_fig_fn) 
+}
+```
+
+create smooth version of average expression per chromatin state
+```{r}
+draw_smooth_avg_exp_one_state <- function(one_based_state_index){
+  input_folder <- '/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/replicate_supp_fig2_ernst_etal_2011/ct_avg_gExp_tss_relative/'
+  output_folder <- '/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/replicate_supp_fig2_ernst_etal_2011/smooth_state_fig_avg_gExp_tss_relative/'
+  dir.create(output_folder)
+  save_fig_fn <- file.path(output_folder, paste0('state_', one_based_state_index, "_avg_exp_tss_relative.png"))
+  state_exp_fn <- file.path(input_folder, paste0('state_', one_based_state_index, "_avg_exp_tss_relative.gz"))
+  state_exp_df <- read.csv(state_exp_fn, sep = '\t')
+  state_exp_df <- as.data.frame(t(state_exp_df))
+  state_exp_df <- log(state_exp_df + 0.1)
+  #return (state_exp_df)
+  num_smooth <- 25
+  total_smooth <- num_smooth * 2 + 1
+  new_df <- as.data.frame(matrix(nrow = nrow(state_exp_df), ncol = ncol(state_exp_df) - 2 * num_smooth))
+  rownames(new_df) <- rownames(state_exp_df)
+  sum_current_pos <- rowSums(state_exp_df[,1:(num_smooth * 2 + 1)])
+  avg_current_pos <- sum_current_pos / total_smooth
+  new_df[,1] <- avg_current_pos
+  for (add_colI in seq(total_smooth + 1, ncol(state_exp_df))){
+    delete_colI <- add_colI - total_smooth
+    sum_current_pos <- sum_current_pos + state_exp_df[,add_colI] - state_exp_df[,delete_colI]
+    avg_current_pos <- sum_current_pos / total_smooth
+    new_df[,delete_colI + 1] <- avg_current_pos
+  }
+  break_list <- seq (-1, 4, by = 0.1)
+  pheatmap(new_df, breaks = break_list, color = colorRampPalette(rev(brewer.pal(n = 7, name = "RdYlBu")))(length(break_list)), fontsize = 5, cluster_rows = FALSE, cluster_cols = FALSE, show_colnames = FALSE, show_rownames = TRUE, filename = save_fig_fn) 
+  return(new_df)
+}
+```
+get one state's avg_expression as a function of TSS, across all cell types
+```{r}
+draw_avg_exp_tss_relative_one_state <- function (one_based_state_index) {
+  input_folder <- '/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/replicate_supp_fig2_ernst_etal_2011/ct_avg_gExp_tss_relative/'
+  output_folder <- '/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/replicate_supp_fig2_ernst_etal_2011/state_fig_avg_gExp_tss_relative/'
+  dir.create(output_folder)
+  save_fig_fn <- file.path(output_folder, paste0('state_', one_based_state_index, "_avg_exp_tss_relative.png"))
+  state_exp_fn <- file.path(input_folder, paste0('state_', one_based_state_index, "_avg_exp_tss_relative.gz"))
+  state_exp_df <- read.csv(state_exp_fn, sep = '\t')
+  state_exp_df <- as.data.frame(t(state_exp_df))
+  state_exp_df <- log(state_exp_df + 0.1)
+  break_list <- seq (0, 3, by = 0.1)
+  pheatmap(state_exp_df, breaks = break_list, color = colorRampPalette(rev(brewer.pal(n = 7, name = "RdYlBu")))(length(break_list)), fontsize = 4.5, cluster_rows = FALSE, cluster_cols = FALSE, show_colnames = FALSE, filename = save_fig_fn, cellwidth = 5 , cellheight = 5) 
+}
+```
+Because each heatmap will have its own scale of avg_gene_exp, we want to extract a suitable range that can be shared among cell types' figure, so that all cell types' figures will share the same color scale. It will be easier to look at plots and figure the variance among different cell types this way.  
+```{r}
+get_color_range_avg_exp_heatmap <- function () {
+  header_ct_fn <- '/Users/vuthaiha/Desktop/window_hoff/data/roadmap_epigenome/gene_exp/header_57epigenomes_rpkm_protein_coding'
+  ct_list <- scan(header_ct_fn, what = '', sep = '\n')
+  ct_list <- ct_list[-1]
+  input_folder <- '/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/replicate_supp_fig2_ernst_etal_2011/ct_avg_gExp_tss_relative/'
+  for (ct in ct_list){
+    input_fn <- file.path(input_folder, paste0(ct, "_avg_exp_tss_relative.gz"))
+    avg_exp_df <- read.csv(input_fn, sep = '\t')
+    print(max(avg_exp_df))
+  }
+}
+```
+call function to get the suitable heatmap color scale
+```{r}
+get_color_range_avg_exp_heatmap()
+```
+call functions to create heatmap for all cell types that we are interested
+```{r}
+header_ct_fn <- '/Users/vuthaiha/Desktop/window_hoff/data/roadmap_epigenome/gene_exp/header_57epigenomes_rpkm_protein_coding'
+ct_list <- scan(header_ct_fn, what = '', sep = '\n')
+ct_list <- ct_list[-1] # get rid of the first header because it is 'gene_id'
+for (ct in c('avg_across_ct')){
+  #draw_avg_exp_tss_relative_one_ct(ct)
+  create_smooth_avg_exp_tss_relative_one_ct(ct)
+  print (paste("Done with drawing plots for cell type:", ct))
+}
+```
+
+call functions to create heatmap for all states, each state will have a heatmap, rows: cell types, columns: positions
+```{r}
+num_state <- 100
+for (state_index in seq(1, num_state)){
+  #draw_avg_exp_tss_relative_one_state(state_index)
+  draw_smooth_avg_exp_one_state(state_index)
+  print (paste("Done creating figure for state: ", state_index))
+}
+```
+
+
+Functions to draw the heatmap of average gene expression in one cell type
+```{r}
+fn <- '/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/replicate_supp_fig2_ernst_etal_2011/one_avg_exp_per_state/bp_uniform_avg_exp.txt'
+#fn <- '/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/replicate_supp_fig2_ernst_etal_2011/one_avg_exp_per_state/segment_uniform_avg_exp.txt'
+get_file_name_without_tail <- function(fn){
+  fn_no_tail <- unlist(strsplit(fn, "[.]"))[1] 
+  return(fn_no_tail)
+}
+
+df <- read.table(fn, sep = '\t', header = TRUE)
+df <- df %>% select(- c('X', 'average', 'coeff.of.variation'))
+rownames(df) <- df$state
+df <- df %>% select(-state) #E098, E087
+# rearrange the rows such that states of the same group are put together
+state_annot_df <- read_state_annot_df(state_annot_fn)
+df <- df %>% slice(state_annot_df$state)
+rownames(df) <- state_annot_df$mneumonics
+# create the df for annotationof rows in our heatmap
+rownames(state_annot_df) <- state_annot_df$mneumonics
+state_annot_df <- state_annot_df %>% select(state_type)
+gap_row_indices <- calculate_gap_rows_among_state_groups(state_annot_df)
+# create the df for annotations of columns in our heatmap
+cell_group_df <- data.frame(ct = colnames(df))
+cell_group_df <- cell_group_df %>% dplyr::left_join(metadata, by = c('ct' = 'CT_NAME'))
+cell_group_df <- cell_group_df %>% arrange(GROUP)
+rownames(cell_group_df) <- cell_group_df$ct
+cell_group_df <- cell_group_df %>% select(c('GROUP'))
+cell_group_df$GROUP <- as.character(cell_group_df$GROUP)
+# rearrange the columns of df
+df <- df %>% select(rownames(cell_group_df))
+# df <- log(df + 1)
+break_list <- seq (0, 3.5, by = 0.1)
+fn_no_tail <- get_file_name_without_tail(fn)
+save_fn <- paste0(fn_no_tail, ".png")
+
+#p <- pheatmap(df, breaks = break_list, color = colorRampPalette(rev(brewer.pal(n = 7, name = "RdYlBu")))(length(break_list)), annotation_row = state_annot_df, annotation_col =  cell_group_df, annotation_colors = list(state_type = STATE_COLOR_DICT, GROUP = CELL_GROUP_COLOR_CODE), gaps_row = gap_row_indices, filename = save_fn, fontsize = 4.5, cluster_rows = FALSE, cluster_cols = FALSE)
+```
+
+Draw average expression by cell group
+```{r}
+t_df <- data.frame(t(df)) # rows: cell types, columnes: states
+t_df <- t_df %>% merge(cell_group_df, by = 0)
+t_df <- t_df %>% select(-'Row.names')
+avg_exp_by_group_df  <- t_df %>% group_by(GROUP) %>% summarise_all(.funs = mean)
+rownames(avg_exp_by_group_df) <- avg_exp_by_group_df$GROUP
+avg_exp_by_group_df <- avg_exp_by_group_df %>% select(-GROUP)
+save_fn <- "/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/replicate_supp_fig2_ernst_etal_2011/one_avg_exp_per_state/bp_uniform_avg_exp_by_cell_group.png"
+p <- pheatmap(avg_exp_by_group_df, breaks = break_list, color = colorRampPalette(rev(brewer.pal(n = 7, name = "RdYlBu")))(length(break_list)), annotation_col =  state_annot_df, annotation_colors = list(state_type = STATE_COLOR_DICT, GROUP = CELL_GROUP_COLOR_CODE),  filename = save_fn, fontsize_col = 4.5, fontsize_row = 10, cluster_rows = FALSE, cluster_cols = FALSE, cellwidth = 5, cellheight = 10)
+# gap_row_indices are calculated based on the previous chunk of code. There's a gap between each group of state
+```
+
+```{r}
+transition_fn <- '~/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/transitions_100.txt.gz'
+state_annot_fn <- '~/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/figures/supp_excel/state_annotations_processed.csv'
+df <- read.csv(transition_fn, sep = '\t', header = TRUE)
+df <- df %>% rename("state" = "state..from.to...Emission.order.")
+head(df)
+state_annot_df <- read_state_annot_df(state_annot_fn)
+```

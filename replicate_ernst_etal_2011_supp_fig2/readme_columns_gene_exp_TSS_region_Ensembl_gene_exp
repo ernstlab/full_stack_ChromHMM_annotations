@@ -1,0 +1,12 @@
+field_index	field_meaning
+1	chromosome
+2	starting_bp_segmentation
+3	ending_bp_segmentation
+4	chromHMM_state
+5	chromosome
+6	starting_bp_TSS_region #(50kb around the TSS)
+7	end_bp_TSS_region #(50kb around the TSS)
+8	ensembl_gene_id
+9	strand
+10	TSS_bp
+11...	cell_type_gene_exp	
