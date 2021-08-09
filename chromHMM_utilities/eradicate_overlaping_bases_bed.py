@@ -35,7 +35,7 @@ def get_num_uniq_bases (input_rearranged_fn, output_fn):
 	total_bp = 0 # total number of uniq base pairs in this bed file
 	for line in inputF: 
 		line = line.strip()
-		line_data = line.split()
+		line_data = line.split("\t")
 		this_chrom = line_data[0]
 		this_start_bp = int(line_data[1])
 		this_end_bp = int(line_data[2])

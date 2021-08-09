@@ -1,4 +1,11 @@
-``
+#import seaborn as sns
+import pandas as pd 
+import numpy as np 
+import os
+import sys
+import time
+import chromHMM_utilities_common_functions_helper as helper
+	
 def get_rgb_format_right(rgb):
 	# convert from (255, 245, 238) to 255,245,238
 	# numbers = (rgb[1:-1]).split(',') # get rid of () 
@@ -28,6 +35,7 @@ def get_standard_ucsc_format_bed_file(segment_fn, state_annot_fn, output_fn, tra
 	segment_df = segment_df [['chrom', 'start_bp', 'end_bp', 'mneumonics', 'color']]
 	# print(segment_df.head())
 	(nrow, ncol) = segment_df.shape
+	print(segment_df.head())
 	segment_df['color'] = (segment_df['color']).apply(hex_to_rgb)
 	segment_df['score'] = ['1'] * nrow
 	segment_df ['strand'] = ['.'] * nrow
@@ -46,6 +54,8 @@ def get_standard_ucsc_format_bed_file(segment_fn, state_annot_fn, output_fn, tra
 
 
 def main():
+	print(sys.argv)
+	print (len(sys.argv))
 	if len(sys.argv) != 8: 
 		usage()
 	segment_fn = sys.argv[1]

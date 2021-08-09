@@ -151,7 +151,7 @@ if (length(args) != 2)
 }
 enrichment_fn <- args[1] # output of ChromHMM OverlapEnrichment, also input to this program
 save_fn <- args[2] # where the figures should be stored
-draw_enrichment_plot_no_color_scale(enrichment_fn, save_fn)
+# draw_enrichment_plot_no_color_scale(enrichment_fn, save_fn)
 # call function for this file
 # draw_enrichment_plot_no_color_scale(enrichment_fn = input_fn, save_fig_fn = output_fn)
-# draw_genome_context_enrichment_plot(input_fn, output_fn)
+draw_genome_context_enrichment_plot(input_fn, output_fn)
