@@ -1,0 +1,21 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	combine_end_segment
+	25	organize_one_chrom_end_raw
+	25	rid_overlapping_from_raw
+	52
+
+[Fri Apr  2 09:48:08 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chrY.gz
+    jobid: 48
+    wildcards: chrom=Y
+
+RuleException in line 43 of /u/project/ernst/havu73/source/chromHMM_utilities/liftOver/Snakefile:
+'Params' object has no attribute 'outputu_no_gz'

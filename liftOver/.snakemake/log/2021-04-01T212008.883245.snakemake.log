@@ -1,0 +1,3 @@
+NameError in line 67 of /u/project/ernst/havu73/source/chromHMM_utilities/liftOver/Snakefile:
+name 'exapnd' is not defined
+  File "/u/project/ernst/havu73/source/chromHMM_utilities/liftOver/Snakefile", line 67, in <module>

@@ -1,0 +1,26 @@
+---
+title: "count_num_marks_each_ct"
+author: "Ha Vu"
+date: "10/15/2019"
+output: html_document
+---
+
+```{r}
+library("tidyverse")
+library("tidyr")
+library("dplyr")
+```
+
+```{r}
+meta_fn <- '/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/ROADMAP_metadata_july2013.csv'
+meta_df <- as.data.frame(read.csv(meta_fn))
+meta_df <- meta_df %>% select("Epigenome.ID..EID.", "GROUP", "COLOR", "TYPE", "Epigenome.name..from.EDACC.Release.9.directory.", "ANATOMY", "TYPE") %>% rename("CT_NAME" = "Epigenome.ID..EID.") %>% rename("Epig_name" = "Epigenome.name..from.EDACC.Release.9.directory.")
+meta_df <- meta_df[!apply(is.na(metadata) | metadata == "", 1, all),]
+# metadata has CT_NAME, GROUP, COLOR
+meta_df %>% group_by('')
+```
+
+```{r}
+emission_fn <- '/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/emissions_100.txt'
+emission_df <- 
+```

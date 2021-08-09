@@ -1,0 +1,388 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cluster nodes: 100
+Job counts:
+	count	jobs
+	1	all
+	1	combine_end_segment
+	25	organize_one_chrom_end_raw
+	25	rid_overlapping_from_raw
+	52
+
+[Fri Apr  2 09:49:11 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr10.gz
+    jobid: 36
+    wildcards: chrom=10
+
+Submitted job 36 with external jobid 'Your job 7136641 ("snakejob.organize_one_chrom_end_raw.36.sh") has been submitted'.
+
+[Fri Apr  2 09:49:11 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr5.gz
+    jobid: 42
+    wildcards: chrom=5
+
+Submitted job 42 with external jobid 'Your job 7136642 ("snakejob.organize_one_chrom_end_raw.42.sh") has been submitted'.
+
+[Fri Apr  2 09:49:13 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr16.gz
+    jobid: 33
+    wildcards: chrom=16
+
+Submitted job 33 with external jobid 'Your job 7136644 ("snakejob.organize_one_chrom_end_raw.33.sh") has been submitted'.
+
+[Fri Apr  2 09:49:14 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr8.gz
+    jobid: 37
+    wildcards: chrom=8
+
+Submitted job 37 with external jobid 'Your job 7136645 ("snakejob.organize_one_chrom_end_raw.37.sh") has been submitted'.
+
+[Fri Apr  2 09:49:14 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr21.gz
+    jobid: 48
+    wildcards: chrom=21
+
+Submitted job 48 with external jobid 'Your job 7136646 ("snakejob.organize_one_chrom_end_raw.48.sh") has been submitted'.
+
+[Fri Apr  2 09:49:15 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr20.gz
+    jobid: 51
+    wildcards: chrom=20
+
+Submitted job 51 with external jobid 'Your job 7136647 ("snakejob.organize_one_chrom_end_raw.51.sh") has been submitted'.
+
+[Fri Apr  2 09:49:16 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr22.gz
+    jobid: 39
+    wildcards: chrom=22
+
+Submitted job 39 with external jobid 'Your job 7136648 ("snakejob.organize_one_chrom_end_raw.39.sh") has been submitted'.
+
+[Fri Apr  2 09:49:17 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr15.gz
+    jobid: 40
+    wildcards: chrom=15
+
+Submitted job 40 with external jobid 'Your job 7136649 ("snakejob.organize_one_chrom_end_raw.40.sh") has been submitted'.
+
+[Fri Apr  2 09:49:18 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chrX.gz
+    jobid: 38
+    wildcards: chrom=X
+
+Submitted job 38 with external jobid 'Your job 7136650 ("snakejob.organize_one_chrom_end_raw.38.sh") has been submitted'.
+
+[Fri Apr  2 09:49:19 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr9.gz
+    jobid: 43
+    wildcards: chrom=9
+
+Submitted job 43 with external jobid 'Your job 7136651 ("snakejob.organize_one_chrom_end_raw.43.sh") has been submitted'.
+
+[Fri Apr  2 09:49:20 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr12.gz
+    jobid: 50
+    wildcards: chrom=12
+
+Submitted job 50 with external jobid 'Your job 7136652 ("snakejob.organize_one_chrom_end_raw.50.sh") has been submitted'.
+
+[Fri Apr  2 09:49:22 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chrM.gz
+    jobid: 28
+    wildcards: chrom=M
+
+Submitted job 28 with external jobid 'Your job 7136653 ("snakejob.organize_one_chrom_end_raw.28.sh") has been submitted'.
+
+[Fri Apr  2 09:49:23 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr13.gz
+    jobid: 41
+    wildcards: chrom=13
+
+Submitted job 41 with external jobid 'Your job 7136654 ("snakejob.organize_one_chrom_end_raw.41.sh") has been submitted'.
+
+[Fri Apr  2 09:49:24 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr19.gz
+    jobid: 46
+    wildcards: chrom=19
+
+Submitted job 46 with external jobid 'Your job 7136655 ("snakejob.organize_one_chrom_end_raw.46.sh") has been submitted'.
+
+[Fri Apr  2 09:49:26 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr4.gz
+    jobid: 45
+    wildcards: chrom=4
+
+Submitted job 45 with external jobid 'Your job 7136657 ("snakejob.organize_one_chrom_end_raw.45.sh") has been submitted'.
+
+[Fri Apr  2 09:49:27 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr6.gz
+    jobid: 47
+    wildcards: chrom=6
+
+Submitted job 47 with external jobid 'Your job 7136658 ("snakejob.organize_one_chrom_end_raw.47.sh") has been submitted'.
+
+[Fri Apr  2 09:49:28 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr3.gz
+    jobid: 49
+    wildcards: chrom=3
+
+Submitted job 49 with external jobid 'Your job 7136659 ("snakejob.organize_one_chrom_end_raw.49.sh") has been submitted'.
+
+[Fri Apr  2 09:49:29 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr11.gz
+    jobid: 34
+    wildcards: chrom=11
+
+Submitted job 34 with external jobid 'Your job 7136660 ("snakejob.organize_one_chrom_end_raw.34.sh") has been submitted'.
+
+[Fri Apr  2 09:49:31 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr7.gz
+    jobid: 30
+    wildcards: chrom=7
+
+Submitted job 30 with external jobid 'Your job 7136661 ("snakejob.organize_one_chrom_end_raw.30.sh") has been submitted'.
+
+[Fri Apr  2 09:49:31 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr17.gz
+    jobid: 27
+    wildcards: chrom=17
+
+Submitted job 27 with external jobid 'Your job 7136662 ("snakejob.organize_one_chrom_end_raw.27.sh") has been submitted'.
+
+[Fri Apr  2 09:49:32 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr1.gz
+    jobid: 32
+    wildcards: chrom=1
+
+Submitted job 32 with external jobid 'Your job 7136663 ("snakejob.organize_one_chrom_end_raw.32.sh") has been submitted'.
+
+[Fri Apr  2 09:49:33 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr2.gz
+    jobid: 44
+    wildcards: chrom=2
+
+Submitted job 44 with external jobid 'Your job 7136664 ("snakejob.organize_one_chrom_end_raw.44.sh") has been submitted'.
+
+[Fri Apr  2 09:49:34 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr18.gz
+    jobid: 35
+    wildcards: chrom=18
+
+Submitted job 35 with external jobid 'Your job 7136665 ("snakejob.organize_one_chrom_end_raw.35.sh") has been submitted'.
+
+[Fri Apr  2 09:49:35 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chrY.gz
+    jobid: 29
+    wildcards: chrom=Y
+
+Submitted job 29 with external jobid 'Your job 7136666 ("snakejob.organize_one_chrom_end_raw.29.sh") has been submitted'.
+
+[Fri Apr  2 09:49:37 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr14.gz
+    jobid: 31
+    wildcards: chrom=14
+
+Submitted job 31 with external jobid 'Your job 7136667 ("snakejob.organize_one_chrom_end_raw.31.sh") has been submitted'.
+[Fri Apr  2 09:50:19 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 30
+    output: temp_raw_end_chr7.gz
+    cluster_jobid: Your job 7136661 ("snakejob.organize_one_chrom_end_raw.30.sh") has been submitted
+
+[Fri Apr  2 09:50:19 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 27
+    output: temp_raw_end_chr17.gz
+    cluster_jobid: Your job 7136662 ("snakejob.organize_one_chrom_end_raw.27.sh") has been submitted
+
+[Fri Apr  2 09:50:19 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 36
+    output: temp_raw_end_chr10.gz
+    cluster_jobid: Your job 7136641 ("snakejob.organize_one_chrom_end_raw.36.sh") has been submitted
+
+[Fri Apr  2 09:50:19 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 42
+    output: temp_raw_end_chr5.gz
+    cluster_jobid: Your job 7136642 ("snakejob.organize_one_chrom_end_raw.42.sh") has been submitted
+
+[Fri Apr  2 09:50:19 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 33
+    output: temp_raw_end_chr16.gz
+    cluster_jobid: Your job 7136644 ("snakejob.organize_one_chrom_end_raw.33.sh") has been submitted
+
+[Fri Apr  2 09:50:19 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 37
+    output: temp_raw_end_chr8.gz
+    cluster_jobid: Your job 7136645 ("snakejob.organize_one_chrom_end_raw.37.sh") has been submitted
+
+[Fri Apr  2 09:50:19 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 48
+    output: temp_raw_end_chr21.gz
+    cluster_jobid: Your job 7136646 ("snakejob.organize_one_chrom_end_raw.48.sh") has been submitted
+
+[Fri Apr  2 09:50:19 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 51
+    output: temp_raw_end_chr20.gz
+    cluster_jobid: Your job 7136647 ("snakejob.organize_one_chrom_end_raw.51.sh") has been submitted
+
+[Fri Apr  2 09:50:19 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 39
+    output: temp_raw_end_chr22.gz
+    cluster_jobid: Your job 7136648 ("snakejob.organize_one_chrom_end_raw.39.sh") has been submitted
+
+[Fri Apr  2 09:50:19 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 40
+    output: temp_raw_end_chr15.gz
+    cluster_jobid: Your job 7136649 ("snakejob.organize_one_chrom_end_raw.40.sh") has been submitted
+
+[Fri Apr  2 09:50:20 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 38
+    output: temp_raw_end_chrX.gz
+    cluster_jobid: Your job 7136650 ("snakejob.organize_one_chrom_end_raw.38.sh") has been submitted
+
+[Fri Apr  2 09:50:20 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 43
+    output: temp_raw_end_chr9.gz
+    cluster_jobid: Your job 7136651 ("snakejob.organize_one_chrom_end_raw.43.sh") has been submitted
+
+[Fri Apr  2 09:50:20 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 50
+    output: temp_raw_end_chr12.gz
+    cluster_jobid: Your job 7136652 ("snakejob.organize_one_chrom_end_raw.50.sh") has been submitted
+
+[Fri Apr  2 09:50:20 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 28
+    output: temp_raw_end_chrM.gz
+    cluster_jobid: Your job 7136653 ("snakejob.organize_one_chrom_end_raw.28.sh") has been submitted
+
+[Fri Apr  2 09:50:20 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 41
+    output: temp_raw_end_chr13.gz
+    cluster_jobid: Your job 7136654 ("snakejob.organize_one_chrom_end_raw.41.sh") has been submitted
+
+[Fri Apr  2 09:50:20 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 46
+    output: temp_raw_end_chr19.gz
+    cluster_jobid: Your job 7136655 ("snakejob.organize_one_chrom_end_raw.46.sh") has been submitted
+
+[Fri Apr  2 09:50:20 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 45
+    output: temp_raw_end_chr4.gz
+    cluster_jobid: Your job 7136657 ("snakejob.organize_one_chrom_end_raw.45.sh") has been submitted
+
+[Fri Apr  2 09:50:20 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 47
+    output: temp_raw_end_chr6.gz
+    cluster_jobid: Your job 7136658 ("snakejob.organize_one_chrom_end_raw.47.sh") has been submitted
+
+[Fri Apr  2 09:50:21 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 49
+    output: temp_raw_end_chr3.gz
+    cluster_jobid: Your job 7136659 ("snakejob.organize_one_chrom_end_raw.49.sh") has been submitted
+
+[Fri Apr  2 09:50:21 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 34
+    output: temp_raw_end_chr11.gz
+    cluster_jobid: Your job 7136660 ("snakejob.organize_one_chrom_end_raw.34.sh") has been submitted
+
+[Fri Apr  2 09:50:21 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 32
+    output: temp_raw_end_chr1.gz
+    cluster_jobid: Your job 7136663 ("snakejob.organize_one_chrom_end_raw.32.sh") has been submitted
+
+[Fri Apr  2 09:50:21 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 44
+    output: temp_raw_end_chr2.gz
+    cluster_jobid: Your job 7136664 ("snakejob.organize_one_chrom_end_raw.44.sh") has been submitted
+
+[Fri Apr  2 09:50:22 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 35
+    output: temp_raw_end_chr18.gz
+    cluster_jobid: Your job 7136665 ("snakejob.organize_one_chrom_end_raw.35.sh") has been submitted
+
+[Fri Apr  2 09:50:22 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 29
+    output: temp_raw_end_chrY.gz
+    cluster_jobid: Your job 7136666 ("snakejob.organize_one_chrom_end_raw.29.sh") has been submitted
+
+[Fri Apr  2 09:50:22 2021]
+Error in rule organize_one_chrom_end_raw:
+    jobid: 31
+    output: temp_raw_end_chr14.gz
+    cluster_jobid: Your job 7136667 ("snakejob.organize_one_chrom_end_raw.31.sh") has been submitted
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /u/project/ernst/havu73/source/chromHMM_utilities/liftOver/.snakemake/log/2021-04-02T094910.976964.snakemake.log

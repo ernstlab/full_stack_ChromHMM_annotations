@@ -1,0 +1,24 @@
+---
+title: "barplot_enrichment"
+author: "Ha Vu"
+date: "7/31/2019"
+output: html_document
+---
+
+```{r}
+source('/Users/vuthaiha/Desktop/window_hoff/source/summary_analysis/draw_overlap_enrichment_heatmap.R')
+```
+
+```{r}
+fn <- '/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/gwas_catalog_analysis/gwas_catalog_enrichment.txt'
+df <- get_overlap_enrichment_df(fn)
+df$state <- as.numeric(df$state)
+ggplot(df, aes(x = state, y = clean_gwas_catalog)) + 
+  theme_bw() + 
+  geom_point() + 
+  geom_line(color= 'grey')  + 
+  scale_x_discrete(name = 'state', limits = seq(1, nrow(df))) + 
+  theme(axis.text.x = element_text(size = 3.6, angle = 90), axis.title.x = element_text(size = 10))
+
+ggsave("/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/gwas_catalog_analysis/gwas_catalog_enrichment.png", width = 6, height = 3, dpi = 300)
+```

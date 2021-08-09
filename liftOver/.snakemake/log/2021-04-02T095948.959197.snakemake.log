@@ -1,0 +1,34 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	combine_end_segment
+	3	rid_overlapping_from_raw
+	5
+
+[Fri Apr  2 09:59:49 2021]
+rule rid_overlapping_from_raw:
+    input: temp_raw_end_chr_22.gz
+    output: temp_end_chr22
+    jobid: 8
+    wildcards: chrom=22
+
+[Fri Apr  2 09:59:49 2021]
+Error in rule rid_overlapping_from_raw:
+    jobid: 8
+    output: temp_end_chr22
+
+RuleException:
+CalledProcessError in line 63 of /u/project/ernst/havu73/source/chromHMM_utilities/liftOver/Snakefile:
+Command ' set -euo pipefail;  
+		pypy find_overlapping_segments_from_liftOver_one_chrom.py temp_raw_end_chr_22.gz temp_end_chr22 ' returned non-zero exit status 1.
+  File "/u/project/ernst/havu73/source/chromHMM_utilities/liftOver/Snakefile", line 63, in __rule_rid_overlapping_from_raw
+  File "/u/home/h/havu73/project-ernst/anaconda/envs/zane_env/lib/python3.6/concurrent/futures/thread.py", line 56, in run
+Removing output files of failed job rid_overlapping_from_raw since they might be corrupted:
+temp_end_chr22
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /u/project/ernst/havu73/source/chromHMM_utilities/liftOver/.snakemake/log/2021-04-02T095948.959197.snakemake.log

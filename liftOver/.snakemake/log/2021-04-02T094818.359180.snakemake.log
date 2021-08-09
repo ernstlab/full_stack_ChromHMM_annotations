@@ -1,0 +1,27 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	combine_end_segment
+	25	organize_one_chrom_end_raw
+	25	rid_overlapping_from_raw
+	52
+
+[Fri Apr  2 09:48:18 2021]
+rule organize_one_chrom_end_raw:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations/Mm10_100_raw_segments.bed.gz
+    output: temp_raw_end_chr3.gz
+    jobid: 50
+    wildcards: chrom=3
+
+Waiting at most 5 seconds for missing files.
+MissingOutputException in line 43 of /u/project/ernst/havu73/source/chromHMM_utilities/liftOver/Snakefile:
+Missing files after 5 seconds:
+temp_raw_end_chr3.gz
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /u/project/ernst/havu73/source/chromHMM_utilities/liftOver/.snakemake/log/2021-04-02T094818.359180.snakemake.log
