@@ -1,0 +1,8 @@
+
+This folder contain files that do analysis to evaluate full-stack, concatenated and independent annotations in predicting the genomic locations of different external genome annotations. These code produce the source data/ figures such as S19-22 in the paper. Most of the code file in this folder will not be called directly, but rather called inside a snakemake pipeline. We will also list the path to snakefiles where these files are called. 
+
+|__demonstration_roc_enrichment_analysis.xslx: an excel file showing you how we transform data outputted from ChromHMM OverlapEnrichment to ROC (TPR, FPR) data, given that we get the data of overlap enrichment after dividing the genome into 50% training and 50% testing. Please refer to the manuscript for details about this procedure. 
+|__calculate_roc_train_test_enrichment.py
+|__call_create_roc_plots_compare_all_models.py
+|__create_roc_plots_compare_all_models.R
+|__compare_models_auc_one_folder.R

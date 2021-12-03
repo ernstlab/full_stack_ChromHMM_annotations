@@ -1,3 +1,11 @@
+# Copyright 2021 Ha Vu (havu73@ucla.edu)
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 library("tidyverse")
 library("tidyr")
 library("dplyr")
@@ -68,9 +76,14 @@ draw_2DLine_neighborhood_enrichment <- function (enrichment_fn, save_fig_fn) {
 	print(paste('DONE! Figure is saved at:', save_fig_fn))	
 }
 
-tss_fn <- '/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/neighborhood_enrichment/hg19/neighborhood_enrichment_tss_hg19.txt'
-save_tss_fn <- '/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/neighborhood_enrichment/hg19/2DLine_neighborhood_enrichment_tss_hg19.png'
+args = commandArgs(trailingOnly=TRUE)
+if (length(args) != 3)
+{
+	stop("wrong command line argument format", call.=FALSE)
+}
+tss_fn <- args[1] # output of ChromHMM NeighborhoodEnrichment, produced by running the .sh file produced by create_neighborhood_enrichment.sh
+save_tss_fn <- args[2] # file path of the 2D plot showing neighborhood enrichments around TSS
+tes_fn <- args[3] # output of ChromHMM NeighborhoodEnrichment, produced by running the .sh file produced by create_neighborhood_enrichment.sh
+save_tes_fn <- args[4] # file path of the 2D plot showing neighborhood enrichments around TES
 draw_2DLine_neighborhood_enrichment(tss_fn, save_tss_fn)
-tes_fn <- '/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/neighborhood_enrichment/hg19/neighborhood_enrichment_tes_hg19.txt'
-save_tes_fn <- '/Users/vuthaiha/Desktop/window_hoff/ROADMAP_aligned_reads/chromHMM_model/model_100_state/neighborhood_enrichment/hg19/2DLine_neighborhood_enrichment_tes_hg19.png'
 draw_2DLine_neighborhood_enrichment(tes_fn, save_tes_fn)

@@ -1,0 +1,131 @@
+import os
+import glob
+import pandas as pd 
+import numpy as np
+raw_segmentation_fn = "../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz"
+raw_segmentation_folder = "../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/"
+GO_output_folder = '../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/gene_ontology_analysis/GREAT'
+ha_share_folder="/u/project/ernst/PUBLIC_SHARED/havu73"
+NUM_STATE = 100
+STATE_LIST = list(map(lambda x: x+1, range(NUM_STATE)))
+STATE_LIST_minus_68 = list(map(lambda x: x+1, range(67))) + list(map(lambda x: x+1, range(68, 100)))
+jobList='jobList'
+GO_TYPE_LIST = ['GO_BP', 'GO_CC', 'GO_MF'] #, 'HP']
+STATE_GROUP_LIST = ['DNase', 'HET', 'TSS', 'acetylations', 'enhancers', 'exon', 'others', 'polycomb_repressed', 'promoters', 'quescient', 'transcribed_and_enhancer', 'transcription', 'weak_enhancers', 'weak_promoters', 'weak_transcription', 'znf']
+def get_remaining_state_list():
+	exist_output_fn_list = glob.glob(GO_output_folder + '/state_E*_GO.tsv')
+	exist_output_state_list = list(map(lambda x: int(x.split('/')[-1].split('_')[1][1:]), exist_output_fn_list))
+	remain_state_list = set(STATE_LIST) - set(exist_output_state_list)
+	remain_state_list = list(remain_state_list)
+	return remain_state_list
+
+rule all:
+	input:
+		# jobList
+		# expand(os.path.join(GO_output_folder, 'state_E{state}_GO.tsv'), state = get_remaining_state_list()), # from get_GREAT_output
+		expand(os.path.join(GO_output_folder, 'combined_all_states', 'tables_for_publication', 'state_characterization_{go_type}.csv.gz'), go_type = GO_TYPE_LIST),
+
+rule get_one_state_bed:
+	input:	
+		raw_segmentation_fn,
+	output:
+		os.path.join(raw_segmentation_folder, 'state_E{state}.bed.gz')
+	params:
+		output_fn_no_gz = os.path.join(raw_segmentation_folder, 'state_E{state}.bed')
+	shell:
+		"""
+		zcat {raw_segmentation_fn} | awk -F'\t' -v s="E{wildcards.state}" '{if ($4 == s) print $0}' | sort -k1,1 -k2,2n > {params.output_fn_no_gz}
+		gzip {params.output_fn_no_gz}
+		"""
+rule transfer_state_bed_to_online_folder: 
+	input:	
+		expand(os.path.join(raw_segmentation_folder, 'state_E{{state}}.bed.gz'), state = STATE_LIST) # from get_one_state_bed
+	output:
+		expand(os.path.join(ha_share_folder, 'full_stack', 'one_state', 'state_E{{state}}.bed.gz'))
+	params:
+		output_folder = os.path.join(ha_share_folder, 'full_stack', 'one_state')
+	shell:	
+		"""
+		cp {raw_segmentation_folder}/state_E*.bed.gz {params.output_folder}
+		"""
+def get_input_url_prefix():
+	ha_url = 'https://public.hoffman2.idre.ucla.edu/ernst/2K9RS/full_stack/one_state/'
+	ha_url = ha_url.replace('/','%2F')
+	ha_url = ha_url.replace(':', '%3A')
+	return ha_url
+
+rule create_jobList_for_GREAT:
+	input:
+		expand(os.path.join(ha_share_folder, 'full_stack', 'one_state', 'state_E{state}.bed.gz'), state = STATE_LIST) #from transfer_state_bed_to_online_folder
+	output:
+		(jobList),
+	params:
+		input_url_prefix=get_input_url_prefix(),
+		GREAT_link="http://bejerano.stanford.edu/great/public/cgi-bin/greatStart.php",
+		output_type="batch",
+		species="hg19",
+		request_sender="havu73"
+	shell:
+		"""
+		rm -f {output[0]} # so we can create new file
+		for s in `seq 1 {NUM_STATE}`
+		do
+			output_fn={GO_output_folder}/state_E${{s}}_GO.tsv
+			if [ ! -f ${{output_fn}} ]
+			then
+				request_name=state_E${{s}}
+				request_url={params.input_url_prefix}%2Fstate_E${{s}}.bed.gz
+				http_request="{params.GREAT_link}?outputType={params.output_type}&requestSpecies={params.species}&requestName=${{request_name}}&requestSender={params.request_sender}&requestURL=${{request_url}}"
+				echo ${{http_request}}
+				echo ${{output_fn}} ${{http_request}} >> {output[0]}
+			fi
+		done
+		"""
+
+rule get_GREAT_output: # send requests to get results from GREAT
+	# Note: this rule takes several times of rerunning. For states 7, 44, 56, 68 , 89, 90 the direct download using wget will not work because they span a lot of genes, and will therefore not result in the most correct patterns of enrichments
+	# To rerun, we just need to change the input to all function to jobList and just do python greatBatchQuerry.py direclty on the terminal
+	input:
+		jobList # from create_jobList_for_GREAT
+	output:
+		expand(os.path.join(GO_output_folder, 'state_E{state}_GO.tsv'), state = get_remaining_state_list())
+	shell:
+		"""
+		python greatBatchQuery.py {input}
+		"""
+
+rule process_GREAT_output: # process the raw output of GREAT and only get the results of the top #num_top_GO go terms for each state
+	input:
+		expand(os.path.join(GO_output_folder, 'state_E{state}_GO.tsv'), state = STATE_LIST_minus_68) # beacuse we tried at all cost to get the results for states 68 and still could not get it due to some errors from the server's end
+	output:
+		expand(os.path.join(GO_output_folder, 'combined_all_states', '{go_type}', '{state_group}_topGO.txt.gz'), go_type = GO_TYPE_LIST, state_group = STATE_GROUP_LIST),
+	params:
+		num_max_GO_terms = 1,
+		output_folder = os.path.join(GO_output_folder, 'combined_all_states'),
+	shell:
+		"""
+		python process_GREAT_output_all_states.py {GO_output_folder} {params.num_max_GO_terms} {params.output_folder}
+		"""
+
+def get_state_annot_df():
+    state_annot_fn = '~/project-ernst/ROADMAP_aligned_reads/chromHMM_model/model_100_state/figures/supp_excel/state_annotations_processed.csv'
+    state_annot_df = pd.read_csv(state_annot_fn, sep = ',', header = 0)
+    state_annot_df = state_annot_df[['state', 'color', 'mneumonics', 'state_order_by_group']]
+    return state_annot_df
+
+rule prepare_summary_table_for_publication:
+	input:
+		expand(os.path.join(GO_output_folder, 'combined_all_states', '{{go_type}}', '{state_group}_topGO.txt.gz'), state_group = STATE_GROUP_LIST), # from rule process_GREAT_output
+	output:
+		os.path.join(GO_output_folder, 'combined_all_states', 'tables_for_publication', 'state_characterization_{go_type}.csv.gz'),
+	run: 
+		df_list = list(map(lambda x: pd.read_csv(x, header = 0, index_col = None, sep = '\t'), input))
+		df = pd.concat(df_list)
+		df['FdrQ'] = df['FdrQ'].astype(str)
+		df['FoldEnrich'] = df['FoldEnrich'].astype(str)
+		df = df.groupby('state', as_index = False).agg({'ID': ';'.join, 'Desc': ';'.join, 'FdrQ': ';'.join, 'FoldEnrich': ';'.join})
+		state_annot_df = get_state_annot_df() # state, color, mneumonics, state_order_by_group
+		df = df.merge(state_annot_df, left_on = 'state', right_on = 'state', how = 'left')
+		df = df.sort_values(by = 'state_order_by_group')
+		df = df.drop('state', axis = 1).rename(columns = {'mneumonics' : 'state'})[['state', 'ID', 'Desc', 'FdrQ', 'FoldEnrich']]
+		df.to_csv(output[0], header = True, index= False, sep = '\t', compression = 'gzip')

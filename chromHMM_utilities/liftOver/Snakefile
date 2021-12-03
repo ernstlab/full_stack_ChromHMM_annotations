@@ -1,10 +1,18 @@
+# Copyright 2021 Ha Vu (havu73@ucla.edu)
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 org_assembly = 'hg19'
-end_assembly = 'Mm10'
-org_segment_dir = '../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations'
+end_assembly = 'hg38' # <TO_BE_FILLED>, the target assembly that we want to convert the full-stack annotations into, hg38 or Mm10, etc. It should match the .over.chain.gz files used for liftOver (if hg19ToMm10.over.chain.gz then Mm10, not mm10).
+org_segment_dir = '' # <TO_BE_FILLED>, the relative path to the folder where file genome_100_segments.bed.gz is stored in your machine
 org_segment_fn = os.path.join(org_segment_dir, 'genome_100_segments.bed.gz')
 org_segment_200bp_fn = os.path.join(org_segment_dir, 'genome_100_200bp_ordered.bed.gz')
-liftOver_dir = '../../../liftOver'
-end_segment_dir = '../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/mm10_segmentations'
+liftOver_dir = './' # we provided liftOver executable file in this folder, that's why we put down the current directory here. Originally, liftOver was downloaded from UCSC genome browser website http://hgdownload.soe.ucsc.edu/admin/exe/
+end_segment_dir = '' # <TO_BE_FILLED>, the relative path to the output folder of this liftOver procedure
 end_segment_raw = os.path.join(end_segment_dir, end_assembly + '_100_raw_segments.bed.gz')
 unmapped_fn = os.path.join(end_segment_dir, 'unmapped_' + org_assembly + '_to_' + end_assembly + '.gz')
 end_segment_last =   os.path.join(end_segment_dir, end_assembly + '_100_no_overlap_from_' + org_assembly + '.bed.gz')
@@ -59,7 +67,7 @@ rule rid_overlapping_from_raw:  # given one chrom's end_raw data, we would like 
 		temp(os.path.join('temp_remove_indices_chr_{chrom}')) 
 	shell:	
 		"""
-		pypy find_overlapping_segments_from_liftOver_one_chrom.py {input} {output}
+		python find_overlapping_segments_from_liftOver_one_chrom.py {input} {output}
 		"""
 
 rule combine_end_segment:

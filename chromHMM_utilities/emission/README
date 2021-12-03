@@ -1,0 +1,13 @@
+This folder contains files that are useful for analyzing the emission matrix outputted from ChromHMM LearnModel, which is a matrix of size 100 (full-stack states) and 1032 (experiments). 
+|__emissions_100.txt: this is the emission matrix outputted by ChromHMM that we provide with this paper. This is the text version of Additional File 3, tab 'emission'
+|__helper.py: some helpful functions
+|__calculate_emission_by_groups.py: calculate the average emission prob of states across experiments associated with different groups (of marks, of GROUP of biosamples, of ANATOMY of biosamples)
+|__output_emission: folder containing the output of some program (we create this folder here for demonstration purposes)
+|__|__emissions_by_mark_group.txt: output from calculate_emission_by_groups.py: average emission prob of states, across different types of marks
+|__|__emissions_by_cell_type_group.txt: output from calculate_emission_by_groups.py: average emission prob of states, across different types of GROUP of cell types (biosamples), as defined by ROADMAP (file ../ROADMAP_metadata_july2013.py)
+|__|__emissions_by_ana_group.txt: output from calculate_emission_by_groups.py: average emission prob of states, across different types of ANATOMY of cell types (biosamples), as defined by ROADMAP (file ../ROADMAP_metadata_july2013.py)
+|__draw_emission_matrix.R: produce the emission matrix in Fig. 2A. Input: emission_fn (emissions_100.txt), state_annot_fn (../state_anotations.txt), save_fn (./output_emission/emissions_100.png)
+|__draw_emission_by_mark_group.R: create figure S5. Input: emission_fn (./output_emission/emissions_by_mark_group.txt), state_annot_fn (../state_anotations.txt), save_fn (./output_emission/emission_by_mark_group.png) 
+|__draw_emission_subsetted_states.R: create figures such as 4B, 5B, 5G: emission parameters for a subset of states. Input: emission_fn (emissions_100.txt), state_annot_fn (../state_anotations.txt), save_fn (where you save the figure), space-delimited state numbers. 
+Notes: state numbers are the number of states (1-100) as outputted raw by ChromHMM LearnModel (before any state characterization efforts). To get state numbers corresponding to state names as presented in the paper, you can look at the columns state, mneumonics in state_annot_fn (../state_anotations.txt)
+Required R packages: tidyverse, tidyr, dplyr, ggplot2, pheatmap 

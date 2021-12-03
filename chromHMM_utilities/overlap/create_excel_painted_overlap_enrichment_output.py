@@ -1,3 +1,11 @@
+# Copyright 2021 Ha Vu (havu73@ucla.edu)
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 import seaborn as sns
 import pandas as pd 
 import numpy as np 
@@ -10,16 +18,15 @@ print ("This file will take as input the chromHMM OverlapEnrichment output file,
 print ("")
 print ("")
 
-def get_state_annot_df():
-    state_annot_fn = '../../..//ROADMAP_aligned_reads/chromHMM_model/model_100_state/figures/supp_excel/state_annotations_processed.csv'
+def get_state_annot_df(state_annot_fn):
     state_annot_df = pd.read_csv(state_annot_fn, sep = ',', header = 0)
     state_annot_df = state_annot_df[['state', 'color', 'mneumonics', 'state_order_by_group']]
     return state_annot_df
 
-def get_enrichment_df(enrichment_fn):
-    state_annot_df = get_state_annot_df()
+def get_enrichment_df(enrichment_fn, state_annot_fn):
+    state_annot_df = get_state_annot_df(state_annot_fn)
     enrichment_df = pd.read_csv(enrichment_fn, sep = "\t", header = 0)
-    enrichment_df = enrichment_df.rename(columns = {u'state (Emission order)': 'state', u'Genome %' : 'percent_in_genome'})
+    enrichment_df = enrichment_df.rename(columns = {u'state (Emission order)': 'state', u'Genome %' : 'percent_in_genome', u'State (Emission order)': 'state'})
     (num_state, num_enr_cont) = (enrichment_df.shape[0] - 1, enrichment_df.shape[1] - 1)  
     percent_genome_of_cont = enrichment_df.iloc[num_state, 2:]
     enrichment_df = enrichment_df.loc[:(num_state - 1)] # rid of the last row because that is the row about percentage each genomic context occupies
@@ -72,8 +79,8 @@ def color_state_annotation(row_data, index_to_color_list):
             results[index] = 'background-color: %s' % state_annot_color # the third cell from the left is the state annotation cells
     return results
 
-def combine_enrichment_df_with_state_annot_df(enrichment_df, enr_cont_list):
-    state_annot_df = get_state_annot_df()
+def combine_enrichment_df_with_state_annot_df(enrichment_df, enr_cont_list, state_annot_fn):
+    state_annot_df = get_state_annot_df(state_annot_fn)
     enrichment_df['state'] = (enrichment_df['state']).astype(str).astype(int)
     enrichment_df = enrichment_df.merge(state_annot_df, how = 'left', left_on = 'state', right_on = 'state', suffixes = ('_x', '_y'))
     enrichment_df = enrichment_df.sort_values(by = 'state_order_by_group')
@@ -91,10 +98,10 @@ def combine_enrichment_df_with_state_annot_df(enrichment_df, enr_cont_list):
     enrichment_df['state_order_by_group'] = enrichment_df['state_order_by_group'].astype(int)
     return enrichment_df
 
-def get_enrichment_colored_df(enrichment_fn, save_fn, context_prefix):
+def get_enrichment_colored_df(enrichment_fn, save_fn, context_prefix, state_annot_fn):
     cm = sns.light_palette("red", as_cmap=True)
     enrichment_df = pd.read_csv(enrichment_fn, sep = "\t", header = 0)
-    enrichment_df = enrichment_df.rename(columns = {u'state (Emission order)': 'state', u'Genome %' : 'percent_in_genome'})
+    enrichment_df = enrichment_df.rename(columns = {u'state (Emission order)': 'state', u'Genome %' : 'percent_in_genome', u'State (Emission order)' : 'state'})
     enrichment_df = enrichment_df.fillna(0) # if there are nan enrichment values, due to the state not being present (such as when we create files with foreground and background), we can fill it by 0 so that the code to make colorful excel would not crash.
     (num_state, num_enr_cont) = (enrichment_df.shape[0] - 1, enrichment_df.shape[1] - 1)
     enr_cont_list = enrichment_df.columns[2:]
@@ -110,7 +117,7 @@ def get_enrichment_colored_df(enrichment_fn, save_fn, context_prefix):
     enrichment_df['max_fold_context'] = no_state_df.apply(lambda x: x.idxmax(), axis = 1) # name of the context that are most enriched in this state
     enrichment_df['max_enrich'] = no_state_df.apply(lambda x: x.max(), axis = 1) # the value of the max fold enrichment in this state
     # now add back data associated with the percentage in genome of each of the
-    enrichment_df = combine_enrichment_df_with_state_annot_df(enrichment_df, enr_cont_list)
+    enrichment_df = combine_enrichment_df_with_state_annot_df(enrichment_df, enr_cont_list, state_annot_fn)
     num_remaining_columns = len(enrichment_df.columns) - 2 - len(enr_cont_list)
     enrichment_df.loc[num_state] = list([0 , np.sum(enrichment_df['percent_in_genome'])]) + list(percent_genome_of_cont) + [None] * num_remaining_columns  
     mneumonics_index_in_row = enrichment_df.columns.get_loc('mneumonics') # column index, zero-based of the menumonics entries, which we will use to paint the right column later
@@ -236,17 +243,18 @@ def get_colored_df_for_gc_znf_assembly_gap_enrichment(enrichment_fn, save_fn):
 
 
 def main():
-    if len(sys.argv) != 4:
+    if len(sys.argv) != 5:
     	usage()
     input_fn = sys.argv[1]
     helper.check_file_exist(input_fn)
     output_fn = sys.argv[2]
     helper.create_folder_for_file(output_fn)
     context_prefix = sys.argv[3]
+    state_annot_fn = sys.argv[4]
     print ("Done getting command line! ")
 
-    get_enrichment_colored_df(input_fn, output_fn, context_prefix)
-    # get_colored_df_for_consHMM_enrichment(input_fn, output_fn)
+    get_enrichment_colored_df(input_fn, output_fn, context_prefix, state_annot_fn)
+    #get_colored_df_for_consHMM_enrichment(input_fn, output_fn)
     #get_colored_df_for_gc_znf_assembly_gap_enrichment(input_fn, output_fn)
 
 
@@ -255,9 +263,7 @@ def usage():
     print ("input_fn: the output of chromHMM OverlapEnrichment")
     print ("output_fn: the name of the excel file that you want to create") 
     print ("context_prefix: the prefix to all the enrichment contexts in this input_fn. For example, if we do enrichments with gnomad variants of varying maf, the column names in input_fn are 'maf_0_0.1<etc>', we can specify context_prefix to gnomad. If we dont need such prefix, specify to empty string. This is useful when we try to write comment on states that are most enriched in each genomic context.")
+    print ('state_annot_fn: where we get all the data of characterization of states')
     exit(1)
 
 main()
-# input_fn = sys.argv[1]
-# output_fn = sys.argv[2]
-# get_colored_df_for_consHMM_enrichment(input_fn, output_fn)

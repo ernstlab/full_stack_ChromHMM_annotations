@@ -1,0 +1,28 @@
+1, get_naive_bayes_data.py: 
+python get_naive_bayes_data.py <segment_fn: segmentation of states throughout the genome, based on full-stack model> <binary_folder:folder of binary data tracks used to train the full-stack model> <binary_file_list_fn: where the list of binary data files that we select for training the naive bayes models are stored, an example: binary_files_5_trial> <output_folder: where prior probabilities and conditional probabilites will be stored>
+
+This file will create prior probabilities and conditional probabilities for selecting marks using naive_bayes
+
+Example (only applicable for our local environment): python get_naive_bayes_data.py /u/project/ernst/ernst/STACKEDCHROMHMM/REORDER_MODEL_BINARY_ROADMAP_NARROWPEAKCONSOLIDATED/normcoord_genome_100_segments.bed.gz /u/project/ernst/ernst/STACKEDCHROMHMM/BINARY_ROADMAP_NARROWPEAKCONSOLIDATED/ ../../chrom_mark_selection_project/binary_files_list_40Fold_decrease ../../chrom_mark_selection_project/naive_bayes/
+
+2, naive_bayes_helpers.py:
+This file contains functions that are used in get_naive_bayes_data.py and naive_bayes.py
+This is specifically designed for running Jason's output of trained HMM models
+Notes: some functiosn here require pandas and numpy. However, we realized that it would be much faster if we implement things using normal python and then run using pypy (to calculate prior probabilities, it takes 13 seconds for pypy and 75 seconds for pandas and numpy)
+
+3, naive_bayes.py
+Format: python naive_bayes.py <cond_prob_fn> <prior_fn> <binary_input_folder> <binary_file_list_fn> <segment_fn> <output_file> <num_marks_to_pick>
+
+Example (only applicable for our local environment): pypy naive_bayes.py ../../chrom_mark_selection_project/naive_bayes/conditional_probabilities.txt  ../../chrom_mark_selection_project/naive_bayes/prior_probabilities.txt /u/project/ernst/ernst/STACKEDCHROMHMM/BINARY_ROADMAP_NARROWPEAKCONSOLIDATED ../../chrom_mark_selection_project/binary_files_list_40Fold_decrease /u/project/ernst/ernst/STACKEDCHROMHMM/REORDER_MODEL_BINARY_ROADMAP_NARROWPEAKCONSOLIDATED/normcoord_genome_100_segments.bed.gz ../../chrom_mark_selection_project/naive_bayes/decrease_40fold/top_80Marks 80
+
+4, get_binary_mark_representation_from_naive_bayes_output.py
+Create a file that takes the output of naive_bayes and outputs the binary representation of mark combinations. Each line takes one more mark. The output file will be mark comb file for create_job_array_eval_subset.sh
+
+Example: python get_binary_mark_representation_from_naive_bayes_output.py ../../chrom_mark_selection_project/naive_bayes/decrease_40fold/top_80Marks ../../chrom_mark_selection_project/naive_bayes/decrease_40fold/increasing_marks_chromHMM_rep4EvalSubset.txt 1032
+
+5, get_mark_names_from_naive_bayes_output.py:
+
+This will create a new file with the names of marks that are ranked and chosen by naive bayes
+python get_mark_names_from_naive_bayes_output.py <rank naive bayes filename> <mark name file: names of marks as ordered by the binary signal file and also consistent with the mark indices> <output file name> 
+
+Example (only applicable for our local environment): python get_mark_names_from_naive_bayes_output.py ../../chrom_mark_selection_project/naive_bayes/decrease_40fold/top_80Marks ../../chrom_mark_selection_project/all_mark_names.txt ../../chrom_mark_selection_project/naive_bayes/decrease_40fold/mark_names_top80.txt

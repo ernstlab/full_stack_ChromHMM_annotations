@@ -1,0 +1,760 @@
+---
+title: "Jason Results"
+output: html_document
+---
+
+
+## R Markdown
+
+
+```{r}
+library(dplyr)
+library(tidyr)
+
+#### Caesar results ####
+caesar = T
+depletion = F
+## ChromStates #######
+library(dplyr)
+# fdr = "fdr"
+fdr = ""
+greyfilter = " clean"
+# greyfilter = "all"
+countfilter = 100
+if(grepl("all", greyfilter)) countfilter = 0
+
+
+if(caesar == F) {
+  
+  chromHMM0 = readxl::read_xlsx("/Users/caesar/Dropbox (Personal)/HorvathLabCoreMembers/Caesar/ProjectEWASmaxlifespan/Supplements/JasonResults/overlap_against_bg_v2.xlsx",
+                                sheet = 2)
+  chromHMM0.enrichFold = readxl::read_xlsx("/Users/caesar/Dropbox (Personal)/HorvathLabCoreMembers/Caesar/ProjectEWASmaxlifespan/Supplements/JasonResults/overlap_against_bg_v2.xlsx",
+                                sheet = 3)
+  
+  
+  ## Clean dataset 
+  chromHMM0 = chromHMM0[, !grepl("...1", colnames(chromHMM0))]
+  # temp = as.matrix(chromHMM0[, grepl("fg", colnames(chromHMM0))])
+  # temp = apply(temp, 1, min)
+  # chromHMM0 = chromHMM0[temp < 0.05, ]
+  chromHMM0 = chromHMM0[, -which(grepl("fg_all_CpGs|Muscle", colnames(chromHMM0)))]
+  chromHMM0.enrichFold = chromHMM0.enrichFold[, -which(grepl("fg_all_CpGs|Muscle", colnames(chromHMM0.enrichFold)))]
+} else {
+  chromHMM0 = read.csv("/Users/caesar/Dropbox (Personal)/HorvathLabCoreMembers/Caesar/ProjectEWASmaxlifespan/Supplements/results_Caesar.csv", stringsAsFactors = F)
+  chromHMM0.enrichFold = read.csv("/Users/caesar/Dropbox (Personal)/HorvathLabCoreMembers/Caesar/ProjectEWASmaxlifespan/Supplements/results_fold_Caesar.csv", stringsAsFactors = F)
+  chromHMM0.table = read.csv("/Users/caesar/Dropbox (Personal)/HorvathLabCoreMembers/Caesar/ProjectEWASmaxlifespan/Supplements/results_table_Caesar.csv", 
+                           stringsAsFactors = F)
+  
+  ### get rid of this later
+  # chromHMM0 = chromHMM0[, !grepl("AdjWeight", colnames(chromHMM0))]
+  # chromHMM0.enrichFold = chromHMM0.enrichFold[, !grepl("AdjWeight", colnames(chromHMM0.enrichFold))]
+  #
+  
+  rownames(chromHMM0) = chromHMM0[, 1]
+  rownames(chromHMM0.enrichFold) = chromHMM0.enrichFold[, 1]
+  rownames(chromHMM0.table) = chromHMM0.table[, 1]
+  
+  # chromHMM0 = chromHMM0[, -1]
+  # chromHMM0.enrichFold = chromHMM0.enrichFold[, -1]
+  colnames(chromHMM0)[1] = "state"
+  colnames(chromHMM0.enrichFold)[1] = "state"
+  colnames(chromHMM0.table)[1] = "state"
+  
+  chromHMM0 = chromHMM0[, -which(grepl("Muscle", colnames(chromHMM0)))]
+  chromHMM0.enrichFold = chromHMM0.enrichFold[, -which(grepl("Muscle", colnames(chromHMM0.enrichFold)))]
+  chromHMM0.table = chromHMM0.table[, -which(grepl("Muscle", colnames(chromHMM0.table)))]
+  
+  # age = read.csv("/Users/caesar/Dropbox (Personal)/HorvathLabCoreMembers/Caesar/ProjectEWASmaxlifespan/Supplements/JasonResults/EWAS_All_top1000_ChromatinStateEnrichment_NEW.csv",
+  #                stringsAsFactors = F)
+  # 
+  # age = age[, c("state", "group", "Hyper.P")] %>% spread(group, Hyper.P)
+  # colnames(age) = c("state", "AgeMeta_negative", "AgeMeta_positive")
+  # rownames(age) = age$state
+  # chromHMM0 = chromHMM0 %>% left_join(age, by = "state")
+  # age$AgeMeta_positive = 2; age$AgeMeta_negative = 2
+  # chromHMM0.enrichFold = chromHMM0.enrichFold %>% left_join(age, by = "state")
+  
+  ### change PRC TF binding names
+  prcnames = c("PRC1 Target Sites", "PRC2 Target Sites")
+  chromHMM0$state[(nrow(chromHMM0) - 1):nrow(chromHMM0)] = prcnames
+  chromHMM0.enrichFold$state[(nrow(chromHMM0.enrichFold) - 1):nrow(chromHMM0.enrichFold)] = prcnames
+  rownames(chromHMM0.table)[(nrow(chromHMM0.table) - 1):nrow(chromHMM0.table)] = prcnames
+}
+
+
+### Amin's coloring and CG counts per chromatin state
+chromInfo = readRDS("/Users/caesar/Dropbox (Personal)/HorvathLabCoreMembers/Caesar/ProjectEWASmaxlifespan/Supplements/JasonResults/chromHMM/stackHmm colors, order, Freq.RDS")
+
+colnames(chromInfo)[1] = "state"
+colnames(chromInfo)[which(colnames(chromInfo) == "color")] = "colorAmin"
+chromInfo$state = as.character(chromInfo$state)
+
+prc12 = data.frame(state = prcnames, FreqOnMammalianArray = c(0, 0), order = c(101, 102), colorAmin = c("#000000", "#000000"))
+##  #543535
+chromInfo = rbind(chromInfo, prc12)
+
+## Re-do the frequencies
+states = read.csv('/Users/caesar/Dropbox (Personal)/MammalianArrayNormalizationTools/ChromatinStatesJasonErnstSooBinKwon/StackHMM, repeat elements, PRCchipseq/mammalian_hg19_fullStack_repeats_PRCchipseq, aggregated.csv',
+                  stringsAsFactors = F)
+checkrepeats = sapply(strsplit(states$full_stacked_state, ","), "[", c(2))
+states = states[is.na(checkrepeats), ]
+
+  myfreq = states %>% group_by(full_stacked_state) %>% summarise(n = n())
+  myfreq = as.data.frame(myfreq)
+  myfreq = rbind(myfreq, data.frame(full_stacked_state = prcnames, n = c(sum(states$PRC1_Amin), sum(states$PRC2_Amin))))
+  rownames(myfreq) = myfreq$full_stacked_state
+  myfreq = myfreq[as.character(chromInfo$state), ]; chromInfo$FreqOnMammalianArray = myfreq$n
+
+  # myfreq = states[states$PRC2_Amin == 1, ]
+  myfreq = states %>% group_by(full_stacked_state) %>% summarise(n = sum(PRC2_Amin == 1) / n())
+  myfreq = as.data.frame(myfreq)
+  myfreq = rbind(myfreq, data.frame(full_stacked_state = prcnames, 
+                                    n = c(sum(states$PRC1_Amin == 1 & states$PRC2_Amin == 1) / sum(states$PRC1_Amin == 1), 1)))
+  rownames(myfreq) = myfreq$full_stacked_state
+  myfreq = myfreq[as.character(chromInfo$state), ]; chromInfo$FreqPRC2 = myfreq$n
+
+#
+
+## Ha's color ano
+anno_color = read.csv("/Users/caesar/Dropbox (Personal)/HorvathLabCoreMembers/Caesar/ProjectEWASmaxlifespan/Supplements/JasonResults/Color_annotation.csv",
+                      stringsAsFactors = F)
+anno_color = rbind(anno_color,  data.frame(state = prcnames, State_group = c("PRC1&2 TFs binding Regions", "PRC1&2 TFs binding Regions")))
+
+chromInfo = chromInfo %>% left_join(anno_color, by = "state")
+#####
+
+chromHMM0 = chromHMM0 %>% left_join(chromInfo, by = "state")
+
+# if(grepl("clean", greyfilter)) {
+#   chromHMM0 = chromHMM0[chromHMM0$FreqOnMammalianArray >= countfilter, ]
+# }
+chromHMM0 = chromHMM0[order(chromHMM0$order, decreasing = FALSE), ]
+chromHMM0$stateName = paste0(chromHMM0$state, " (", chromHMM0$FreqOnMammalianArray, ")")
+
+if(caesar == T) {
+  pmatrix = as.matrix(chromHMM0[, grepl("positive|negative", colnames(chromHMM0))]); rownames(pmatrix) = chromHMM0$state
+} else {
+  pmatrix = as.matrix(chromHMM0[, grepl("fg", colnames(chromHMM0))]); rownames(pmatrix) = chromHMM0$state
+}
+
+
+if(grepl("fdr", fdr)) {
+  mycols = colnames(pmatrix); myrows = rownames(pmatrix)
+  temp = p.adjust(pmatrix, method = "fdr", n = sum(chromInfo$FreqOnMammalianArray >= countfilter)* (ncol(pmatrix) + 4))
+  pmatrix = matrix(temp, ncol = ncol(pmatrix), byrow = FALSE)
+  colnames(pmatrix) = mycols; rownames(pmatrix) = myrows
+}
+
+if(grepl("clean", greyfilter)) {
+  temp = apply(pmatrix, 1, function(x) return(min(x, na.rm = T)))
+  pmatrix = pmatrix[temp < 0.05, ]
+  # pmatrix[pmatrix > 0.05] = NA
+}
+chromHMM0 = chromHMM0[chromHMM0$state %in% rownames(pmatrix), ]
+
+rownames(pmatrix) = chromHMM0$stateName
+
+if(caesar == T) {
+  temp = sapply(strsplit(colnames(pmatrix), "_"), '[', c(1,2,3,4,5))
+  temp = t(temp)
+  for(i in 1:nrow(temp)) {
+    if(grepl("Age", colnames(pmatrix)[i])) {
+      temp[i, c(2,3)] = temp[i, c(1, 2)]
+      temp[i, c(4)] = 500
+      temp[i, c(1)] = "Age Meta"
+      temp[i, c(2)] = ""
+    } else if(grepl("Phylo|phylo", colnames(pmatrix)[i])) {
+      if(grepl("AdjWeight", colnames(pmatrix)[i])) {
+        temp[i, c(1,2,3, 4)] = temp[i, c(2, 3, 4, 5)]
+        temp[i, c(2)] = "AdjPhyloWeight"
+      } else {
+        temp[i, c(1,2,3, 4)] = temp[i, c(2, 1, 3, 4)]
+      }
+    } else  {
+      if(!grepl("AdjWeight", colnames(pmatrix)[i])) {
+        temp[i, c(3,4)] = temp[i, c(2,3)]
+        # temp[i, c(3)] = temp[i, c(2)]
+        temp[i, c(2)] = "Generic" 
+      } 
+      
+    }
+    
+  }
+  temp = temp[, c(1,2,3, 4)]
+  temp[, 2] = ifelse(temp[, 2] == "phylo", "Phylo", temp[, 2])
+  # temp[, 2] = ifelse(grepl("phylo|Phylo", temp[, 2]), "Phylo", "Generic")
+} else if(F) {
+  temp = sapply(strsplit(colnames(pmatrix), "_"), '[', c(1,2,3,4,5))
+  temp = t(temp)
+  for(i in 1:nrow(temp)) {
+    if(grepl("Phylo|phylo", colnames(pmatrix)[i]) & grepl("Meta|meta", colnames(pmatrix)[i]))  {
+      temp[i, c(1,2,3)] = temp[i, c(3, 2, 5)]
+    } else if(grepl("Phylo|phylo", colnames(pmatrix)[i])) {
+      temp[i, c(1,2,3)] = temp[i, c(3, 2, 4)]
+    } else if(grepl("Meta|meta", colnames(pmatrix)[i]))  {
+      temp[i, c(1,2,3)] = temp[i, c(2, 1, 4)]
+    } else {
+      temp[i, c(1,2,3)] = temp[i, c(2, 1, 3)]
+    }
+    
+  }
+  temp[, 2] = ifelse(temp[, 2] == "phylo", "Phylo", "Generic")
+  temp = temp[, c(1,2,3)]
+} else {
+  temp = sapply(strsplit(colnames(pmatrix), "_"), '[', c(2,3,4))
+  temp = t(temp)
+  for(i in 1:nrow(temp)) {
+    
+    if(grepl("Phylo|phylo", colnames(pmatrix)[i])) {
+      temp[i, c(1,2,3)] = temp[i, c(2, 1, 3)]
+    } else  {
+      temp[i, c(3)] = temp[i, c(2)]
+      temp[i, c(2)] = "Generic"
+    }
+    
+  }
+  temp[, 2] = ifelse(temp[, 2] == "phylo", "Phylo", "Generic")
+}
+temp = cbind(temp, 1:nrow(temp))
+temp = cbind(temp,ifelse(temp[, 1] == "Meta", "a", 
+                         ifelse(temp[, 1] == "Skin", "b",
+                                ifelse(temp[, 1] == "Blood", "c", 
+                                       ifelse(temp[, 1] == "Liver", "d", "e")))))
+
+temp = cbind(temp, ifelse(temp[, 2] == "Generic", 1, 
+                          ifelse(temp[, 2] == "AdjWeight", 2, 
+                                 ifelse(temp[, 2] == "Phylo", 3, 4))))
+temp = cbind(temp, ifelse(temp[, 3] == "positive", 1, 2)); temp = as.data.frame(temp)
+temp[,3] = ifelse(temp[, 3] == "positive", "Positive", "Negative")
+if(caesar == T) {
+  temp = temp %>% arrange(V6, V7, V8)
+  myanalyses = temp
+  # temp[is.na(temp)] = ""
+  pmatrix = pmatrix[, as.numeric(temp$V5)]
+} else {
+  temp = temp %>% arrange(V5, V6, V7)
+  myanalyses = temp
+  # temp[is.na(temp)] = ""
+  pmatrix = pmatrix[, as.numeric(temp$V4)]
+}
+
+
+
+
+colnames(pmatrix) = paste0(temp[, 1], " ", temp[, 2], " ", temp[, 3])
+
+## Sort out the fold enrichment matrix ####
+# colnames(chromHMM0.enrichFold)[which(colnames(chromHMM0.enrichFold) == "state...3")] = "state"
+chromHMM0.enrichFold = as.data.frame(chromHMM0.enrichFold); chromHMM0.enrichFold = chromHMM0.enrichFold[!is.na(chromHMM0.enrichFold$state), ]
+rownames(chromHMM0.enrichFold) = chromHMM0.enrichFold$state
+chromHMM0.enrichFold = chromHMM0.enrichFold[chromHMM0$state, ]
+
+# rownames(chromHMM0.table) = as.character(chromHMM0.table$state)
+chromHMM0.table = chromHMM0.table[chromHMM0$state, ]
+
+if(caesar == T) {
+  qmatrix = as.matrix(chromHMM0.enrichFold[, grepl("positive|negative", colnames(chromHMM0.enrichFold))])
+  chromHMM0.table = as.matrix(chromHMM0.table[, grepl("positive|negative", colnames(chromHMM0.table))])
+} else {
+  qmatrix = as.matrix(chromHMM0.enrichFold[, grepl("fg", colnames(chromHMM0.enrichFold))])
+  chromHMM0.table = as.matrix(chromHMM0.table[, grepl("fg", colnames(chromHMM0.table))])
+}
+
+if(caesar == T) {
+  qmatrix = qmatrix[, as.numeric(temp$V5)]
+  chromHMM0.table = chromHMM0.table[, as.numeric(temp$V5)]
+} else {
+  qmatrix = qmatrix[, as.numeric(temp$V4)]
+  chromHMM0.table = chromHMM0.table[, as.numeric(temp$V4)]
+}
+
+
+colnames(qmatrix) = paste0(temp[, 1], " ", temp[, 2], " ", temp[, 3])
+colnames(chromHMM0.table) = paste0(temp[, 1], " ", temp[, 2], " ", temp[, 3])
+
+#pmatrix = cbind(chromHMM0)
+# control the scale not to go over E-20
+pmatrix[!is.na(pmatrix) & pmatrix < 1E-20] = 1E-20
+#
+temp = pmatrix; temp[is.na(temp)] = 0
+textMatrix = format(temp,scientific=T,digit=2)
+# textMatrix[textMatrix == "0.0e+00"] = ""
+textMatrix[pmatrix > .05] = ""
+textMatrix[is.na(pmatrix)] =  ""
+textMatrix[!is.na(pmatrix) & pmatrix <= 1E-20] = "<1E-20"
+
+chromHMM0.table[pmatrix > 1e-4] = ""
+# control and change back the scale so the max 20 colors look the same as 19
+pmatrix[!is.na(pmatrix) & pmatrix <= 1E-20] = 1E-19
+#
+if(!grepl("clean", greyfilter)) {
+  # pmatrix[pmatrix > 0.05] = 1
+  textMatrix[pmatrix > 0.05] = ""
+}
+
+# textMatrix = paste0(textMatrix, "\n", qmatrix)
+pmatrix = -log10(pmatrix)
+textMatrix[is.infinite(pmatrix)] = "0"
+# pmatrix[is.infinite(pmatrix)] = max(pmatrix[!is.infinite(pmatrix)], na.rm = T) + 1
+# pmatrix[!is.na(qmatrix) & qmatrix < 1] = -pmatrix[!is.na(qmatrix) & qmatrix < 1]
+pmatrix[!is.na(qmatrix) & qmatrix < 1] = 0
+
+# vect_color = data.frame(p = unique(pmatrix[!is.na(pmatrix)]))
+# vect_color = vect_color[order(vect_color$p, decreasing = F), , drop = F]
+# vect_color$color = ""
+# colmatrix = textMatrix
+# # colfunc <- colorRampPalette(c("blue", "white"))
+# colfunc = scales::gradient_n_pal(colours = c("blue", "white"),
+#                               values= vect_color$p[vect_color$p < 0])
+# colmatrix[!is.na(pmatrix) & pmatrix < 0] = colfunc(pmatrix[!is.na(pmatrix) & pmatrix < 0])
+# # vect_color$color[vect_color$p < 0] = colfunc(sum(vect_color$p < 0))
+# # colfunc <- colorRampPalette(c("white", "red"))
+# colfunc = scales::gradient_n_pal(colours = c("white", "red"),
+#                                  values= vect_color$p[vect_color$p >= 0])
+# colmatrix[!is.na(pmatrix) & pmatrix >= 0] = colfunc(pmatrix[!is.na(pmatrix) & pmatrix >= 0])
+# colmatrix[colmatrix == ""] = "grey"
+
+```
+
+
+## Figure Plotting 
+
+```{r}
+library(ComplexHeatmap)
+library(RColorBrewer)
+
+## Top annotation
+colors_vect = c(rainbow(n = 9, s = 0.5, v=1), rainbow(n = 9, s = 1, v=1), "#AAAAAAFF", "#000000FF")
+# mypalette = colors_vect[c(1, 7, 10, 16, 18, 20)]
+mypalette = colors_vect[c(20, 18, 1, 10, 7, 5)]
+pmatrix[is.na(pmatrix)] = 0
+mylevels = c("Meta", "Skin", "Blood", "Liver", "Brain",  "Age")
+mysplit = factor(myanalyses[, 1], levels = mylevels)
+mytop = HeatmapAnnotation(foo = anno_block(gp = gpar(fill = mypalette),
+                                           labels =mylevels, 
+                                           labels_gp = gpar(col = "white", fontsize = 7),
+                                           height = unit(.4, "cm")
+                                           ),
+                         # foo2 = anno_boxplot(10^-pmatrix, height = unit(1, "cm"), gp = gpar(fill = mysplit)),
+                         foo2 = anno_points(as.numeric(myanalyses$V4), gp = gpar(fill = mypalette)),
+                         annotation_label = gt_render(
+                                                  c("**Tissues**",
+                                                    "**# of Selected CGs for Enrichment**"),
+                                                  gp = gpar(fontsize = 6)
+                                              ))
+
+## Right annotation
+myrects = chromHMM0 %>% group_by(colorAmin) %>% 
+  summarise(n1 = n(), order = min(order), color = first(colorAmin), State_group = first(State_group)) %>%
+  arrange(order)
+
+stategroups = factor(chromHMM0$State_group, levels = myrects$State_group)
+myright = rowAnnotation(foo = anno_block(gp = gpar(fill = myrects$color),
+        labels = myrects$State_group,
+        labels_gp = gpar(col = "white", fontsize = 5)))
+
+le = as.character(stategroups)
+col_letters = myrects$color; names(col_letters) = myrects$State_group
+myright = rowAnnotation(foo3 = anno_text(myrects$State_group, location = 0.5, just = "center"))
+
+## Left annotation
+le_colors = factor(le, levels = names(col_letters)); levels(le_colors) = col_letters
+myleft = rowAnnotation('CG Frequency' = anno_barplot(chromHMM0$FreqPRC2, row_title_gp = gpar(fontsize = .001),
+                                                     width = unit(1, "cm"), labels_gp = gpar(col = "black", fontsize = 6),
+                                                     gap =  unit(2, "cm"), gp = gpar(fill = as.character(le_colors))), 
+                       annotation_label = gt_render(
+                                                  c("Background CG Frequency     "),
+                                                  gp = gpar(fontsize = 5)
+                                              ))
+
+## New Right annotation
+ha = rowAnnotation(foo = anno_text(chromHMM0$state, location = 0.5, just = "center",
+    gp = gpar(fill = le_colors, col = "white", border = "black"),
+    width = max_text_width(chromHMM0$state)*1.2))
+
+## TextMatrix
+
+mylayer_fun = function(j, i, x, y, width, height, fill) {
+        # since grid.text can also be vectorized
+        grid.text(pindex(textMatrix, i, j), x, y, gp = gpar(fontsize = 2.5))
+}
+
+# myright2 = rowAnnotation(foo = anno_text(month.name, gp = gpar(fontsize = 1:12+4)))
+
+
+# Plotmap
+# col_fun = circlize::colorRamp2(c(0, 0.05, max(pmatrix)), c("white", "lightgreen", "#FF0000"))
+col_fun = circlize::colorRamp2(c(0, max(pmatrix)), c("white", "#FF0000"))
+ht1 = Heatmap(pmatrix, name = "Enrichment -log10(Pvalue)", column_split = mysplit, row_split = stategroups,
+              column_title = NULL, row_title = NULL,
+               cluster_rows = FALSE, cluster_columns = FALSE,
+              show_row_dend = FALSE,
+              # rect_gp = gpar(col= "#EDFAFA", gap = unit(.05, "mm")), 
+              top_annotation = mytop, left_annotation = myleft, 
+              # right_annotation = ha,
+              column_names_gp = gpar(fontsize = 7),
+              column_names_rot = 70,
+              row_names_gp = gpar(fontsize = 5),
+              row_names_side = "left", col = col_fun,
+              # row_title_gp = gpar(fontsize = 1),
+              row_gap = unit(.01, "mm"),
+              column_gap = unit(.01, "mm"),
+              border = T,
+              # gap = unit(.1, "mm"),
+              heatmap_legend_param = list(
+                  title_gp = gpar(fontsize = 6),
+                  labels_gp = gpar(fontsize = 6) 
+                  ),
+              layer_fun = mylayer_fun
+)
+
+
+ht2 = Heatmap(le, name = "Chromatin State Groups", col = col_letters,
+              # row_title = T,
+              # right_annotation = myright,
+              row_names_side = "right",
+              column_names_gp = gpar(fontsize = 7),
+              heatmap_legend_param = list(
+                  title_gp = gpar(fontsize = 6),
+                  labels_gp = gpar(fontsize = 6) 
+                  ))
+
+htlist = ht1+ht2
+
+
+pdf("/Users/caesar/Dropbox (Personal)/HorvathLabCoreMembers/Caesar/ProjectEWASmaxlifespan/FiguresAndTables/ChromatinEnrichment/v000_chromatinState_Enrichment.pdf",
+    height = 6, width = 10)
+draw(htlist, row_title = "", column_title = "Chromatin State Enrichment", 
+    heatmap_legend_side = "right", annotation_legend_side = "left", ht_gap = unit(.1, "cm"))
+
+
+# stategroups.d = data.frame(stategroups = as.character(stategroups)) %>% group_by(stategroups) %>%
+#   mutate(ranking = 1:length(stategroups), max = length(stategroups))
+# stategroups.d = chromHMM0 %>% group_by(colorAmin) %>%
+#   mutate(order = min(order), color = first(colorAmin), State_group = first(State_group),
+#          ranking = 1:length(colorAmin), max = length(colorAmin)) %>%
+#   arrange(order)
+
+# textMatrix[pmatrix < 5]  = ""
+# allannotations = unique(c(textMatrix)); allannotations = allannotations[!allannotations == ""]
+# allannotations = data.frame(text = allannotations)
+# allannotations$rowid = NA; allannotations$colid = NA
+# allannotations$split = NA
+# allannotations$splitrow = NA
+# for(i in 1:nrow(allannotations)) {
+#       rowid = which(textMatrix == allannotations$text[i]) %% nrow(pmatrix)
+#       if(rowid == 0) rowid = nrow(pmatrix)
+#       allannotations$splitrow[i] = stategroups.d$order[rowid]
+#       allannotations$rowid[i] = 1 - stategroups.d$ranking[rowid] / stategroups.d$max[rowid]
+#       #
+#       rowid = ceiling(which(textMatrix == allannotations$text[i]) / nrow(pmatrix))
+#       allannotations$split[i] = ceiling(rowid / 4)
+#       rowid = ifelse(rowid %% 4 == 0, 4, rowid %% 4)
+#       allannotations$colid[i] = rowid / 4
+# }
+# 
+# for(k in 1:length(myrects$order)) {
+#   for(j in 1:length(mylevels)) {
+# 
+#     allannotations.temp = allannotations[allannotations$split == j  & allannotations$splitrow == myrects$order[k], ]
+#     if(nrow(allannotations.temp)) {
+#       decorate_heatmap_body("Enrichment -log10(Pvalue)", {
+# 
+#           for(i in 1:nrow(allannotations.temp)) {
+#             myy = ifelse(allannotations.temp$rowid[i] + .15 > .95, .95, allannotations.temp$rowid[i] + .15)
+#             grid.text(allannotations.temp$text[i], allannotations.temp$colid[i] - 0.12, myy,
+# 
+#                       default.units = "npc", gp = gpar(col = "black", fontsize = 3.5))
+#           }
+#           # grid.text("test1", .1, .9, default.units = "npc")
+#           # grid.text("test2", .1, .1, default.units = "npc")
+#           grid.lines(c(0.5, 0.5), c(0, 1), gp = gpar(lty = 2, lwd = .6))
+#           }, column_slice = j, row_slice = k)
+#     } else  {
+#       decorate_heatmap_body("Enrichment -log10(P-value)", {
+#           grid.lines(c(0.5, 0.5), c(0, 1), gp = gpar(lty = 2, lwd = .6))
+#           }, column_slice = j, row_slice = k)
+#     }
+# 
+#   }
+# }
+
+# decorate_annotation("CG Frequency", { 
+#     grid.text("Background CG Frequency", x = unit(-.1, "npc"), y = unit(0, "npc"),
+#               gp = gpar(col = "black", fontsize = 3.5)) 
+# })
+
+
+for(k in 1:length(myrects$order)) {
+  for(j in 1:length(mylevels)) {
+    decorate_heatmap_body("Enrichment -log10(Pvalue)", {
+        
+        grid.lines(c(0.5, 0.5), c(0, 1), gp = gpar(lty = 2, lwd = .6))
+        
+        if(!j == length(mylevels)) {
+          grid.lines(c(0.25, 0.25), c(0, 1), gp = gpar(lty = 2, lwd = .6))
+          grid.lines(c(0.75, 0.75), c(0, 1), gp = gpar(lty = 2, lwd = .6))
+        }
+        
+        }, column_slice = j, row_slice = k)
+
+  }
+}
+
+dev.off()
+
+```
+
+
+## Main Figure Plotting, separate pos and neg.
+```{r}
+library(ComplexHeatmap)
+library(RColorBrewer)
+mainfigure = T
+
+rowfilter = apply(pmatrix[, -c(ncol(pmatrix) - 1, ncol(pmatrix))], 1, function(x) return(sum(x > 4) > 0))
+pmatrix = pmatrix[rowfilter, ]
+textMatrix = textMatrix[rowfilter, ]
+chromHMM0 = chromHMM0[rowfilter, ]
+chromHMM0.table = chromHMM0.table[rowfilter, ]
+
+a = textMatrix
+for(i in 1:length(pmatrix)) {
+ a[i] = paste(rep("*", ceiling(pmatrix[i] / 5)), collapse = "")
+}
+
+for(i in 1:2) {
+  if(i == 1) {
+    sepname = "Positive"
+  } else {
+    sepname = "Negative"
+  }
+  
+  
+  pmatrix.temp = pmatrix[, grepl(sepname, colnames(pmatrix)) | grepl("Age", colnames(pmatrix))]
+  # colnames(pmatrix.temp)[1:(ncol(pmatrix.temp) - 2)] = sapply(strsplit(paste0(" ", colnames(pmatrix.temp)[1:(ncol(pmatrix.temp) - 2)]), sepname), "[", c(1))
+  textMatrix.temp = textMatrix[, grepl(sepname, colnames(textMatrix)) | grepl("Age", colnames(textMatrix))]
+  myanalyses.temp = myanalyses[grepl(sepname, myanalyses$V3) | grepl("Age", myanalyses$V1), ]
+  chromHMM0.temp = chromHMM0
+  
+  if(mainfigure == T) {
+    # rowfilter = apply(pmatrix.temp[, -c(ncol(pmatrix.temp) - 1, ncol(pmatrix.temp))], 1, function(x) return(sum(x > 4) > 0))
+    # pmatrix.temp = pmatrix.temp[rowfilter, ]
+    # textMatrix.temp = textMatrix.temp[rowfilter, ]
+    # chromHMM0.temp = chromHMM0[rowfilter, ]
+    textSize = 3.5
+  } else {
+    textSize = 4
+  }
+  
+  # Set column names to get rid of the "negative"
+  colnames(pmatrix.temp) = paste0(myanalyses.temp[, 1], " ", myanalyses.temp[, 2])
+  myanalyses.temp[, 1] = ifelse(myanalyses.temp[, 1] ==  "Age Meta", "Age", myanalyses.temp[, 1])
+  
+  
+  if(i == 1) colnames(pmatrix.temp) = rep("", ncol(pmatrix.temp))
+  
+  ## Top annotation
+  colors_vect = c(rainbow(n = 9, s = 0.5, v=1), rainbow(n = 9, s = 1, v=1), "#AAAAAAFF", "#000000FF")
+  # mypalette = colors_vect[c(1, 7, 10, 16, 18, 20)]
+  mypalette = colors_vect[c(20, 18, 1, 10, 7, 6)]
+  pmatrix.temp[is.na(pmatrix.temp)] = 0
+  mylevels = c("Meta", "Skin", "Blood", "Liver", "Brain", "Age")
+  mysplit = factor(myanalyses.temp[, 1], levels = mylevels)
+  mytop = HeatmapAnnotation(foo = anno_block(gp = gpar(fill = mypalette),
+                                             labels =mylevels, 
+                                             labels_gp = gpar(col = "white", fontsize = 7),
+                                             height = unit(.35, "cm")
+                                             ),
+                           # foo2 = anno_boxplot(10^-pmatrix, height = unit(1, "cm"), gp = gpar(fill = mysplit)),
+                           foo2 = anno_points(as.numeric(myanalyses.temp$V4), gp = gpar(fill = mysplit), height = unit(.6, "cm"),
+                                              axis_param = list(
+                                                  side = "left",
+                                                  at = c(0, 250, 500), 
+                                                  labels = c("0", "250", "500")
+                                              )),
+                           annotation_label = gt_render(
+                                                    c("**Tissues**",
+                                                      "**# of Selected CGs for Enrichment**"),
+                                                    gp = gpar(fontsize = 6)
+                                                ))
+  
+  ## Right annotation
+  myrects = chromHMM0.temp %>% group_by(colorAmin) %>% 
+    summarise(n1 = n(), order = min(order), color = first(colorAmin), State_group = first(State_group)) %>%
+    arrange(order)
+  
+  stategroups = factor(chromHMM0.temp$State_group, levels = myrects$State_group)
+  myright = rowAnnotation(foo = anno_block(gp = gpar(fill = myrects$color),
+          labels = myrects$State_group,
+          labels_gp = gpar(col = "white", fontsize = 5)))
+  
+  le = as.character(stategroups)
+  col_letters = myrects$color; names(col_letters) = myrects$State_group
+  myright = rowAnnotation(foo3 = anno_text(myrects$State_group, location = 0.5, just = "center"))
+  
+  ## Left annotation
+  le_colors = factor(le, levels = names(col_letters)); levels(le_colors) = col_letters
+  myleft = rowAnnotation('CG Frequency' = anno_barplot(chromHMM0.temp$FreqPRC2, row_title_gp = gpar(fontsize = .001),
+                                                       width = unit(.8, "cm"), labels_gp = gpar(col = "black", fontsize = 5.4),
+                                                       gap =  unit(2, "cm"), gp = gpar(fill = as.character(le_colors))), 
+                         annotation_label = gt_render(
+                                                    c("PRC2 Target Freq"),
+                                                    gp = gpar(fontsize = ifelse(i == 1, 7, 4))
+                                                ))
+  
+  ## New Right annotation
+  # ha = rowAnnotation(foo = anno_text(chromHMM0$state, location = 0.5, just = "center",
+  #     gp = gpar(fill = le_colors, col = "white", border = "black"),
+  #     width = max_text_width(chromHMM0$state)*1.2))
+  
+  ## TextMatrix
+  
+  mylayer_fun = function(j, i, x, y, width, height, fill) {
+          # since grid.text can also be vectorized
+          grid.text(pindex(textMatrix.temp, i, j), x, y, gp = gpar(fontsize = textSize))
+  }
+  
+  # myright2 = rowAnnotation(foo = anno_text(month.name, gp = gpar(fontsize = 1:12+4)))
+  
+  
+  
+  # Plotmap
+  # col_fun = circlize::colorRamp2(c(0, 0.05, max(pmatrix)), c("white", "lightgreen", "#FF0000"))
+  col_fun = circlize::colorRamp2(c(NA, 0, max(pmatrix, na.rm = T)), c("grey", "white", "#FF0000"))
+  ht1 = Heatmap(pmatrix.temp, name = "Enrichment -log10(Pvalue)", column_split = mysplit, row_split = stategroups,
+                column_title = NULL, row_title = NULL,
+                 cluster_rows = FALSE, cluster_columns = FALSE,
+                show_row_dend = FALSE,
+                rect_gp = gpar(col= "#E0FFFF", gap = unit(.001, "mm")),
+                top_annotation = mytop, left_annotation = myleft, 
+                # right_annotation = ha,
+                column_names_gp = gpar(fontsize = 6.8),
+                column_names_rot = 89,
+                row_names_gp = gpar(fontsize = 5),
+                row_names_side = "left", col = col_fun,
+                # row_title_gp = gpar(fontsize = 1),
+                row_gap = unit(.01, "mm"),
+                column_gap = unit(.01, "mm"),
+                border = T,
+                # gap = unit(.1, "mm"),
+                heatmap_legend_param = list(
+                    title_gp = gpar(fontsize = 6),
+                    labels_gp = gpar(fontsize = 6) 
+                    ),
+                layer_fun = mylayer_fun
+  )
+  
+  sidename = ifelse(i == 1, F, T)
+  ht2 = Heatmap(le, name = "Chromatin State Groups", col = col_letters,
+                # row_title = T,
+                # right_annotation = myright,
+                column_title = NULL, row_title = NULL,
+                show_column_names = sidename,
+                row_names_side = "right",
+                column_names_gp = gpar(fontsize = 7),
+                heatmap_legend_param = list(
+                    title_gp = gpar(fontsize = 6),
+                    labels_gp = gpar(fontsize = 5) 
+                    ))
+  
+  htlist = ht1+ht2
+  
+  if(i == 1) {
+    mytitle = "Chromatin State Enrichment for hypermethylated CGs"
+  } else {
+    mytitle = "Chromatin State Enrichment for hypomethylated CGs"
+  }
+  
+  if(mainfigure == T) {
+    figureheight = ifelse(i == 1, 3.8, 4.5)
+    figurewidth =  7.5
+  }  else {
+    figureheight = ifelse(i == 1, 5.6, 6.4)
+    figurewidth = 8
+  }
+  
+  pdf(paste0("/Users/caesar/Dropbox (Personal)/HorvathLabCoreMembers/Caesar/ProjectEWASmaxlifespan/FiguresAndTables/ChromatinEnrichment/v10_main_",
+             sepname, "_chromatinState_Enrichment.pdf"),
+      height = figureheight, width = figurewidth)
+  draw(htlist, row_title = "", column_title = "", 
+      heatmap_legend_side = "right", annotation_legend_side = "left", ht_gap = unit(.1, "cm"))
+  
+  
+  # stategroups.d = data.frame(stategroups = as.character(stategroups)) %>% group_by(stategroups) %>%
+  #   mutate(ranking = 1:length(stategroups), max = length(stategroups))
+  # stategroups.d = chromHMM0 %>% group_by(colorAmin) %>%
+  #   mutate(order = min(order), color = first(colorAmin), State_group = first(State_group),
+  #          ranking = 1:length(colorAmin), max = length(colorAmin)) %>%
+  #   arrange(order)
+  
+  # textMatrix[pmatrix < 5]  = ""
+  # allannotations = unique(c(textMatrix)); allannotations = allannotations[!allannotations == ""]
+  # allannotations = data.frame(text = allannotations)
+  # allannotations$rowid = NA; allannotations$colid = NA
+  # allannotations$split = NA
+  # allannotations$splitrow = NA
+  # for(i in 1:nrow(allannotations)) {
+  #       rowid = which(textMatrix == allannotations$text[i]) %% nrow(pmatrix)
+  #       if(rowid == 0) rowid = nrow(pmatrix)
+  #       allannotations$splitrow[i] = stategroups.d$order[rowid]
+  #       allannotations$rowid[i] = 1 - stategroups.d$ranking[rowid] / stategroups.d$max[rowid]
+  #       #
+  #       rowid = ceiling(which(textMatrix == allannotations$text[i]) / nrow(pmatrix))
+  #       allannotations$split[i] = ceiling(rowid / 4)
+  #       rowid = ifelse(rowid %% 4 == 0, 4, rowid %% 4)
+  #       allannotations$colid[i] = rowid / 4
+  # }
+  # 
+  # for(k in 1:length(myrects$order)) {
+  #   for(j in 1:length(mylevels)) {
+  # 
+  #     allannotations.temp = allannotations[allannotations$split == j  & allannotations$splitrow == myrects$order[k], ]
+  #     if(nrow(allannotations.temp)) {
+  #       decorate_heatmap_body("Enrichment -log10(Pvalue)", {
+  # 
+  #           for(i in 1:nrow(allannotations.temp)) {
+  #             myy = ifelse(allannotations.temp$rowid[i] + .15 > .95, .95, allannotations.temp$rowid[i] + .15)
+  #             grid.text(allannotations.temp$text[i], allannotations.temp$colid[i] - 0.12, myy,
+  # 
+  #                       default.units = "npc", gp = gpar(col = "black", fontsize = 3.5))
+  #           }
+  #           # grid.text("test1", .1, .9, default.units = "npc")
+  #           # grid.text("test2", .1, .1, default.units = "npc")
+  #           grid.lines(c(0.5, 0.5), c(0, 1), gp = gpar(lty = 2, lwd = .6))
+  #           }, column_slice = j, row_slice = k)
+  #     } else  {
+  #       decorate_heatmap_body("Enrichment -log10(P-value)", {
+  #           grid.lines(c(0.5, 0.5), c(0, 1), gp = gpar(lty = 2, lwd = .6))
+  #           }, column_slice = j, row_slice = k)
+  #     }
+  # 
+  #   }
+  # }
+  
+  # decorate_annotation("CG Frequency", { 
+  #     grid.text("Background CG Frequency", x = unit(-.1, "npc"), y = unit(0, "npc"),
+  #               gp = gpar(col = "black", fontsize = 3.5)) 
+  # })
+  
+  
+  for(k in 1:length(myrects$order)) {
+    for(j in 1:length(mylevels)) {
+      decorate_heatmap_body("Enrichment -log10(Pvalue)", {
+          grid.lines(c(0.5, 0.5), c(0, 1), gp = gpar(lty = 2, lwd = .6))
+          if(!j == length(mylevels)) {
+            grid.lines(c(0.25, 0.25), c(0, 1), gp = gpar(lty = 2, lwd = .6))
+            grid.lines(c(0.75, 0.75), c(0, 1), gp = gpar(lty = 2, lwd = .6))
+          }
+          }, column_slice = j, row_slice = k)
+  
+    }
+  }
+  
+  dev.off()
+}
+
+```
+
+
+

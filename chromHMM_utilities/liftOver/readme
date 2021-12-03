@@ -1,0 +1,8 @@
+This folder contains files that are useful for liftOver the full-stack state annotations from hg19 to a target assembly (the paper used liftOver to produce full-stack annotations for hg38), only for chromosomes 1-22, X, Y, M. We used snakemake to manage the whole pipeline. In order to reproduce the results, you will need to fill in the lines marked with comments '<TO_BE_FILLED>' in the Snakefile (only 3 lines), specifying some relative file paths local to your computer. The file Snakefile contains comments with instructions for you to fill in this code.
+If you try to reproduce the results of liftOver, we recommend running snakemake using a high-performance computer cluster in parallel. 
+|__Snakefile: specifying the pipeline used to liftOver full-stack state annotations from hg19 to a target assembly. Please modify 3 lines in this file to reproduce the results (see above and see the file itself). 
+|__change_segmentation_to_200bp_segmentation_for_liftOver.py: code used as part of the pipeline, called inside Snakefile. 
+|__find_overlapping_segments_from_liftOver_one_chrom.py: code used as part of the pipeline, called inside Snakefile.
+|__liftOver: executable file used as part of the pipeline, called inside Snakefile. This tool was downloaded from ucsc genome browser (http://hgdownload.soe.ucsc.edu/admin/exe/)
+|__hg19ToHg38.over.chain.gz: chain file used by liftOver, downloaded from ucsc genome browser (https://hgdownload.soe.ucsc.edu/goldenPath/hg19/liftOver/)
+|__hg19ToMm10.over.chain.gz: chain file used by liftOver, downloaded from ucsc genome browser (https://hgdownload.soe.ucsc.edu/goldenPath/hg19/liftOver/)

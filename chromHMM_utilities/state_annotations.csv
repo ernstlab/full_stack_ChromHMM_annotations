@@ -1,0 +1,162 @@
+state,mneumonics,Long annotations,Short Annotations,Group,color,state_order_by_group
+1,Quies1,"quescient; H3K9me3 very weak; broad domain; 
+Cell lines;  ENCODE2012, Epithelial, IMR90, Myostat",quescient / weak H3K9me3,quescient,#FFFFFF,3
+2,Quies2,"quescient; H3K9me3 weak inIMR90, Epithelial, ENCODE2012, Myostat",quescient / weak H3K9me3,quescient,#FFFFFF,4
+3,HET1,"H3K9me3. Het in epithelial, IM90, adipose, HSC&B-cell, thymus. LTR repeats 
+Mix of Het and quescient in other. ",HET,HET,#8A91D0,8
+4,HET2,"H3K9me3+H3K27me3; Quescient: Mesench, blood & T-cell, Brain. 
+PolyRep in Sm.Muscle, muscle. Het in Epithelial, IM90, Myostat",HET,HET,#8A91D0,9
+5,Acet1,H3K9me3 + class1 epigenome acetylations +simple repeats,acetylations + enhancers / repeats; ,acetylations,#FFFFCC,26
+6,Acet2,"class1 epigenome acetylations weak; highest emissions in ES & iPSC. 
+19_DNase in ESC, iPSC and ES-deriv. Mixes of quescient in other cell types",acetylations + enhancers / repeats; ,acetylations,#FFFFCC,27
+7,Acet3,class1 epigenome acetylations very weak; universal quescient,acetylations + enhancers / repeats; ,acetylations,#FFFFCC,28
+8,Acet4,"class 1 epigenome acetylations and IMR90 enhancers. 
+17_EnhW2 in most cell types",acetylations + enhancers / repeats; ,acetylations,#FFFFCC,29
+9,Acet5,class 1 epigenome acetylations and IMR90 enhancers weak. ,acetylations + enhancers / repeats; ,acetylations,#FFFFCC,30
+10,Acet6,"IMR90 class 1 acetylations.
+18_EnhAc in Myostat, IMR90, Mesench",acetylations + enhancers / repeats; ,acetylations,#FFFFCC,31
+11,Acet7,"Enhancers in IMR90, Myostat, Mesench, Epithelial, ENCODE2012 .
+ IMR90 class 1 acetylations",acetylations + enhancers / repeats; ,acetylations,#FFFFCC,32
+12,EnhA1,"enhancers in most cell types, weaker in blood. EnhA1 in Digestive, 
+Other, ES_deriv, Epithelial, Heart, Muscle, Thymus and Neurosph","enhancers ;
+non-spec, myostat, mesench, epitheial ",enhancers,#FFC000,42
+13,EnhA2,"enhancers in mesenchymal, muscle, heart, neurosph, adipose. 
+DNase in ESC and iPSC","enhancers ;
+non-spec, myostat, mesench, epitheial ",enhancers,#FFC000,43
+14,EnhA3,"strong enhancers in most cells, weaker in blood and ESC&iPSC","enhancers ;
+non-spec, myostat, mesench, epitheial ",enhancers,#FFC000,44
+15,EnhA4,"strong enhancers in myostat, mesench, lung, epithelial","enhancers ;
+non-spec, myostat, mesench, epitheial ",enhancers,#FFC000,45
+16,EnhA5,"enhancers in mesenchymal, myosat. DNase (weaker emission) in most other","enhancers ;
+non-spec, myostat, mesench, epitheial ",enhancers,#FFC000,46
+17,EnhWk1,"weak enhancers acetylation in mesench & myostat. 
+DNase in brain, IM90, Adipose, Epithelial, Neurosph, muscle",weak enhancers,weak enhancers,#FFFF00,34
+18,TxEnh1,"H3K79me2 and enhancers Mesench, Myostat, ENCODE, Epithelial",transcribed and enhancer,transcribed and enhancer,#C2E105,62
+19,TxEnh2,H3K79me2 and blood enhancers (Blood_H3K4me1*) ,transcribed and enhancer,transcribed and enhancer,#C2E105,63
+20,Tx1,"H3K79me2. Mostly Tx5p, 
+some TxEnhW in Blood & T-cell (Blood_H3K4me1*)","transcription;
+non-spec and ESC-derived",transcription,#008000,72
+21,Tx2,"weak H3K79me2, 5_Tx5p","transcription;
+non-spec and ESC-derived",transcription,#008000,73
+22,Tx3,"H3K79m2 and H3K79me1, 5_Tx5p, ","transcription;
+non-spec and ESC-derived",transcription,#008000,74
+23,TxEnh3,"H3K79me2 strong, H3K79me1, H4K20me1, H3K36me3, some enhancers. 
+6_Tx in ESC, ES-deriv and iPSC. 12_TxEnhW in Blood &T-cell, sm. Muscle, myostat and adipose",transcribed and enhancer ,transcribed and enhancer,#C2E105,64
+24,Tx4,"H3K79me2 and H3K36me3 (weaker). 6_Tx, few 5_Tx5p",transcription,transcription,#008000,75
+25,TxEx1,H3K79me2 and H3K36me3; exon; 6_Tx ,exon ,exon,#70AD47,80
+26,TxEx2,H3K36me3 strongest; exons; Tx3p,exon ,exon,#70AD47,81
+27,TxEx3,H3K36me3 strong; exon; Tx3p,exon ,exon,#70AD47,82
+28,Tx5,H3K36me3; SINE repeats strongest; 7_Tx3p in all most all cell types,transcription,transcription,#008000,76
+29,TxWk1,H3K36me3 weak; weak transcription; 8_TxWk,weak transcription,weak transcription,#009600,70
+30,Tx6,"H3K36me3 - HSC&B-cell and Mesench preference. 
+7_Tx3p in blood, mesench, ESC, iPsc, Myostat, adipose, thymus. ","transcription;
+non-spec and blood*, mesenche",transcription,#008000,77
+31,Tx7,"H3K36me3 strong, HSC&B-cell and Mesench preference; 
+7_Tx3p in all cell types","transcription;
+non-spec and blood*, mesenche",transcription,#008000,78
+32,Tx8,H3K36me3 (weaker); Mix of 7_Tx3p and 8_TxWk,"transcription;
+non-spec and blood*, mesenche",transcription,#008000,79
+33,TxEnh4,"H3K36me3 strong and some enhancers (H3K27ac, H3K4me1); exons; 
+near TES; 11_TxEnh3p all cell types",transcription 3' + enhancer,transcribed and enhancer,#C2E105,65
+34,TxEnh5,H3K36me3 (weaker). 11_TxEnh3p in most cell types. 7_Tx3p in a few,transcription 3' + enhancer,transcribed and enhancer,#C2E105,66
+35,TxWk2,H3K36me3 weak; 8_TxW in all cell types; some acetylations,weak transcription,weak transcription,#009600,71
+36,TxEnh6,"H3K36me3 + enhancers blood preference (H3K4me1*, H3K4me3*, H3K27ac*). 
+11_TxEnh3p in all cell types","transcription 3' + enhancer, blood*",transcribed and enhancer,#C2E105,67
+37,TxEx4,"TES and some promoter flanking; 9_TxReg;  very high avg_gene_exp; 
+H3K36me3, H3K79me2, H3K79me1, H3K27ac, H3K4me1, H3K4me2, H3K9ac",TES,exon,#70AD47,83
+38,TxEnh7,"H3K79me2 and enhancers; 10_TxEnh5p, 12_TxEnhW in all cell types",transcription 5' + enhancer,transcribed and enhancer,#C2E105,68
+39,EnhWk2,"Enhancers in muscle, adipose, heart, brain (13_ENhA, 15_EnhAF)
+(H3M4me1 and acetylations, weak). 18_EnhAc and 17_EnhW2 in other","weak enhancers;
+muscle, brain, heart",weak enhancers,#FFFF00,35
+40,EnhWk3,"enhancers (H3K4me1, H3K27ac) in muscle, heart, adipose (weak emissions). 
+Weak Enh, DNase signals in others","weak enhancers;
+muscle, brain, heart",weak enhancers,#FFFF01,36
+41,EnhWk4,"weak enhancers (H3K4me1 weak, no H3K27ac) brain and neurosph","weak enhancers;
+muscle, brain, heart",weak enhancers,#FFFF02,37
+42,EnhA6,"Brain* enhancers (Brain_H3K4me1*, Brain_H3K4me3*)",Brain* enhancers,enhancers,#FFC000,47
+43,PromF1,"H3K4me1 strongest, all ct; some promoter flank; other marks: 
+H3K4me2, DNase, H2A.Z, weaker in H3K4me3, H3K27ac, H3K9ac, class1 acetylation",flanking TSS - promoter,promoters,#ff4500,91
+44,PromF2,"H3K4me1, H3K4me2, H3K4me3, DNase, acetylations promoter flank upstream bias",flanking TSS - promoter,promoters,#ff4500,92
+45,PromF3,"H3K4me2, H3K4me3, H3K4me1(weaker than me3), DNase, acetylations
+ - flanking tss upstream and downstream",flanking TSS - promoter,promoters,#ff4500,93
+46,PromF4,"H3K4me2, H3K4me3 limited H3K4me1, heavily acetylated -
+ flanking tss downstream bias",flanking TSS - promoter,promoters,#ff4500,94
+47,TSS1,TSS more acetylated and active; 1_TssA in all cell types,TSS,TSS,#FF0000,98
+48,TSS2,TSS (22_PromP in iPSC),TSS,TSS,#FF0000,99
+49,PromF5,flanking promoter; 2_PromU in most cell types; stronger on H3K4me3,flanking TSS- promoter,promoters,#ff4500,95
+50,BivProm1,bivalent promoter- more balanced H3K4me3/ H3K27me3,"bivalent promoter; 
+non-spec",bivalent promoters,#7030A0,87
+51,BivProm2,bivalent promoter- stronger on H3K27me3,"bivalent promoter; 
+non-spec",bivalent promoters,#7030A0,88
+52,BivProm3,"24_ReprPC in ENCODE, Blood & Tcell, Digestive, HSC &B-cell, Sm.Muscle. 
+23_PromBiv flanking in other cell types. H3K27me3 and H3K4me1","bivalent promoter; 
+non-spec",bivalent promoters,#7030A0,89
+53,ReprPC1,ReprPC (except: PromBiv in ESC); H3K27me3 strong and H3K4me1 weak,polycomb repressed,polycomb repressed,#808080,17
+54,ReprPC2,polycomb repressed (H3K27me3),polycomb repressed,polycomb repressed,#808080,18
+55,ReprPC3,weak polycomb repressed (H3K27me3 weak),polycomb repressed,polycomb repressed,#808080,19
+56,ReprPC4,very weak polycomb repressed (H3K27me3 very weak),polycomb repressed,polycomb repressed,#808080,20
+57,ReprPC5,polycomb repressed (H3K27me3 in most cell types and some class1 acetylation in ESC and ESC-derived),polycomb repressed,polycomb repressed,#808080,21
+58,ReprPC6,"24_ReprPC (H3K27me3) in Brain, Epithelial, muscles, Mesench, 
+Neurosph, Mystat, IM90, Adipose. Others quescient",polycomb repressed,polycomb repressed,#808080,22
+59,ReprPC7,"17_EnhW: brain, HSC&B-cell, Neurosph, ESC, iPSC, Heart. 
+24_ReprPC: Epithelial, Mesench, Mystat, IM90, Adipose.
+H3K27me3 IMR90, Epithelial, Myostat, Mesench with some class 1 acetylations and H3K4me1",polycomb repressed,polycomb repressed,#808080,23
+60,EnhA7,"blood_enhancer* (Blood H3K4me1, H3K4me3). 13_EnhA1, 15_EnhAF in Blood&Tcell, HSC&B-cell. 
+Mixed 24_ReprPC, 22_PromP, 17_EnhW2 in others. H3K4me1 &H3K27me3 weak. ",enhancer; blood *,enhancers,#FFC000,48
+61,EnhWk5,"weak enhancers blood* and thymus (H3K4me1, very weak H3K27ac in thymus) ",weak enhancer; blood *,weak enhancers,#FFFF00,38
+62,EnhWk6,"weak enhancer blood* (T-cell preferential) and thymus (H3K4me1 and H3K27ac). 
+Very weak enhancers  + transcription in others",weak enhancer; blood *,weak enhancers,#FFFF00,39
+63,EnhA8,"active enhancers in blood* and thymus (H3K4me1, H3K27ac, H3K4me2, H3K4me3)",enhancer; blood *,enhancers,#FFC000,49
+64,EnhA9,Blood* and thymus enhancer strongest. 9_TxReg and 10_TxReg5p in other ct,enhancer; blood *,enhancers,#FFC000,50
+65,EnhA10,"HSC&B-cell* enhancers (K4me1, K27ac, DNase) --not as strong as 64; 
+weaker enhancers in other cell types",enhancer; blood *,enhancers,#FFC000,51
+66,EnhA11,"Monoctyes, neutrophils, HSC&Bcells * enhancers ",enhancer; blood *,enhancers,#FFC000,52
+67,EnhWk7,HSC-Bcells weak enhancers (HSC H3K4me1*),weak enhancer; blood *,weak enhancers,#FFFF00,40
+68,Quies3,quescient (very low non-specific signal),quescient ,quescient,#FFFFFF,5
+69,GapArtf1,No signal; unmappable - assembly gaps,assembly gap,others,#fff5ee,0
+70,Quies4,H3K9me3 very weak; LINE repeats; 25_ques in most ct. 21_Het in ESC-related,quescient,quescient,#FFFFFF,6
+71,HET3,H3K9me3 weak; LINE repeats,HET + LINE/satelite/LTR repeats,HET,#8A91D0,10
+72,HET4,"H3K9me3; LTR/LINE/satellite repeats; 
+Stronger in Adipose, Mesench, Neurosph, ESC, HSC &Bcells",HET + LINE/satelite/LTR repeats,HET,#8A91D0,11
+73,HET5,H3K9me3 strong; LTR repeats,HET + LINE/satelite/LTR repeats,HET,#8A91D0,12
+74,HET6,H3K9me3 weak; LTR and Other class repeats,HET + LINE/satelite/LTR repeats,HET,#8A91D0,13
+75,HET7,H3K9me3 very weak; LTR and Other class repeats,HET + LINE/satelite/LTR repeats,HET,#8A91D0,14
+76,HET8,"H3K9me3 and some H3K27me3; LTR, RNA repeats",HET + LINE/satelite/LTR repeats,HET,#8A91D0,15
+77,GapArtf2,"satellite repeats/artifacts;
+H3K9me3, DNase I, and some signal from many others",artifact,others,#fff5ee,1
+78,GapArtf3,"rRNA, satellite repeats; artifacts; 
+High signal most experiments; satellite repeats",artifact,others,#fff5ee,2
+79,HET9,"H3K9me3 - ESC/iPSC; LTR, Satellite repeats",HET + LTR repeats,HET,#8A91D0,16
+80,znf1,H3K36me3+H3K9me3; ZNF genes,ZNF genes,znf,#66CDAA,84
+81,znf2,H3K36me3+H3K9me3 strong; ZNF genes (~80 folds),ZNF genes,znf,#66CDAA,85
+82,TxEnh8,"Transcribed enhancers 3'; enhancers Myostat, IMR90, Mesench, Epithelial",transcription 3' + enhancer,transcribed and enhancer,#C2E105,69
+83,EnhA12,"Epithelial enhancers (H3K4me1 & DNase); 
+ES_derived weaker acetylations + H3K4me1","ct_spec enhancers;
+epithelial, digestive, lung, liver, ENCODE",enhancers,#FFC000,53
+84,EnhA13,"enhancers (H3K4me1) - epithelial, weak signals","ct_spec enhancers;
+epithelial, digestive, lung, liver, ENCODE",enhancers,#FFC000,54
+85,EnhA14,"Liver/Intestine/Digestive* enhancers (H3K4me1, H3K27ac, DNase); 
+weak others","ct_spec enhancers;
+epithelial, digestive, lung, liver, ENCODE",enhancers,#FFC000,55
+86,EnhA15,Liver/Intestine/Digestive enhancers weak,"ct_spec enhancers;
+epithelial, digestive, lung, liver, ENCODE",enhancers,#FFC000,56
+87,EnhA16,"ENCODE cell line specific positions; H2A.Z, H3K4me1, H3K27ac, DNase","ct_spec enhancers;
+epithelial, digestive, lung, liver, ENCODE",enhancers,#FFC000,57
+88,DNase1,"DNase I only; CTCF in various cell types, Candidate Insulator",DNase,DNase,#fff44f,86
+89,EnhA17,"ESC, iPSC, Neurosph enhancers and some differentiated",enhancer; ESC  iPSC Neurosph,enhancers,#FFC000,58
+90,EnhWk8,"17_EnhW2, 18_EnhAC in ES_derived, ESC, iPSC (K4me1, very weak K27ac). 
+25_Ques in others.",weak enhancers; ESC-associated*,weak enhancers,#FFFF00,41
+91,EnhA18,"ESC/iPSC enhancers (13_EnhA1) strong and 
+some ESC-derived (ESC H3K4me1*); ERV1 repeats",enhancers; ESC-associated,enhancers,#FFC000,59
+92,EnhA19,"ES/iPSC/ES-derived enhancers strong (H3K4me1, DNase, acetylations)",enhancers; ESC-associated,enhancers,#FFC000,60
+93,Acet8,"acetylations marks + enhancers in ESC-derived 
+(H1_BMP4_Derived_Trophoblast_Cultu#FF0000_Cells)",acetylations + enhancers; ESC-derived *,acetylations,#FFFFCC,33
+94,ReprPC8,H3K27me3/H3K9me3 weak. Mixed 25_Ques and 24_ReprPC,polycomb repressed,polycomb repressed,#808080,24
+95,Quies5,quescient (H3K9me3/H3K27me3 very weak),quescient (H3K9me3/H3K27me3 weak),quescient,#FFFFFF,7
+96,ReprPC9,H3k27me3  in es/ipsc; Weak H3K27me3 in others; 24_ReprPC in all ct,"polycomb repressed; ESC, iPSC",polycomb repressed,#808080,25
+97,BivProm4,"bivalent promoter in Blood & T-cells, HSC & B-cell, ESC. Prom_D2 in Brain, muscle, sm. Muscle, mesench, neurosph, myosate and adipose. 
+A mix of Prom_D2, bivalent promoter and 22_prom_p in ESC_derived, ENCODE 2012, iPSC, Digestive, Epithelia, Heath and other cell types",bivalent / downstream promoter,bivalent promoters,#7030A0,90
+98,PromF6,"active downstream promoter (3_PromD1, 4_PromD2 all ct);  ",downstream promoter,promoters,#ff4500,96
+99,PromF7,"Prom further downstream (neighborhood enrichment); 4_PromD2 all ct;
+H3K4me1, H3K4me2, H3K4me3, H3K79me2, H3K9ac, H3K27ac",downstream promoter,promoters,#ff4500,97
+100,EnhA20,HUVEC enhancers,enhancer; HUVEC vascular,enhancers,#FFC000,61

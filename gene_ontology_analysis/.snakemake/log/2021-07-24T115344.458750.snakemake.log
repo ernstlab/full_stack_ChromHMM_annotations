@@ -1,0 +1,20 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	3	prepare_summary_table_for_publication
+	4
+
+[Sat Jul 24 11:53:45 2021]
+rule prepare_summary_table_for_publication:
+    input: ../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/gene_ontology_analysis/GREAT/combined_all_states/GO_BP/DNase_topGO.txt.gz, ../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/gene_ontology_analysis/GREAT/combined_all_states/GO_BP/HET_topGO.txt.gz, ../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/gene_ontology_analysis/GREAT/combined_all_states/GO_BP/TSS_topGO.txt.gz, ../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/gene_ontology_analysis/GREAT/combined_all_states/GO_BP/acetylations_topGO.txt.gz, ../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/gene_ontology_analysis/GREAT/combined_all_states/GO_BP/enhancers_topGO.txt.gz, ../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/gene_ontology_analysis/GREAT/combined_all_states/GO_BP/exon_topGO.txt.gz, ../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/gene_ontology_analysis/GREAT/combined_all_states/GO_BP/others_topGO.txt.gz, ../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/gene_ontology_analysis/GREAT/combined_all_states/GO_BP/polycomb_repressed_topGO.txt.gz, ../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/gene_ontology_analysis/GREAT/combined_all_states/GO_BP/promoters_topGO.txt.gz, ../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/gene_ontology_analysis/GREAT/combined_all_states/GO_BP/quescient_topGO.txt.gz, ../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/gene_ontology_analysis/GREAT/combined_all_states/GO_BP/transcribed_and_enhancer_topGO.txt.gz, ../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/gene_ontology_analysis/GREAT/combined_all_states/GO_BP/transcription_topGO.txt.gz, ../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/gene_ontology_analysis/GREAT/combined_all_states/GO_BP/weak_enhancers_topGO.txt.gz, ../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/gene_ontology_analysis/GREAT/combined_all_states/GO_BP/weak_promoters_topGO.txt.gz, ../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/gene_ontology_analysis/GREAT/combined_all_states/GO_BP/weak_transcription_topGO.txt.gz, ../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/gene_ontology_analysis/GREAT/combined_all_states/GO_BP/znf_topGO.txt.gz
+    output: ../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/gene_ontology_analysis/GREAT/combined_all_states/tables_for_publication/state_characterization_GO_BP.csv.gz
+    jobid: 3
+    wildcards: go_type=GO_BP
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /u/project/ernst/havu73/source/gene_ontology_analysis/.snakemake/log/2021-07-24T115344.458750.snakemake.log
