@@ -1,3 +1,0 @@
-NameError in line 10 of /u/project/ernst/havu73/source/gene_ontology_analysis/Snakefile:
-name 'jobList' is not defined
-  File "/u/project/ernst/havu73/source/gene_ontology_analysis/Snakefile", line 10, in <module>

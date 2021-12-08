@@ -1,4 +1,0 @@
-Building DAG of jobs...
-WildcardError in line 41 of /u/project/ernst/havu73/source/gene_ontology_analysis/Snakefile:
-Wildcards in input files cannot be determined from output files:
-'state'
