@@ -1,0 +1,31 @@
+This folder contains code that we used to create analysis associated with Additional File 1: Figure S8 (Full-stack states maximum-enrichments with annotated concatenated-model chromatin states in 127 reference epigenomes). We ran this analysis before snakemake was introduced to us, so the pipeline was run by submitting computing  jobs manually on the cluster, involving quite a bit of job- baby sitting. Below, we outline the steps for this analysis:
+
+1, Download data of concatenated chroamtin state annotations for 127 reference epigenomes (biosamples) from Roadmap.
+- Update the file download_data.sh at the lines marked with '# TO BE UPDATED', we provided instructions to how to update this file in the comments following '# TO BE UPDATED'
+- Run download_data.sh
+- When download_data.sh is finished running, we already downloaded the chromatin state segmentation data for 25-state concatenated annotations for 127 reference epigenomes. 
+
+2, Get the bed files of genomic coordinates of each of 25 chromatin states in each of the 127 refernece epigenomes. 
+- Update the file separate_151825_data_into_state.sh at the lines marked with '# TO BE UPDATED', we provided instructions to how to update this file in the comments following '# TO BE UPDATED'
+- Run separate_151825_data_into_state.sh
+- When separate_151825_data_into_state.sh is finished running, we already created a lot of .sh files. You will then run these .sh files sequentially or in parallel on your local computer or on the computing cluster (we recommend running on computing cluster in parallel). 
+
+3, Get the fold enrichments between full-stack states with each of the 25 concatenated states in each of the 127 reference epigenomes. 
+- Update the file create_enrichment_jobs.sh at the lines marked with '# TO BE UPDATED', we provided instructions to how to update this file in the comments following '# TO BE UPDATED' 
+- Run create_enrichment_jobs.sh
+- When create_enrichment_jobs.sh is finished running, we already created a lot of .sh files. You will then run these .sh files sequentially or in parallel on your local computer or on the computing cluster (we recommend running on computing cluster in parallel). 
+
+4, get_ranked_max_enriched_25_state.py
+Input: python get_ranked_max_enriched_25_state.py 
+<folder containing all subfolders with data of fold enrichments between full-stack states and the 25 states in concatenated models, this is the same as $fullStack_enrichment_folder in create_enrichment_jobs.sh> 
+<output folder where you want to store the excel file that resembles Additional File 1: Figure S8>
+
+Explanation: Running this file will help us aggregate output data from step 3 and create the excel file that shows the 25-state from concatenated models that are most enriched with each full-stack state in each reference epigenome.
+
+5, get_mmm_enrichments_across_ct.py
+Input: python get_mmm_enrichments_across_ct.py 
+<folder containing all subfolders with data of fold enrichments between full-stack states and the 25 states in concatenated models, this is the same as $fullStack_enrichment_folder in create_enrichment_jobs.sh> 
+<output folder where you want to store the excel file that resembles Additional File 1: Figure S8>
+<Number of states in the concatenated model, in our case, 25>
+
+Explanation:  Running this file will help us get the  excel presented in AF5, the last two tabs. It will aggregate data from  step 3 and take the maximum, minimum and median fold enrichmets across 127 reference epigenomes.

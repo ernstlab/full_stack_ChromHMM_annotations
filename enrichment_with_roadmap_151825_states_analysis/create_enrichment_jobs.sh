@@ -1,0 +1,34 @@
+create_overlap_enrichment_code='/u/home/h/havu73/project-ernst/source/chromHMM_utilities/overlap/create_overlap_enrichment.sh' # TO BE UPDATED: change this file to the relative path of the file <relative path>/chromHMM_utilities/overlap/create_overlap_enrichment.sh . We provided this file on github.
+shDir=/u/home/h/havu73/project-ernst/source/job_jobs # TO BE UPDATED: change this folder to the relative path where you want to store all the .sh files that this code will produce. These .sh files will then be run on computing cluster or on your local computer. If you submit these jobs using the computing cluster, you can run them in parallel and that will save a lot fo time. 
+
+# all suffixes are written with .gz
+download_link_suffix_15='_15_coreMarks_segments.bed.gz'
+download_link_suffix_18='_18_core_K27ac_segments.bed.gz'
+download_link_suffix_25="_25_imputed12marks_segments.bed.gz"
+
+segment_folder_15_state='/u/home/h/havu73/project-ernst/data/roadmap_epigenome/15_core_model_downloaded' # TO BE UPDATED: change this folder to the relative path where you want to store the 15-state concatenated annotations for 127 reference epigenomes. 
+segment_folder_18_state=/u/home/h/havu73/project-ernst/data/roadmap_epigenome/18_core_K27ac_model_downloaded # TO BE UPDATED: change this folder to the relative path where you want to store the 18-state concatenated annotations for 98 reference epigenomes. 
+segment_folder_25_state='/u/home/h/havu73/project-ernst/data/roadmap_epigenome/25_imputed12marks_model_downloaded' # TO BE UPDATED: change this folder to the relative path where you want to store the 25-state concatenated annotations for 127 reference epigenomes. 
+
+fullStack_segment_fn='/u/home/h/havu73/project-ernst/ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz' # TO BE UPDATED: change this file to the relative file path where you store the full-stack state annotation in your local environment.
+fullStack_enrichment_folder='/u/home/h/havu73/project-ernst/ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/' # TO BE UPDATED: change this folder to the relative path where you want your output to be stored. After you run the code that follow, there will be 127 subfolders inside this folder, each corresponding to a reference eipgenome (biosample)
+mkdir -p $fullStack_enrichment_folder
+
+job_index=1
+this_num_state_enrichment_folder=${fullStack_enrichment_folder}/25_state_model/
+mkdir -p ${this_num_state_enrichment_folder}
+for ct_folder in $segment_folder_25_state/*/
+do
+	ct=$(echo $ct_folder | awk -F'/' '{print $(NF-1) }')
+	this_ct_state_segment_folder=${ct_folder}/state_segments/
+	this_ct_segment_fn=${ct_folder}/${ct}${download_link_suffix_25}
+	if [ -f $this_ct_segment_fn ];
+	then
+		shFile=overlap_${job_index}
+		this_output_folder=${this_num_state_enrichment_folder}/${ct}
+
+		command="${create_overlap_enrichment_code}  $shDir ${shFile} $fullStack_segment_fn $this_ct_state_segment_folder $this_output_folder overlap_enrichment"
+		$command 
+		job_index=$(($job_index + 1))
+	fi
+done
