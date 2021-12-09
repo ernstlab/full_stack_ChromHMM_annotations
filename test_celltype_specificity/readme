@@ -1,0 +1,10 @@
+This folder contains code to do the testing of cell type specificity of different states, as presented in Additional File 1, Figure S7. The input needed for this analysis is simply the emission probability matrix of the full-stack model, outputted by ChromHMM. That emission matrix is provided as a .txt file in the folder chromHMM_utilities/emission/emissions_100.txt.
+1, Run statistical tests and get results in a .txt file: 
+- Update the code in test_tissue_specificity_emission.R: We already noted the places to update the code with '# TO BE UPDATED' in this file. We only ask you to update some file paths to make the code compatible with your local environment
+- Run Rscript test_tissue_specificity_emission.R
+- This will result in some .txt files, each corresponding to the test associated with one histone modification/chroamtin mark. 
+
+2, Create excel spreadsheet with the results:
+- Update the code in investigate_result_tissue_spec_test.py file: We already noted the places to update the code with '# TO BE UPDATED' in this file. We only ask you to update some file paths to make the code compatible with your local environment
+- Run python investigate_result_tissue_spec_test.py
+- This will result in file summary_cell_group.xlsx inside the folder where you specifty as the output folder from file test_tissue_specificity_emission.R
