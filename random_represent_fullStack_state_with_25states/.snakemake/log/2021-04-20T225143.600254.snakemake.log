@@ -1,0 +1,30 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	sample_segment_equal_per_state
+	2
+
+[Tue Apr 20 22:51:43 2021]
+rule sample_segment_equal_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/temp_sample_region.bed.gz
+    jobid: 1
+
+[Tue Apr 20 22:51:47 2021]
+Error in rule sample_segment_equal_per_state:
+    jobid: 1
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/temp_sample_region.bed.gz
+
+RuleException:
+CalledProcessError in line 18 of /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/Snakefile:
+Command ' set -euo pipefail;  
+		python sample_region_for_state_representation.py ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz 100 ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/temp_sample_region.bed.gz ' returned non-zero exit status 1.
+  File "/u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/Snakefile", line 18, in __rule_sample_segment_equal_per_state
+  File "/u/home/h/havu73/project-ernst/anaconda/envs/zane_env/lib/python3.6/concurrent/futures/thread.py", line 56, in run
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/.snakemake/log/2021-04-20T225143.600254.snakemake.log

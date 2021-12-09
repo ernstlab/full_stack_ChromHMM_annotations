@@ -1,0 +1,132 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cluster nodes: 100
+Job counts:
+	count	jobs
+	1	all
+	9	count_sample_region_per_state
+	9	overlap_sample_region_with_ct_segment
+	9	sample_segment_equal_per_state
+	28
+
+[Tue May 18 13:49:09 2021]
+rule sample_segment_equal_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_826/temp_sample_region.bed.gz
+    jobid: 169
+    wildcards: seed=826
+
+Submitted job 169 with external jobid 'Your job 7872096 ("snakejob.sample_segment_equal_per_state.169.sh") has been submitted'.
+
+[Tue May 18 13:49:11 2021]
+rule sample_segment_equal_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_813/temp_sample_region.bed.gz
+    jobid: 180
+    wildcards: seed=813
+
+Submitted job 180 with external jobid 'Your job 7872098 ("snakejob.sample_segment_equal_per_state.180.sh") has been submitted'.
+
+[Tue May 18 13:49:13 2021]
+rule sample_segment_equal_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_750/temp_sample_region.bed.gz
+    jobid: 167
+    wildcards: seed=750
+
+Submitted job 167 with external jobid 'Your job 7872100 ("snakejob.sample_segment_equal_per_state.167.sh") has been submitted'.
+
+[Tue May 18 13:49:14 2021]
+rule sample_segment_equal_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_342/temp_sample_region.bed.gz
+    jobid: 178
+    wildcards: seed=342
+
+Submitted job 178 with external jobid 'Your job 7872102 ("snakejob.sample_segment_equal_per_state.178.sh") has been submitted'.
+
+[Tue May 18 13:49:16 2021]
+rule sample_segment_equal_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_40/temp_sample_region.bed.gz
+    jobid: 183
+    wildcards: seed=40
+
+Submitted job 183 with external jobid 'Your job 7872104 ("snakejob.sample_segment_equal_per_state.183.sh") has been submitted'.
+
+[Tue May 18 13:49:18 2021]
+rule sample_segment_equal_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_388/temp_sample_region.bed.gz
+    jobid: 41
+    wildcards: seed=388
+
+Submitted job 41 with external jobid 'Your job 7872106 ("snakejob.sample_segment_equal_per_state.41.sh") has been submitted'.
+
+[Tue May 18 13:49:20 2021]
+rule sample_segment_equal_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_351/temp_sample_region.bed.gz
+    jobid: 173
+    wildcards: seed=351
+
+Submitted job 173 with external jobid 'Your job 7872108 ("snakejob.sample_segment_equal_per_state.173.sh") has been submitted'.
+
+[Tue May 18 13:49:22 2021]
+rule sample_segment_equal_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_118/temp_sample_region.bed.gz
+    jobid: 171
+    wildcards: seed=118
+
+Submitted job 171 with external jobid 'Your job 7872110 ("snakejob.sample_segment_equal_per_state.171.sh") has been submitted'.
+
+[Tue May 18 13:49:24 2021]
+rule sample_segment_equal_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_176/temp_sample_region.bed.gz
+    jobid: 174
+    wildcards: seed=176
+
+Submitted job 174 with external jobid 'Your job 7872112 ("snakejob.sample_segment_equal_per_state.174.sh") has been submitted'.
+Waiting at most 5 seconds for missing files.
+MissingOutputException in line 15 of /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/Snakefile:
+Missing files after 5 seconds:
+../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_826/temp_sample_region.bed.gz
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Waiting at most 5 seconds for missing files.
+MissingOutputException in line 15 of /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/Snakefile:
+Missing files after 5 seconds:
+../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_813/temp_sample_region.bed.gz
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Waiting at most 5 seconds for missing files.
+MissingOutputException in line 15 of /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/Snakefile:
+Missing files after 5 seconds:
+../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_750/temp_sample_region.bed.gz
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Waiting at most 5 seconds for missing files.
+MissingOutputException in line 15 of /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/Snakefile:
+Missing files after 5 seconds:
+../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_342/temp_sample_region.bed.gz
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Waiting at most 5 seconds for missing files.
+MissingOutputException in line 15 of /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/Snakefile:
+Missing files after 5 seconds:
+../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_40/temp_sample_region.bed.gz
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Waiting at most 5 seconds for missing files.
+[Tue May 18 13:50:07 2021]
+Finished job 41.
+1 of 28 steps (4%) done
+[Tue May 18 13:50:07 2021]
+Finished job 173.
+2 of 28 steps (7%) done
+[Tue May 18 13:50:07 2021]
+Finished job 171.
+3 of 28 steps (11%) done
+[Tue May 18 13:50:07 2021]
+Finished job 174.
+4 of 28 steps (14%) done
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/.snakemake/log/2021-05-18T134907.059799.snakemake.log

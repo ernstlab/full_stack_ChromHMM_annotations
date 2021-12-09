@@ -8,6 +8,16 @@ Within this folder:
 - File <a href="https://public.hoffman2.idre.ucla.edu/ernst/1G6UT/hg19_genome_100_browser.bed.gz">hg19_genome_100_browser.bed.gz</a> contains a browser file of full-stack state annotation in hg19 assembly. This file is compatible to for UCSC genome browser. Since our training data (1032 input data tracks) are in hg19, the assembly used for original training and annotation.
 - File <a href="https://public.hoffman2.idre.ucla.edu/ernst/1G6UT/hg38lift_genome_100_segments.bed.gz">hg38lift_genome_100_segments.bed.gz</a> is similar to hg19_genome_100_segments.bed.gz, but based on a liftOver of each 200bp bin to hg38. Positions mapped to from multiple locations in hg19 did not receive an annotation. Since the 200-bp intervals are no longer maintained when using OverlapEnrichment and NeighborhoodEnrichment the options '-b' and '-lowmmem' should be used with this command in addition to the '-labels' option as with the hg19 file.
 - File <a href="https://public.hoffman2.idre.ucla.edu/ernst/1G6UT/hg38lift_genome_100_browser.bed.gz">hg38lift_genome_100_browser.bed.gz</a> is similar to hg19_genome_100_browser.bed.gz but is for the liftOver to hg38. Positions mapped to from multiple locations in hg19 did not receive an annotation.
+
+# Folders:
+Within each subfolders inside this folder, there are readme that can help you understand and apply the code. Note: AF stands for Additional File
+- chromHMM_utilities contains subfolders and files that are helpful in processing the output of chromHMM (processing the emission matrix, overlap enrichment, neighborhood enrichment, calculating the AUROCs to measure how an annotation can help recover the genomic location of a genome element of interest). 
+- enrichment_with_roadmap_151825_states_analysis: contains code to reproduce the results presented in AF1: Fig. S8 and excel spreadsheet AF6
+- gene_ontology_analysis contains code to reproduce the results of gene ontology enrichment analysis for all the full-stack states, as presented in AF2.
+- replicate_ernst_etal_2011_supp_fig2: contains code to reproduce the results presented in AF1: Fig. S10-11 showing the average gene expression for each full-stack state.
+- test_celltype_specificity: contains code to reproduce the results presented in AF1: Fig. S7 showing the resulting of statistical tests on the cell-type specificity of full-stack states, based on emission parameters.
+- random_represent_fullStack_state_with_25states: contains code to reproduce results presented in AF1: Fig. S9 showing the estimated probabilities of overlap between a full stack state and a 25-state from concatenated annotations for each of the biosamples. 
+
 # License:
 All code is provided under the MIT Open Acess License
 Copyright 2021 Ha Vu and Jason Ernst

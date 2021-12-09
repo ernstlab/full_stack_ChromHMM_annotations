@@ -1,0 +1,4 @@
+Building DAG of jobs...
+WildcardError in line 10 of /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/Snakefile:
+Wildcards in input files cannot be determined from output files:
+'seed'

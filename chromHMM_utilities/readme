@@ -1,10 +1,22 @@
+## NOTES
+
 This folder provides code that were used to analyze output from ChromHMM and produce figures presented in the paper. Within each subfolder, we provde readme files outlining the different code files' functionality and how to run them.
 - emission: folder containing files to process the emission probability matrix outputted by ChromHMM LearnModel.
 - liftOver: folder containing files to produce the full-stack annotations that are lifted-over from hg19 to another assembly. 
 - naive_bayes_summary_tracks: folder containing files to produce the set of datasets that can best summarize the model of 1032 datasets. The output of this is provided in Additional File 1: Figure S4 in the paper. 
 - neighborhood: folder containing files to process the output of neighborhood enrichment of full-stack states with annotated TSS and TES, ouputted by ChromHMM OverlapEnrichment function
 - overlap: folder containing files to process the output of overlap enrichment of full-stack states with different external genome annotation contexts, outputted by ChromHMM OverlapEnrichment function.
+- get_segmentation_file_with_color.py: create a bed files with the chroamtin state annotations from either the full-stack/concatenated/ independent models FOR A SPECIFIC GENOMIC REGION, where we can input into UCSC genome browser and get visualization of the chromatin states, colored and annotated. 
 - state_recover_gc: folder containing code to calculate the full-stack annotation (and other independent/concatenated annotaitons)'s AUROC in recovering the genomic locations of external genome annotation elements. 
 - helper_function.R: some useful R functions shared in multiple code files across the folders.
 - ROADMAP_metadata_july2013.csv: metadata of biosamples used as part of Roadmap and ENCODE project, which are inputted to training the full-stack model. 
 - state_annotations.csv: characterizations of the full-stack states (state names, state meanings, state colors, etc.)
+
+## LICENSE
+Copyright 2021 Ha Vu (havu73@ucla.edu)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

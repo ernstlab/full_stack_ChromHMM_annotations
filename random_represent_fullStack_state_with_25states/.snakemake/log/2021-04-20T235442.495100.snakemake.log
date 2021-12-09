@@ -1,0 +1,143 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	overlap_sample_region_with_ct_segment
+	127	sort_ct_segment_fn
+	129
+
+[Tue Apr 20 23:54:43 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E023/E023_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E023/E023_sorted_segment.bed
+    jobid: 81
+    wildcards: ct=E023
+
+[Tue Apr 20 23:54:56 2021]
+Finished job 81.
+1 of 129 steps (0.78%) done
+
+[Tue Apr 20 23:54:56 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E025/E025_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E025/E025_sorted_segment.bed
+    jobid: 80
+    wildcards: ct=E025
+
+[Tue Apr 20 23:55:11 2021]
+Finished job 80.
+2 of 129 steps (2%) done
+
+[Tue Apr 20 23:55:11 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E069/E069_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E069/E069_sorted_segment.bed
+    jobid: 115
+    wildcards: ct=E069
+
+[Tue Apr 20 23:55:26 2021]
+Finished job 115.
+3 of 129 steps (2%) done
+
+[Tue Apr 20 23:55:26 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E056/E056_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E056/E056_sorted_segment.bed
+    jobid: 27
+    wildcards: ct=E056
+
+[Tue Apr 20 23:55:41 2021]
+Finished job 27.
+4 of 129 steps (3%) done
+
+[Tue Apr 20 23:55:41 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E073/E073_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E073/E073_sorted_segment.bed
+    jobid: 67
+    wildcards: ct=E073
+
+[Tue Apr 20 23:55:54 2021]
+Finished job 67.
+5 of 129 steps (4%) done
+
+[Tue Apr 20 23:55:54 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E052/E052_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E052/E052_sorted_segment.bed
+    jobid: 120
+    wildcards: ct=E052
+
+[Tue Apr 20 23:56:07 2021]
+Finished job 120.
+6 of 129 steps (5%) done
+
+[Tue Apr 20 23:56:07 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E055/E055_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E055/E055_sorted_segment.bed
+    jobid: 12
+    wildcards: ct=E055
+
+[Tue Apr 20 23:56:21 2021]
+Finished job 12.
+7 of 129 steps (5%) done
+
+[Tue Apr 20 23:56:21 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E074/E074_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E074/E074_sorted_segment.bed
+    jobid: 21
+    wildcards: ct=E074
+
+[Tue Apr 20 23:56:34 2021]
+Finished job 21.
+8 of 129 steps (6%) done
+
+[Tue Apr 20 23:56:34 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E068/E068_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E068/E068_sorted_segment.bed
+    jobid: 104
+    wildcards: ct=E068
+
+[Tue Apr 20 23:56:47 2021]
+Finished job 104.
+9 of 129 steps (7%) done
+
+[Tue Apr 20 23:56:47 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E001/E001_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E001/E001_sorted_segment.bed
+    jobid: 30
+    wildcards: ct=E001
+
+[Tue Apr 20 23:56:55 2021]
+Finished job 30.
+10 of 129 steps (8%) done
+
+[Tue Apr 20 23:56:55 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E049/E049_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E049/E049_sorted_segment.bed
+    jobid: 17
+    wildcards: ct=E049
+
+Terminating processes on user request, this might take some time.
+[Tue Apr 20 23:57:03 2021]
+Error in rule sort_ct_segment_fn:
+    jobid: 17
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E049/E049_sorted_segment.bed
+
+RuleException:
+CalledProcessError in line 32 of /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/Snakefile:
+Command ' set -euo pipefail;  
+		zcat ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E049/E049_25_imputed12marks_segments.bed.gz | sort -k1,1 -k2,2n > ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E049/E049_sorted_segment.bed ' returned non-zero exit status 130.
+  File "/u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/Snakefile", line 32, in __rule_sort_ct_segment_fn
+  File "/u/home/h/havu73/project-ernst/anaconda/envs/zane_env/lib/python3.6/concurrent/futures/thread.py", line 56, in run
+Removing output files of failed job sort_ct_segment_fn since they might be corrupted:
+../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E049/E049_sorted_segment.bed
+Complete log: /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/.snakemake/log/2021-04-20T235442.495100.snakemake.log

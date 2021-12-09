@@ -6,8 +6,10 @@ This folder contains files that are useful for analyzing the emission matrix out
 |__|__emissions_by_mark_group.txt: output from calculate_emission_by_groups.py: average emission prob of states, across different types of marks
 |__|__emissions_by_cell_type_group.txt: output from calculate_emission_by_groups.py: average emission prob of states, across different types of GROUP of cell types (biosamples), as defined by ROADMAP (file ../ROADMAP_metadata_july2013.py)
 |__|__emissions_by_ana_group.txt: output from calculate_emission_by_groups.py: average emission prob of states, across different types of ANATOMY of cell types (biosamples), as defined by ROADMAP (file ../ROADMAP_metadata_july2013.py)
+|__|__top_mark_cell_type_per_state.xlsx: output from rank_chrom_mark_celltype_emission.py: excel source of Fig. 2BC
 |__draw_emission_matrix.R: produce the emission matrix in Fig. 2A. Input: emission_fn (emissions_100.txt), state_annot_fn (../state_anotations.txt), save_fn (./output_emission/emissions_100.png)
 |__draw_emission_by_mark_group.R: create figure S5. Input: emission_fn (./output_emission/emissions_by_mark_group.txt), state_annot_fn (../state_anotations.txt), save_fn (./output_emission/emission_by_mark_group.png) 
 |__draw_emission_subsetted_states.R: create figures such as 4B, 5B, 5G: emission parameters for a subset of states. Input: emission_fn (emissions_100.txt), state_annot_fn (../state_anotations.txt), save_fn (where you save the figure), space-delimited state numbers. 
+|__rank_chrom_mark_celltype_emission.py: This will create excel files that will help you create figures such as Fig. 2BC. Input: emission_fn(emission_100.txt), output_fn(./output_emission/top_mark_cell_type_per_state.xlsx), num_top_marks (100), metadata_fn (../ROADMAP_metadata_july2013.py)
 Notes: state numbers are the number of states (1-100) as outputted raw by ChromHMM LearnModel (before any state characterization efforts). To get state numbers corresponding to state names as presented in the paper, you can look at the columns state, mneumonics in state_annot_fn (../state_anotations.txt)
 Required R packages: tidyverse, tidyr, dplyr, ggplot2, pheatmap 

@@ -1,0 +1,96 @@
+import os
+import glob
+full_stack_segment_fn = '../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz' # TO BE UPDATED : change this to the path to where you save the full-stack chroamtin state annotation
+ct_25state_segment_foler = '../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19' # TO BE UPDATED: change this to the folder where you have the 127 biosamples' 25-state concatenated annotations. You may download these annotations from roadmap using the code provided in ../enrichment_with_roadmap_151825_states_analysis/download_data.sh
+
+ct_list = glob.glob(ct_25state_segment_foler + '/E*')
+ct_list = list(map(lambda x: x.split('/')[-1], ct_list)) 
+NUM_SAMPLE_SEGMENT_PER_STATE = 100
+output_folder = '../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state' # TO BE UPDATED: change this to the folder where you would like to save the output of this analysis. The final output will be inside the subfolder average_all_seeds from inside this folder. 
+seed_list = [690, 716, 307, 575, 347, 419, 666, 496, 183, 452, 40, 388, 813, 176, 118, 750, 342, 826, 351, 210]
+rule all:
+	input:
+		expand(os.path.join(output_folder, 'seed_{seed}', 'sample_state_sorted_by_ct.txt.gz'), seed = seed_list),
+		expand(os.path.join(output_folder, 'seed_{seed}', 'sample_state_sorted_by_group.txt.gz'), seed = seed_list),
+		os.path.join(output_folder, 'average_all_seeds', 'avg_prop_state25_per_group.csv.gz'),
+		os.path.join(output_folder, 'average_all_seeds', 'avg_prop_state25_per_group.xlsx'),
+
+rule sample_segment_equal_per_state:
+	# sample regions on the genome such that for each state, the number of sampled regions are similar
+	input:
+		full_stack_segment_fn, # from raw data
+	output:
+		(os.path.join(output_folder, 'seed_{seed}', 'temp_sample_region.bed.gz'))
+	shell:
+		"""
+		python sample_region_for_state_representation.py {input} {NUM_SAMPLE_SEGMENT_PER_STATE} {output} {wildcards.seed}
+		"""
+
+rule sort_ct_segment_fn:
+	input:
+		os.path.join(ct_25state_segment_foler, '{ct}', '{ct}_25_imputed12marks_segments.bed.gz') # from raw data
+	output:
+		(os.path.join(ct_25state_segment_foler, '{ct}', '{ct}_sorted_segment.bed.gz'))
+	params:
+		output_no_gz = os.path.join(ct_25state_segment_foler, '{ct}', '{ct}_sorted_segment.bed')
+	shell:
+		"""
+		zcat {input} | sort -k1,1 -k2,2n > {params.output_no_gz}
+		gzip {params.output_no_gz}
+		"""
+
+rule overlap_sample_region_with_ct_segment:
+	input:	
+		(os.path.join(output_folder, 'seed_{seed}', 'temp_sample_region.bed.gz')), # from rule sample_segment_equal_per_state
+		expand(os.path.join(ct_25state_segment_foler, '{ct}', '{ct}_sorted_segment.bed.gz'), ct = ct_list) # from rule sort_ct_segment_fn
+	output:
+		os.path.join(output_folder, 'seed_{seed}', 'sample_segment_fullStack_ct25State.bed.gz'),
+	params:
+		ct_list_string = " ".join(ct_list),
+		output_no_gz = os.path.join(output_folder, 'seed_{seed}', 'sample_segment_fullStack_ct25State.bed')
+	shell:
+		"""
+		command="zcat {input[0]} | sort -k1,1 -k2,2n " # first sort the file of sample regions, where each state appear NUM_SAMPLE_SEGMENT_PER_STATE times
+		output_header="chrom\\tstart\\tend\\tfull_stack"
+		rm -f {output} # so we can overwrite it
+		rm -f {params.output_no_gz} # so we can overwrite it
+		for ct in {params.ct_list_string}
+		do 
+			ct_segment_fn={ct_25state_segment_foler}/${{ct}}/${{ct}}_sorted_segment.bed.gz
+			command="$command | bedtools map -a stdin -b ${{ct_segment_fn}} -c 4 -o collapse"
+			output_header="${{output_header}}\\t${{ct}}"
+		done
+		command="$command >> {params.output_no_gz} "
+		# now onto the writing part
+		echo  -e $output_header > {params.output_no_gz} # write the header first # need the -e flag for tabs to be considered seriously
+		eval $command # write the content
+		gzip {params.output_no_gz} # gzip
+		""" 
+
+rule count_sample_region_per_state:
+	input:
+		os.path.join(output_folder, 'seed_{seed}', 'sample_segment_fullStack_ct25State.bed.gz') # from rule overlap_sample_region_with_ct_segment
+	output:	
+		os.path.join(output_folder, 'seed_{seed}', 'sample_state_sorted_by_ct.txt.gz'),
+		os.path.join(output_folder, 'seed_{seed}', 'sample_state_sorted_by_group.txt.gz')
+	params:
+		this_output_folder = os.path.join(output_folder, 'seed_{seed}')
+	shell:
+		"""
+		python count_sample_region_per_full_stack_state.py {input} {params.this_output_folder}
+		"""
+
+rule summary_sample_regions_across_seed:
+	input:
+		expand(os.path.join(output_folder, 'seed_{seed}', 'sample_state_sorted_by_ct.txt.gz'), seed = seed_list),
+		expand(os.path.join(output_folder, 'seed_{seed}', 'sample_state_sorted_by_group.txt.gz'), seed = seed_list),
+	output:
+		os.path.join(output_folder, 'average_all_seeds', 'avg_prop_state25_per_group.csv.gz'),
+		os.path.join(output_folder, 'average_all_seeds', 'avg_prop_state25_per_group.xlsx'),
+	params:
+		all_seed_folder = output_folder,
+		avg_output_folder = os.path.join(output_folder, 'average_all_seeds'),
+	shell:
+		"""
+		python calculate_summary_sample_regions.py {params.all_seed_folder} {params.avg_output_folder}	
+		"""

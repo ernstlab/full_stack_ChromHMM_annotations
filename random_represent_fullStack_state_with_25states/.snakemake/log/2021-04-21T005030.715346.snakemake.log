@@ -1,0 +1,247 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cluster nodes: 100
+Job counts:
+	count	jobs
+	1	all
+	1	overlap_sample_region_with_ct_segment
+	18	sort_ct_segment_fn
+	20
+
+[Wed Apr 21 00:50:31 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E032/E032_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E032/E032_sorted_segment.bed
+    jobid: 19
+    wildcards: ct=E032
+
+Error submitting jobscript (exit code 1):
+
+
+[Wed Apr 21 00:50:57 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E033/E033_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E033/E033_sorted_segment.bed
+    jobid: 98
+    wildcards: ct=E033
+
+Submitted job 98 with external jobid 'Your job 7403687 ("snakejob.sort_ct_segment_fn.98.sh") has been submitted'.
+
+[Wed Apr 21 00:51:17 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E044/E044_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E044/E044_sorted_segment.bed
+    jobid: 112
+    wildcards: ct=E044
+
+Submitted job 112 with external jobid 'Your job 7403691 ("snakejob.sort_ct_segment_fn.112.sh") has been submitted'.
+
+[Wed Apr 21 00:51:21 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E042/E042_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E042/E042_sorted_segment.bed
+    jobid: 72
+    wildcards: ct=E042
+
+Submitted job 72 with external jobid 'Your job 7403696 ("snakejob.sort_ct_segment_fn.72.sh") has been submitted'.
+
+[Wed Apr 21 00:51:26 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E037/E037_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E037/E037_sorted_segment.bed
+    jobid: 123
+    wildcards: ct=E037
+
+Submitted job 123 with external jobid 'Your job 7403701 ("snakejob.sort_ct_segment_fn.123.sh") has been submitted'.
+
+[Wed Apr 21 00:51:30 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E112/E112_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E112/E112_sorted_segment.bed
+    jobid: 24
+    wildcards: ct=E112
+
+Submitted job 24 with external jobid 'Your job 7403707 ("snakejob.sort_ct_segment_fn.24.sh") has been submitted'.
+
+[Wed Apr 21 00:51:35 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E034/E034_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E034/E034_sorted_segment.bed
+    jobid: 114
+    wildcards: ct=E034
+
+Submitted job 114 with external jobid 'Your job 7403715 ("snakejob.sort_ct_segment_fn.114.sh") has been submitted'.
+
+[Wed Apr 21 00:51:43 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E041/E041_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E041/E041_sorted_segment.bed
+    jobid: 41
+    wildcards: ct=E041
+
+Submitted job 41 with external jobid 'Your job 7403719 ("snakejob.sort_ct_segment_fn.41.sh") has been submitted'.
+
+[Wed Apr 21 00:51:47 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E047/E047_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E047/E047_sorted_segment.bed
+    jobid: 117
+    wildcards: ct=E047
+
+Submitted job 117 with external jobid 'Your job 7403723 ("snakejob.sort_ct_segment_fn.117.sh") has been submitted'.
+
+[Wed Apr 21 00:51:51 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E045/E045_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E045/E045_sorted_segment.bed
+    jobid: 4
+    wildcards: ct=E045
+
+[Wed Apr 21 00:51:51 2021]
+Finished job 98.
+1 of 20 steps (5%) done
+[Wed Apr 21 00:51:51 2021]
+Finished job 112.
+2 of 20 steps (10%) done
+[Wed Apr 21 00:51:51 2021]
+Finished job 72.
+3 of 20 steps (15%) done
+[Wed Apr 21 00:51:51 2021]
+Finished job 123.
+4 of 20 steps (20%) done
+Submitted job 4 with external jobid 'Your job 7403728 ("snakejob.sort_ct_segment_fn.4.sh") has been submitted'.
+
+[Wed Apr 21 00:51:56 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E115/E115_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E115/E115_sorted_segment.bed
+    jobid: 73
+    wildcards: ct=E115
+
+Submitted job 73 with external jobid 'Your job 7403733 ("snakejob.sort_ct_segment_fn.73.sh") has been submitted'.
+
+[Wed Apr 21 00:52:00 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E038/E038_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E038/E038_sorted_segment.bed
+    jobid: 64
+    wildcards: ct=E038
+
+[Wed Apr 21 00:52:01 2021]
+Finished job 24.
+5 of 20 steps (25%) done
+Submitted job 64 with external jobid 'Your job 7403737 ("snakejob.sort_ct_segment_fn.64.sh") has been submitted'.
+
+[Wed Apr 21 00:52:04 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E046/E046_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E046/E046_sorted_segment.bed
+    jobid: 88
+    wildcards: ct=E046
+
+Submitted job 88 with external jobid 'Your job 7403742 ("snakejob.sort_ct_segment_fn.88.sh") has been submitted'.
+
+[Wed Apr 21 00:52:08 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E089/E089_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E089/E089_sorted_segment.bed
+    jobid: 16
+    wildcards: ct=E089
+
+Submitted job 16 with external jobid 'Your job 7403746 ("snakejob.sort_ct_segment_fn.16.sh") has been submitted'.
+
+[Wed Apr 21 00:52:12 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E040/E040_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E040/E040_sorted_segment.bed
+    jobid: 2
+    wildcards: ct=E040
+
+Submitted job 2 with external jobid 'Your job 7403751 ("snakejob.sort_ct_segment_fn.2.sh") has been submitted'.
+
+[Wed Apr 21 00:52:15 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E043/E043_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E043/E043_sorted_segment.bed
+    jobid: 61
+    wildcards: ct=E043
+
+Submitted job 61 with external jobid 'Your job 7403755 ("snakejob.sort_ct_segment_fn.61.sh") has been submitted'.
+
+[Wed Apr 21 00:52:20 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E039/E039_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E039/E039_sorted_segment.bed
+    jobid: 75
+    wildcards: ct=E039
+
+Waiting at most 5 seconds for missing files.
+Submitted job 75 with external jobid 'Your job 7403759 ("snakejob.sort_ct_segment_fn.75.sh") has been submitted'.
+
+[Wed Apr 21 00:52:23 2021]
+rule sort_ct_segment_fn:
+    input: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E048/E048_25_imputed12marks_segments.bed.gz
+    output: ../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E048/E048_sorted_segment.bed
+    jobid: 45
+    wildcards: ct=E048
+
+MissingOutputException in line 26 of /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/Snakefile:
+Missing files after 5 seconds:
+../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E034/E034_sorted_segment.bed
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Waiting at most 5 seconds for missing files.
+Submitted job 45 with external jobid 'Your job 7403765 ("snakejob.sort_ct_segment_fn.45.sh") has been submitted'.
+MissingOutputException in line 26 of /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/Snakefile:
+Missing files after 5 seconds:
+../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E041/E041_sorted_segment.bed
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Waiting at most 5 seconds for missing files.
+MissingOutputException in line 26 of /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/Snakefile:
+Missing files after 5 seconds:
+../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E047/E047_sorted_segment.bed
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Waiting at most 5 seconds for missing files.
+MissingOutputException in line 26 of /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/Snakefile:
+Missing files after 5 seconds:
+../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E045/E045_sorted_segment.bed
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Waiting at most 5 seconds for missing files.
+MissingOutputException in line 26 of /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/Snakefile:
+Missing files after 5 seconds:
+../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E115/E115_sorted_segment.bed
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Waiting at most 5 seconds for missing files.
+MissingOutputException in line 26 of /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/Snakefile:
+Missing files after 5 seconds:
+../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E038/E038_sorted_segment.bed
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Waiting at most 5 seconds for missing files.
+MissingOutputException in line 26 of /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/Snakefile:
+Missing files after 5 seconds:
+../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E046/E046_sorted_segment.bed
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Waiting at most 5 seconds for missing files.
+MissingOutputException in line 26 of /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/Snakefile:
+Missing files after 5 seconds:
+../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E089/E089_sorted_segment.bed
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Waiting at most 5 seconds for missing files.
+MissingOutputException in line 26 of /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/Snakefile:
+Missing files after 5 seconds:
+../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E040/E040_sorted_segment.bed
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+Waiting at most 5 seconds for missing files.
+MissingOutputException in line 26 of /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/Snakefile:
+Missing files after 5 seconds:
+../../../data/roadmap_epigenome/25_imputed12marks_model_downloaded/hg19/E043/E043_sorted_segment.bed
+This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait.
+[Wed Apr 21 00:53:22 2021]
+Finished job 75.
+6 of 20 steps (30%) done
+Waiting at most 5 seconds for missing files.
+[Wed Apr 21 00:53:24 2021]
+Finished job 45.
+7 of 20 steps (35%) done
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/.snakemake/log/2021-04-21T005030.715346.snakemake.log

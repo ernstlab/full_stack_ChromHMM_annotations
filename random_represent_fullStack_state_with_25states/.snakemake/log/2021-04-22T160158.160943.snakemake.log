@@ -1,0 +1,29 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	count_sample_region_per_state
+	2
+
+[Thu Apr 22 16:01:58 2021]
+rule count_sample_region_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/sample_segment_fullStack_ct25State.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/sample_state_sorted_by_ct.txt.gz, ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/sample_state_sorted_by_group.txt.gz
+    jobid: 1
+
+[Thu Apr 22 16:13:00 2021]
+Finished job 1.
+1 of 2 steps (50%) done
+
+[Thu Apr 22 16:13:00 2021]
+localrule all:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/sample_state_sorted_by_ct.txt.gz, ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/sample_state_sorted_by_group.txt.gz
+    jobid: 0
+
+[Thu Apr 22 16:13:00 2021]
+Finished job 0.
+2 of 2 steps (100%) done
+Complete log: /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/.snakemake/log/2021-04-22T160158.160943.snakemake.log

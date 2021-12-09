@@ -1,0 +1,138 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cluster nodes: 100
+Job counts:
+	count	jobs
+	1	all
+	10	sample_segment_equal_per_state
+	11
+
+[Tue May 18 13:13:46 2021]
+rule sample_segment_equal_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_307/temp_sample_region.bed.gz
+    jobid: 8
+    wildcards: seed=307
+
+Submitted job 8 with external jobid 'Your job 7871610 ("snakejob.sample_segment_equal_per_state.8.sh") has been submitted'.
+
+[Tue May 18 13:13:48 2021]
+rule sample_segment_equal_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_496/temp_sample_region.bed.gz
+    jobid: 1
+    wildcards: seed=496
+
+Submitted job 1 with external jobid 'Your job 7871611 ("snakejob.sample_segment_equal_per_state.1.sh") has been submitted'.
+
+[Tue May 18 13:13:50 2021]
+rule sample_segment_equal_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_690/temp_sample_region.bed.gz
+    jobid: 3
+    wildcards: seed=690
+
+Submitted job 3 with external jobid 'Your job 7871613 ("snakejob.sample_segment_equal_per_state.3.sh") has been submitted'.
+
+[Tue May 18 13:13:51 2021]
+rule sample_segment_equal_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_419/temp_sample_region.bed.gz
+    jobid: 6
+    wildcards: seed=419
+
+Submitted job 6 with external jobid 'Your job 7871614 ("snakejob.sample_segment_equal_per_state.6.sh") has been submitted'.
+
+[Tue May 18 13:13:53 2021]
+rule sample_segment_equal_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_575/temp_sample_region.bed.gz
+    jobid: 7
+    wildcards: seed=575
+
+Submitted job 7 with external jobid 'Your job 7871615 ("snakejob.sample_segment_equal_per_state.7.sh") has been submitted'.
+
+[Tue May 18 13:13:55 2021]
+rule sample_segment_equal_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_716/temp_sample_region.bed.gz
+    jobid: 5
+    wildcards: seed=716
+
+Submitted job 5 with external jobid 'Your job 7871617 ("snakejob.sample_segment_equal_per_state.5.sh") has been submitted'.
+
+[Tue May 18 13:13:57 2021]
+rule sample_segment_equal_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_183/temp_sample_region.bed.gz
+    jobid: 10
+    wildcards: seed=183
+
+Submitted job 10 with external jobid 'Your job 7871619 ("snakejob.sample_segment_equal_per_state.10.sh") has been submitted'.
+
+[Tue May 18 13:13:59 2021]
+rule sample_segment_equal_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_666/temp_sample_region.bed.gz
+    jobid: 2
+    wildcards: seed=666
+
+Submitted job 2 with external jobid 'Your job 7871620 ("snakejob.sample_segment_equal_per_state.2.sh") has been submitted'.
+
+[Tue May 18 13:14:01 2021]
+rule sample_segment_equal_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_452/temp_sample_region.bed.gz
+    jobid: 4
+    wildcards: seed=452
+
+Submitted job 4 with external jobid 'Your job 7871621 ("snakejob.sample_segment_equal_per_state.4.sh") has been submitted'.
+
+[Tue May 18 13:14:03 2021]
+rule sample_segment_equal_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_347/temp_sample_region.bed.gz
+    jobid: 9
+    wildcards: seed=347
+
+Submitted job 9 with external jobid 'Your job 7871623 ("snakejob.sample_segment_equal_per_state.9.sh") has been submitted'.
+[Tue May 18 13:14:50 2021]
+Finished job 8.
+1 of 11 steps (9%) done
+[Tue May 18 13:14:50 2021]
+Finished job 1.
+2 of 11 steps (18%) done
+[Tue May 18 13:14:50 2021]
+Finished job 3.
+3 of 11 steps (27%) done
+[Tue May 18 13:14:50 2021]
+Finished job 6.
+4 of 11 steps (36%) done
+[Tue May 18 13:14:50 2021]
+Finished job 7.
+5 of 11 steps (45%) done
+[Tue May 18 13:14:50 2021]
+Finished job 5.
+6 of 11 steps (55%) done
+[Tue May 18 13:14:50 2021]
+Finished job 10.
+7 of 11 steps (64%) done
+[Tue May 18 13:14:50 2021]
+Finished job 2.
+8 of 11 steps (73%) done
+[Tue May 18 13:14:50 2021]
+Finished job 4.
+9 of 11 steps (82%) done
+[Tue May 18 13:14:50 2021]
+Finished job 9.
+10 of 11 steps (91%) done
+
+[Tue May 18 13:14:50 2021]
+localrule all:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_690/temp_sample_region.bed.gz, ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_716/temp_sample_region.bed.gz, ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_307/temp_sample_region.bed.gz, ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_575/temp_sample_region.bed.gz, ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_347/temp_sample_region.bed.gz, ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_419/temp_sample_region.bed.gz, ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_666/temp_sample_region.bed.gz, ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_496/temp_sample_region.bed.gz, ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_183/temp_sample_region.bed.gz, ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/seed_452/temp_sample_region.bed.gz
+    jobid: 0
+
+[Tue May 18 13:14:50 2021]
+Finished job 0.
+11 of 11 steps (100%) done
+Complete log: /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/.snakemake/log/2021-05-18T131345.321101.snakemake.log

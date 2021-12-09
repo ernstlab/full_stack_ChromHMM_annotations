@@ -1,0 +1,29 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	1	all
+	1	sample_segment_equal_per_state
+	2
+
+[Tue Apr 20 22:56:34 2021]
+rule sample_segment_equal_per_state:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/hg19_segmentations/genome_100_segments.bed.gz
+    output: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/temp_sample_region.bed.gz
+    jobid: 1
+
+[Tue Apr 20 22:56:39 2021]
+Finished job 1.
+1 of 2 steps (50%) done
+
+[Tue Apr 20 22:56:39 2021]
+localrule all:
+    input: ../../../ROADMAP_aligned_reads/chromHMM_model/model_100_state/enrichment_151825_roadmap_chromState/sample_segment_overlap_25state/temp_sample_region.bed.gz
+    jobid: 0
+
+[Tue Apr 20 22:56:39 2021]
+Finished job 0.
+2 of 2 steps (100%) done
+Complete log: /u/project/ernst/havu73/source/25state_enrichments/random_represent_fullStack_state_with_25states/.snakemake/log/2021-04-20T225634.246407.snakemake.log
