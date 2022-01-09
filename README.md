@@ -1,6 +1,6 @@
 
 # full_stack_ChromHMM_annotations
-Data of genome annotation from full-stack ChromHMM model trained with 1032 datasets from 127 reference epigenomes 
+Data of genome annotation from full-stack ChromHMM model trained with 1032 datasets from 127 reference epigenomes. Please refer to the published manuscript at <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02572-z"> Genome Biology </a>
 # Download links:
 Data of full-stack genome annotations for reference assemblies hg19 and hg38 can be found <a href="https://public.hoffman2.idre.ucla.edu/ernst/1G6UT/"> here</a>: 
 Within this folder:
