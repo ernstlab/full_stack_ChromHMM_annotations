@@ -10,6 +10,7 @@ org_assembly = 'hg19'
 end_assembly = 'hg38' # <TO_BE_FILLED>, the target assembly that we want to convert the full-stack annotations into, hg38 or Mm10, etc. It should match the .over.chain.gz files used for liftOver (if hg19ToMm10.over.chain.gz then Mm10, not mm10).
 org_segment_dir = '' # <TO_BE_FILLED>, the relative path to the folder where file genome_100_segments.bed.gz is stored in your machine
 org_segment_fn = os.path.join(org_segment_dir, 'genome_100_segments.bed.gz')
+org_sorted_fn = os.path.join(org_segment_dir, 'genome_100_segments.bed.gz')
 org_segment_200bp_fn = os.path.join(org_segment_dir, 'genome_100_200bp_ordered.bed.gz')
 liftOver_dir = './' # we provided liftOver executable file in this folder, that's why we put down the current directory here. Originally, liftOver was downloaded from UCSC genome browser website http://hgdownload.soe.ucsc.edu/admin/exe/
 end_segment_dir = '' # <TO_BE_FILLED>, the relative path to the output folder of this liftOver procedure
@@ -22,14 +23,27 @@ rule all:
 	input:
 		end_segment_last,
 
-rule org_200bp:
+rule sort_org_segment: # sort the segmentation files based on genomic coordinates
 	input:
 		org_segment_fn,
+	output:
+		temp(org_sorted_fn),
+	params: 
+		output_no_gz = org_sorted_fn[:-3]
+	shell:
+		"""
+		./reorganize_bed_file.sh {input} {params.output_no_gz} # the code automatically gzip the file
+		gzip {params.output_no_gz}
+		"""
+
+rule org_200bp: # write the segmentation file into a format such that each line corresponds to a 200-bp segment
+	input:
+		org_sorted_fn,
 	output:	
 		org_segment_200bp_fn
 	shell:
 		"""
-		../reorganize_bed_file.sh {input} {output} # the code automatically gzip the file
+		python change_segmentation_to_200bp_segmentation_for_liftOver.py {input} {output} # this code can be better off run using pypy if you have it, that would speed things up by ~5 folds, the code will write to .gz file automatically
 		"""
 
 rule liftOver:
