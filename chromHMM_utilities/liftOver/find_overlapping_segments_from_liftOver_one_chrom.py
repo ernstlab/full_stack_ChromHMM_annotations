@@ -1,11 +1,3 @@
-# Copyright 2021 Ha Vu (havu73@ucla.edu)
-
-# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 # find segments that map to the same place on the genome when we perform some liftOver job
 # it only works one chromosome at a time
 # it only report the invalid lines and not fix the problem
@@ -23,7 +15,7 @@ def make_dir(directory):
 	try:
 		os.makedirs(directory)
 	except:
-		print 'Folder' + directory + ' is already created'
+		print ('Folder' + directory + ' is already created')
 
 
 def open_file_read (fn): 
@@ -44,7 +36,7 @@ def open_file_write (fn):
 	"""
 	if fn[-3:] == ".gz":
 		# zip file
-		F = gzip.open(fn, 'wb')
+		F = gzip.open(fn, 'wt')
 	else: 
 		# non zip file
 		F = open(fn, 'w')
@@ -52,18 +44,18 @@ def open_file_write (fn):
 
 def check_file_exist(fn):
 	if not os.path.isfile(fn):
-		print "File: " + fn + " DOES NOT EXISTS"
+		print ("File: " + fn + " DOES NOT EXISTS")
 		exit(1)
 	return 
 
 def check_dir_exist(fn):
 	if not os.path.isdir(fn):
-		print "Directory: " + fn + " DOES NOT EXISTS"
+		print ("Directory: " + fn + " DOES NOT EXISTS")
 		exit(1)
 	return 
 	
 def create_folder_for_file(fn):
-	last_slash_index = string.rfind(fn, '/')
+	last_slash_index = fn.find('/')
 	if last_slash_index != -1: # path contains folder
 		make_dir(fn[:last_slash_index])
 	return 
@@ -105,13 +97,13 @@ def main():
 	check_file_exist(input_fn)
 	output_fn = sys.argv[2]
 	create_folder_for_file(output_fn)
-	print "Done getting command line argument"
+	print ("Done getting command line argument")
 	report_overlapping_bases(input_fn, output_fn)
-	print "Done!"
+	print ("Done!")
 
 def usage():
-	print "python find_overlapping_segments_from_liftOver.py"
-	print "input_fn: the results of liftOver. Assumption: this file only contains infomation for one chromsome. In other words, the chromosome column in this file is exactly similar across different rows. This file should be sorted by increasing starting bp"
-	print "output_fn: the corrected segmentation file. Any segments that map to the same places with any other segments will be eradicated"
+	print ("python find_overlapping_segments_from_liftOver.py")
+	print ("input_fn: the results of liftOver. Assumption: this file only contains infomation for one chromsome. In other words, the chromosome column in this file is exactly similar across different rows. This file should be sorted by increasing starting bp")
+	print ("output_fn: the corrected segmentation file. Any segments that map to the same places with any other segments will be eradicated")
 	exit(1)
 main()
