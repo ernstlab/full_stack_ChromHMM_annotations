@@ -65,7 +65,7 @@ def add_comments_on_states(enrichment_df, num_state, num_enr_cont, context_prefi
     for enr_cont in enr_cont_list:
         top_states = enrichment_df[enr_cont][:num_state].nlargest(NUM_TOP_STATE_TO_COMMENT)
         top_states = np.around(top_states, decimals = 1) # round the values of enrichment 
-        comment_this_cont = map(lambda x: 'rank' + str(x + 1) + '_'+ context_prefix + '_' + enr_cont + ':' + str(top_states[top_states.index[x]])+ "; ", range(NUM_TOP_STATE_TO_COMMENT)) # the string that specify the content of the comment: rank<rank>_<enrichment_context>: <enrichment_values>
+        comment_this_cont = list(map(lambda x: 'rank' + str(x + 1) + '_'+ context_prefix + '_' + enr_cont + ':' + str(top_states[top_states.index[x]])+ "; ", range(NUM_TOP_STATE_TO_COMMENT))) # the string that specify the content of the comment: rank<rank>_<enrichment_context>: <enrichment_values>
         for i in range(NUM_TOP_STATE_TO_COMMENT):
             top_state_index = top_states.index[i] # the index of the state that has rank i 
             output_comment[top_state_index] = output_comment[top_state_index] + comment_this_cont[i] # concatenate comment string 
@@ -105,7 +105,7 @@ def get_enrichment_colored_df(enrichment_fn, save_fn, context_prefix, state_anno
     enrichment_df = enrichment_df.fillna(0) # if there are nan enrichment values, due to the state not being present (such as when we create files with foreground and background), we can fill it by 0 so that the code to make colorful excel would not crash.
     (num_state, num_enr_cont) = (enrichment_df.shape[0] - 1, enrichment_df.shape[1] - 1)
     enr_cont_list = enrichment_df.columns[2:]
-    enr_cont_list = map(get_rid_of_stupid_file_tail, enr_cont_list) # fix the name of the enrichment context. If it contains the tail '.bed.gz' then we get rid of it
+    enr_cont_list = list(map(get_rid_of_stupid_file_tail, enr_cont_list)) # fix the name of the enrichment context. If it contains the tail '.bed.gz' then we get rid of it
     enrichment_df.columns = list(enrichment_df.columns[:2]) + list(enr_cont_list)
     percent_genome_of_cont = enrichment_df.iloc[num_state, 2:]
     enrichment_df = enrichment_df.loc[:(num_state-1)] # rid of the last row because that is the row about percentage each genomic context occupies    
@@ -181,7 +181,7 @@ def get_colored_df_for_consHMM_enrichment(enrichment_fn, save_fn):
     (num_state, num_enr_cont) = (enrichment_df.shape[0] - 1, enrichment_df.shape[1] - 1)
 
     enr_cont_list = enrichment_df.columns[2:]
-    enr_cont_list = map(get_rid_of_stupid_file_tail, enr_cont_list) # fix the name of the enrichment context. If it contains the tail '.bed.gz' then we get rid of it
+    enr_cont_list = list(map(get_rid_of_stupid_file_tail, enr_cont_list)) # fix the name of the enrichment context. If it contains the tail '.bed.gz' then we get rid of it
     enrichment_df.columns = list(enrichment_df.columns[:2]) + list(enr_cont_list) # now change the column names of the enrichment contexts. If the contexts' names contain '.bed.gz' then get rid of it.
     no_state_df = enrichment_df[enrichment_df.columns[2:]] # only get the data of enrichment contexts for now, don't consider state and percent_in_genome
 
