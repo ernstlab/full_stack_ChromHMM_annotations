@@ -2,7 +2,7 @@
 # full_stack_ChromHMM_annotations
 Data of genome annotation from full-stack ChromHMM model trained with 1032 datasets from 127 reference epigenomes. Please refer to the published manuscript at <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02572-z"> Genome Biology </a>
 # Download links:
-Data of full-stack genome annotations for reference assemblies hg19 and hg38 can be found <a href="https://public.hoffman2.idre.ucla.edu/ernstUUKP7/"> here</a>: 
+Data of full-stack genome annotations for reference assemblies hg19 and hg38 can be found <a href="https://public.hoffman2.idre.ucla.edu/ernst/UUKP7/"> here</a>: 
 Within this folder:
 - File <a href="https://public.hoffman2.idre.ucla.edu/ernst/UUKP7/hg19_genome_100_segments.bed.gz">hg19_genome_100_segments.bed.gz</a> contains a simple four column .bed file of full-stack state annotation in hg19 assembly. Since our training data (1032 input data tracks) are in hg19, the assembly used for original training and annotation. The fourth column contains a state label with a prefix number that can be used to order the states. The OverlapEnrichment and NeighborhoodEnrichment commands of ChromHMM with the '-labels' option can compute enrichments for this file and order states based on the prefix number.
 - File <a href="https://public.hoffman2.idre.ucla.edu/ernst/UUKP7/hg19_genome_100_browser.bed.gz">hg19_genome_100_browser.bed.gz</a> contains a browser file of full-stack state annotation in hg19 assembly. This file is compatible to for UCSC genome browser. Since our training data (1032 input data tracks) are in hg19, the assembly used for original training and annotation.
