@@ -24,9 +24,10 @@ def get_standard_ucsc_format_bed_file(segment_fn, state_annot_fn, output_fn, tra
 	segment_df = pd.read_csv(segment_fn, sep = '\t', header = None)
 	segment_df.columns = ['chrom', 'start_bp', 'end_bp', 'state']
 	# filter the segmentation data for the region that we are interested in 
-	segment_df = segment_df[segment_df['chrom'] == chrom]
-	segment_df = segment_df[segment_df['start_bp'] >= start_bp]
-	segment_df = segment_df[segment_df['end_bp'] <= end_bp]
+	if chrom != None and start_bp != None and end_bp != None:
+		segment_df = segment_df[segment_df['chrom'] == chrom]
+		segment_df = segment_df[segment_df['start_bp'] >= start_bp]
+		segment_df = segment_df[segment_df['end_bp'] <= end_bp]
 	# get state annotation data
 	state_df = pd.read_csv(state_annot_fn, sep = ',', header = 0)
 	state_df['state'] = (state_df['state']).apply(lambda x: 'E' + str(x))
@@ -69,9 +70,22 @@ def main():
 		pass
 	helper.create_folder_for_file(output_fn)
 	track_name = sys.argv[4]
-	chrom = sys.argv[5]
-	start_bp = helper.get_command_line_integer(sys.argv[6])
-	end_bp = helper.get_command_line_integer(sys.argv[7])
+	try:
+		chrom = sys.argv[5]
+	except:
+		chrom = None
+	try:
+		start_bp = int(sys.argv[6])
+	except:
+		start_bp = None
+	try:
+		end_bp = int(sys.argv[7])
+	except:
+		end_bp = None
+	if chrom==None or start_bp==None or end_bp==None:
+		chrom = None
+		start_bp = None
+		end_bp = None
 	print ("Done reading command line arguments")
 	get_standard_ucsc_format_bed_file(segment_fn, state_annot_fn, output_fn, track_name, chrom, start_bp, end_bp)
 	print ("Done!")

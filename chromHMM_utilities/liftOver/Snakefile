@@ -16,12 +16,13 @@ liftOver_dir = './' # we provided liftOver executable file in this folder, that'
 end_segment_dir = '' # <TO_BE_FILLED>, the relative path to the output folder of this liftOver procedure
 end_segment_raw = os.path.join(end_segment_dir, end_assembly + '_100_raw_segments.bed.gz')
 unmapped_fn = os.path.join(end_segment_dir, 'unmapped_' + org_assembly + '_to_' + end_assembly + '.gz')
-end_segment_last =   os.path.join(end_segment_dir, end_assembly + '_100_no_overlap_from_' + org_assembly + '.bed.gz')
+end_segment_no_overlap_from_org =   os.path.join(end_segment_dir, end_assembly + '_100_no_overlap_from_' + org_assembly + '.bed.gz')
+end_segment_last = os.path.join(end_segment_dir, end_assembly + '_100_finalLiftOver.bed.gz')
 CHROMOSOME_LIST = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', 'X', 'Y', 'M']
 
 rule all:
 	input:
-		end_segment_last,
+		end_segment_no_overlap_from_org,
 
 rule sort_org_segment: # sort the segmentation files based on genomic coordinates
 	input:
@@ -89,9 +90,9 @@ rule combine_end_segment:
 		expand(os.path.join('temp_remove_indices_chr_{chrom}'), chrom = CHROMOSOME_LIST) ,# from rule rid_overlapping_from_raw
 		expand(os.path.join('temp_raw_end_chr_{chrom}'), chrom = CHROMOSOME_LIST)
 	output:	
-		end_segment_last,
+		end_segment_no_overlap_from_org,
 	params:	
-		output_no_gz = end_segment_last[:-3],
+		output_no_gz = end_segment_no_overlap_from_org[:-3],
 		chrom_list_bash_format = ' '.join(CHROMOSOME_LIST),
 	shell:
 		"""
@@ -104,3 +105,13 @@ rule combine_end_segment:
 		done
 		gzip -f {params.output_no_gz}
 		"""
+
+rule compress_end_segment:
+	input:
+		end_segment_no_overlap_from_org,
+	output:
+		end_segment_last,
+	shell:
+		'''
+		python compress_segmentation_data.py --segment_bed_fn {input[0]} --output_fn {output[0]}
+		'''
