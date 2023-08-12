@@ -40,6 +40,9 @@ File structure this folder:
 - File <a href="https://public.hoffman2.idre.ucla.edu/ernst/2K9RS/full_stack/full_stack_annotation_public_release/hg38/hg38_IHEC_segments.bed.gz">hg38_IHEC_segments.bed.gz</a> contains a simple four-column .bed file for full-stack state annotation in hg38 assembly. This annotation was learned using 5339 datasets released by <a href="https://epigenomesportal.ca/ihec/">IHEC</a>. The fourth column contains a state label with a prefix number that can be used to order the states. The OverlapEnrichment and NeighborhoodEnrichment commands of ChromHMM with the '-labels' option can compute enrichments for this file and order states based on the prefix number.
 - Right now, the state names and characterizations are **tentative** and are subject to changes. The tentative state characterizations can be downloaded from <a href="https://github.com/ernstlab/full_stack_ChromHMM_annotations/tree/main/pilot_IHEC/IHEC_state_annotations.xlsx">IHEC_state_annotations.xlsx</a>.  
 
+# UCSC genome browser tracks
+- To view the full-stack annotation in hg19, hg38 and mm10, including the pilot annotation learned using IHEC data, please use the track hub link https://public.hoffman2.idre.ucla.edu/ernst/2K9RS//full_stack/full_stack_annotation_public_release/hub.txt. Instructions on how to view these tracks on UCSC Genome Browser is provided in a step-by-step <a href="https://github.com/ernstlab/mouse_fullStack_annotations/view_ucsc_genome_browser.pptx"> powerpoint</a>.
+
 # Folders:
 Within each subfolders inside this folder, there are readme that can help you understand and apply the code. Note: AF stands for Additional File
 - chromHMM_utilities contains subfolders and files that are helpful in processing the output of chromHMM (processing the emission matrix, overlap enrichment, neighborhood enrichment, calculating the AUROCs to measure how an annotation can help recover the genomic location of a genome element of interest). 
