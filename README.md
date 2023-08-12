@@ -38,7 +38,7 @@ File structure this folder:
 
 # Pilot full-stack chromatin state annotations generated using data from IHEC
 - File <a href="https://public.hoffman2.idre.ucla.edu/ernst/2K9RS/full_stack/full_stack_annotation_public_release/hg38/hg38_IHEC_segments.bed.gz">hg38_IHEC_segments.bed.gz</a> contains a simple four-column .bed file for full-stack state annotation in hg38 assembly. This annotation was learned using 5339 datasets released by <a href="https://epigenomesportal.ca/ihec/">IHEC</a>. The fourth column contains a state label with a prefix number that can be used to order the states. The OverlapEnrichment and NeighborhoodEnrichment commands of ChromHMM with the '-labels' option can compute enrichments for this file and order states based on the prefix number.
-- Right now, the state names and characterizations are tentative and are subject to changes. The tentative state characterizations can be downloaded from  
+- Right now, the state names and characterizations are **tentative** and are subject to changes. The tentative state characterizations can be downloaded from <a href="https://github.com/ernstlab/full_stack_ChromHMM_annotations/tree/main/pilot_IHEC/IHEC_state_annotations.xlsx">IHEC_state_annotations.xlsx</a>.  
 
 # Folders:
 Within each subfolders inside this folder, there are readme that can help you understand and apply the code. Note: AF stands for Additional File
