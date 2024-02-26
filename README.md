@@ -9,7 +9,8 @@ Within this folder:
 - File <a href="https://public.hoffman2.idre.ucla.edu/ernst/UUKP7/hg38lift_genome_100_segments.bed.gz">hg38lift_genome_100_segments.bed.gz</a> is similar to hg19_genome_100_segments.bed.gz, but based on a liftOver of each 200bp bin to hg38. Positions mapped to from multiple locations in hg19 did not receive an annotation. Since the 200-bp intervals are no longer maintained when using OverlapEnrichment and NeighborhoodEnrichment the options '-b' and '-lowmmem' should be used with this command in addition to the '-labels' option as with the hg19 file.
 - File <a href="https://public.hoffman2.idre.ucla.edu/ernst/UUKP7/hg38lift_genome_100_browser.bed.gz">hg38lift_genome_100_browser.bed.gz</a> is similar to hg19_genome_100_browser.bed.gz but is for the liftOver to hg38. Positions mapped to from multiple locations in hg19 did not receive an annotation.
 
-- Detailed description of states can be found at Additional File 3 in the  <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02572-z"> manuscript </a>. If you want a csv file outline similar information about the states' desctiptions, you can also use file ```state_annotations_processed.csv``` provided in this folder. 
+- Detailed description of states can be found at Additional File 3 in the  <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02572-z"> manuscript </a>. If you want a csv file outline similar information about the states' desctiptions, you can also use file <a href="https://public.hoffman2.idre.ucla.edu/ernst/UUKP7/state_annotations_processed.csv">state_annotations_processed.csv</a> provided in this folder.
+- For an analogous annotation in mouse can be found on <a href="https://github.com/ernstlab/mouse_fullStack_annotations">this page</a>.
 
 # Folders:
 Within each subfolders inside this folder, there are readme that can help you understand and apply the code. Note: AF stands for Additional File
