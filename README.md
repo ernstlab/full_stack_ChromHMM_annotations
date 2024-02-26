@@ -2,47 +2,14 @@
 # full_stack_ChromHMM_annotations
 Data of genome annotation from full-stack ChromHMM model trained with 1032 datasets from 127 reference epigenomes. Please refer to the published manuscript at <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02572-z"> Genome Biology </a>
 # Download links:
-Data of full-stack genome annotations for reference assemblies hg19 and hg38 can be found <a href="https://public.hoffman2.idre.ucla.edu/ernst/2K9RS//full_stack/full_stack_annotation_public_release/"> here</a>: 
-File structure this folder:
-```
-├── genomes.txt
-├── hg19
-│   ├── hg19_genome_100_browser.bb
-│   ├── hg19_genome_100_browser.bed.gz
-│   ├── hg19_genome_100_segments.bed.gz
-│   ├── state_annotations_processed.csv
-│   └── trackDb.txt
-├── hg38
-│   ├── hg38_genome_100_browser.bb
-│   ├── hg38_genome_100_browser.bed.gz
-│   ├── hg38_genome_100_segments.bed.gz
-│   ├── hg38_genome_100_segments_no_regions_mapped_from_multiple_hg19_ucsc.bed.gz
-│   ├── state_annotations_processed.csv
-│   └── trackDb.txt
-├── hub.txt
-└── mm10
-    ├── mm10_100_segments_browser.bed.gz
-    ├── mm10_100_segments_segments.bed.gz
-    ├── mm10_genome_100_browser.bb
-    ├── state_annotation_processed.tsv
-    └── trackDb.txt
-```
-- File <a href="https://public.hoffman2.idre.ucla.edu/ernst/2K9RS//full_stack/full_stack_annotation_public_release/hg19/hg19_genome_100_segments.bed.gz">hg19_genome_100_segments.bed.gz</a> contains a simple four column .bed file of full-stack state annotation in hg19 assembly. Since our training data (1032 input data tracks) are in hg19, the assembly used for original training and annotation. The fourth column contains a state label with a prefix number that can be used to order the states. The OverlapEnrichment and NeighborhoodEnrichment commands of ChromHMM with the '-labels' option can compute enrichments for this file and order states based on the prefix number.
-- File <a href="https://public.hoffman2.idre.ucla.edu/ernst/2K9RS//full_stack/full_stack_annotation_public_release/hg19/hg19_genome_100_browser.bed.gz">hg19_genome_100_browser.bed.gz</a> contains a browser file of full-stack state annotation in hg19 assembly. This file is compatible to for UCSC genome browser. Since our training data (1032 input data tracks) are in hg19, hg19 is the assembly used for original training and annotation.
-- File <a href="https://public.hoffman2.idre.ucla.edu/ernst/2K9RS//full_stack/full_stack_annotation_public_release/hg38/hg38_genome_100_segments.bed.gz">hg38lift_genome_100_segments.bed.gz</a> is similar to hg19_genome_100_segments.bed.gz, but based on a liftOver of each 200bp bin to hg38. Positions mapped to from multiple locations in hg19 did not receive an annotation. Since the 200-bp intervals are no longer maintained when using OverlapEnrichment and NeighborhoodEnrichment the options '-b' and '-lowmmem' should be used with this command in addition to the '-labels' option as with the hg19 file.
-- File <a href="https://public.hoffman2.idre.ucla.edu/ernst/2K9RS//full_stack/full_stack_annotation_public_release/hg38/hg38_genome_100_browser.bed.gz">hg38lift_genome_100_browser.bed.gz</a> is similar to hg19_genome_100_browser.bed.gz but is for the liftOver to hg38. Positions mapped to from multiple locations in hg19 did not receive an annotation. 
+Data of full-stack genome annotations for reference assemblies hg19 and hg38 can be found <a href="https://public.hoffman2.idre.ucla.edu/ernst/UUKP7/"> here</a>: 
+Within this folder:
+- File <a href="https://public.hoffman2.idre.ucla.edu/ernst/UUKP7/hg19_genome_100_segments.bed.gz">hg19_genome_100_segments.bed.gz</a> contains a simple four column .bed file of full-stack state annotation in hg19 assembly. Since our training data (1032 input data tracks) are in hg19, the assembly used for original training and annotation. The fourth column contains a state label with a prefix number that can be used to order the states. The OverlapEnrichment and NeighborhoodEnrichment commands of ChromHMM with the '-labels' option can compute enrichments for this file and order states based on the prefix number.
+- File <a href="https://public.hoffman2.idre.ucla.edu/ernst/UUKP7/hg19_genome_100_browser.bed.gz">hg19_genome_100_browser.bed.gz</a> contains a browser file of full-stack state annotation in hg19 assembly. This file is compatible to for UCSC genome browser. Since our training data (1032 input data tracks) are in hg19, hg19 is the assembly used for original training and annotation.
+- File <a href="https://public.hoffman2.idre.ucla.edu/ernst/UUKP7/hg38lift_genome_100_segments.bed.gz">hg38lift_genome_100_segments.bed.gz</a> is similar to hg19_genome_100_segments.bed.gz, but based on a liftOver of each 200bp bin to hg38. Positions mapped to from multiple locations in hg19 did not receive an annotation. Since the 200-bp intervals are no longer maintained when using OverlapEnrichment and NeighborhoodEnrichment the options '-b' and '-lowmmem' should be used with this command in addition to the '-labels' option as with the hg19 file.
+- File <a href="https://public.hoffman2.idre.ucla.edu/ernst/UUKP7/hg38lift_genome_100_browser.bed.gz">hg38lift_genome_100_browser.bed.gz</a> is similar to hg19_genome_100_browser.bed.gz but is for the liftOver to hg38. Positions mapped to from multiple locations in hg19 did not receive an annotation.
+
 - Detailed description of states can be found at Additional File 3 in the  <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02572-z"> manuscript </a>. If you want a csv file outline similar information about the states' desctiptions, you can also use file ```state_annotations_processed.csv``` provided in this folder. 
-- Folder <a href="https://public.hoffman2.idre.ucla.edu/ernst/2K9RS/full_stack/full_stack_annotation_public_release/mm10/">mm10</a> contains data of the full-stack annotations generated by training a ChromHMM stacked model on 901 datasets profiling 14 chromatin mark in mouse. This model was introduced in <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-023-02994-x"> manuscript </a>, and <a href="https://github.com/ernstlab/mouse_fullStack_annotations"> Github</a>.
-
-<!-- 
-# Pilot full-stack chromatin state annotations generated using data from IHEC
-- File <a href="https://public.hoffman2.idre.ucla.edu/ernst/2K9RS/full_stack/full_stack_annotation_public_release/hg38/hg38_IHEC_segments.bed.gz">hg38_IHEC_segments.bed.gz</a> contains a simple four-column .bed file for full-stack state annotation in hg38 assembly. This annotation was learned using 5339 datasets released by <a href="https://epigenomesportal.ca/ihec/">IHEC</a>. The fourth column contains a state label with a prefix number that can be used to order the states. The OverlapEnrichment and NeighborhoodEnrichment commands of ChromHMM with the '-labels' option can compute enrichments for this file and order states based on the prefix number.
-- Right now, the state names and characterizations are **tentative** and are subject to changes. The tentative state characterizations can be downloaded from <a href="https://github.com/ernstlab/full_stack_ChromHMM_annotations/tree/main/pilot_IHEC/IHEC_state_annotations.xlsx">IHEC_state_annotations.xlsx</a>.  
-
--->
-
-# UCSC genome browser tracks
-- To view the full-stack annotation in hg19, hg38 and mm10, including the pilot annotation learned using IHEC data, please use the track hub link https://public.hoffman2.idre.ucla.edu/ernst/2K9RS//full_stack/full_stack_annotation_public_release/hub.txt. Instructions on how to view these tracks on UCSC Genome Browser is provided in a step-by-step <a href="https://github.com/ernstlab/mouse_fullStack_annotations/view_ucsc_genome_browser.pptx"> powerpoint</a>.
 
 # Folders:
 Within each subfolders inside this folder, there are readme that can help you understand and apply the code. Note: AF stands for Additional File
