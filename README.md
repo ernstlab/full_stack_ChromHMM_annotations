@@ -16,7 +16,7 @@ chrom, start, end, full_stack state
 ├── state_annot_README.md: read me file for file state_annotation_processed_publish.csv
 └── trackDb.txt
 ```
-Data of full-stack genome annotations for reference assemblies hg38 can be found </a href="https://public.hoffman2.idre.ucla.edu/ernst/2K9RS//full_stack/full_stack_annotation_public_release/hg38"> here </a>. Full-stack annotations in hg38 were created by lifting-over the annotation from hg10 to hg38. The whole liftOver pipeline's code is provide </a href="https://github.com/ernstlab/full_stack_ChromHMM_annotations/tree/main/chromHMM_utilities/liftOver"> here </a>. Within this folder:
+Data of full-stack genome annotations for reference assemblies hg38 can be found <a href="https://public.hoffman2.idre.ucla.edu/ernst/2K9RS//full_stack/full_stack_annotation_public_release/hg38"> here </a>. Full-stack annotations in hg38 were created by lifting-over the annotation from hg10 to hg38. The whole liftOver pipeline's code is provide </a href="https://github.com/ernstlab/full_stack_ChromHMM_annotations/tree/main/chromHMM_utilities/liftOver"> here </a>. Within this folder:
 ```
 ├── hg38_genome_100_browser.bb: bigbed file of the hg38's full-stack annotation lifted over from hg19. 
 This file can only be viewed properly on the ucsc genome browser through the trackhub link:
@@ -39,7 +39,7 @@ Since the publication of our data, the annotation of full-stack annotation in **
 - Version 2: (From August 11 2023___ to February 26 2024___ ) : We mistakenly shared the links for the data in this version such that the annotations hg38 are raw output of the UCSC Genome browser's liftOver software (missing the step of filtering out bps in hg38 that were mapped from multiple bps in hg19). 
 As of May 6 2024, we have archived the data of version3 onto https://zenodo.org/records/5759119
 # UCSC Genome browser track hub link:
-You can view the full-stack annotations in hg19, hg38 and mm10 (see </a href='https://github.com/ernstlab/mouse_fullStack_annotations'> Mouse's Github </a>) as a trackhub on UCSC genome browser using the link: https://public.hoffman2.idre.ucla.edu/ernst/2K9RS///full_stack/full_stack_annotation_public_release/hub.txt
+You can view the full-stack annotations in hg19, hg38 and mm10 (see </a href="https://github.com/ernstlab/mouse_fullStack_annotations"> Mouse's Github </a>) as a trackhub on UCSC genome browser using the link: https://public.hoffman2.idre.ucla.edu/ernst/2K9RS///full_stack/full_stack_annotation_public_release/hub.txt
 # Folders:
 Within each subfolders inside this folder, there are readme that can help you understand and apply the code. Note: AF stands for Additional File
 - chromHMM_utilities contains subfolders and files that are helpful in processing the output of chromHMM (processing the emission matrix, overlap enrichment, neighborhood enrichment, calculating the AUROCs to measure how an annotation can help recover the genomic location of a genome element of interest). 
