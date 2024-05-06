@@ -1,15 +1,15 @@
 state,mneumonics,Long annotations,Short Annotations,Group,color,state_order_by_group
-1,Quies1,"quiescent; H3K9me3 very weak; broad domain; 
-Cell lines;  ENCODE2012, Epithelial, IMR90, Myostat",quiescent / weak H3K9me3,quiescent,#FFFFFF,3
-2,Quies2,"quiescent; H3K9me3 weak inIMR90, Epithelial, ENCODE2012, Myostat",quiescent / weak H3K9me3,quiescent,#FFFFFF,4
+1,Quies1,"quescient; H3K9me3 very weak; broad domain; 
+Cell lines;  ENCODE2012, Epithelial, IMR90, Myostat",quescient / weak H3K9me3,quescient,#FFFFFF,3
+2,Quies2,"quescient; H3K9me3 weak inIMR90, Epithelial, ENCODE2012, Myostat",quescient / weak H3K9me3,quescient,#FFFFFF,4
 3,HET1,"H3K9me3. Het in epithelial, IM90, adipose, HSC&B-cell, thymus. LTR repeats 
-Mix of Het and quiescent in other. ",HET,HET,#8A91D0,8
+Mix of Het and quescient in other. ",HET,HET,#8A91D0,8
 4,HET2,"H3K9me3+H3K27me3; Quescient: Mesench, blood & T-cell, Brain. 
 PolyRep in Sm.Muscle, muscle. Het in Epithelial, IM90, Myostat",HET,HET,#8A91D0,9
 5,Acet1,H3K9me3 + class1 epigenome acetylations +simple repeats,acetylations + enhancers / repeats; ,acetylations,#FFFFCC,26
 6,Acet2,"class1 epigenome acetylations weak; highest emissions in ES & iPSC. 
-19_DNase in ESC, iPSC and ES-deriv. Mixes of quiescent in other cell types",acetylations + enhancers / repeats; ,acetylations,#FFFFCC,27
-7,Acet3,class1 epigenome acetylations very weak; universal quiescent,acetylations + enhancers / repeats; ,acetylations,#FFFFCC,28
+19_DNase in ESC, iPSC and ES-deriv. Mixes of quescient in other cell types",acetylations + enhancers / repeats; ,acetylations,#FFFFCC,27
+7,Acet3,class1 epigenome acetylations very weak; universal quescient,acetylations + enhancers / repeats; ,acetylations,#FFFFCC,28
 8,Acet4,"class 1 epigenome acetylations and IMR90 enhancers. 
 17_EnhW2 in most cell types",acetylations + enhancers / repeats; ,acetylations,#FFFFCC,29
 9,Acet5,class 1 epigenome acetylations and IMR90 enhancers weak. ,acetylations + enhancers / repeats; ,acetylations,#FFFFCC,30
@@ -97,7 +97,7 @@ non-spec",bivalent promoters,#7030A0,89
 56,ReprPC4,very weak polycomb repressed (H3K27me3 very weak),polycomb repressed,polycomb repressed,#808080,20
 57,ReprPC5,polycomb repressed (H3K27me3 in most cell types and some class1 acetylation in ESC and ESC-derived),polycomb repressed,polycomb repressed,#808080,21
 58,ReprPC6,"24_ReprPC (H3K27me3) in Brain, Epithelial, muscles, Mesench, 
-Neurosph, Mystat, IM90, Adipose. Others quiescent",polycomb repressed,polycomb repressed,#808080,22
+Neurosph, Mystat, IM90, Adipose. Others quescient",polycomb repressed,polycomb repressed,#808080,22
 59,ReprPC7,"17_EnhW: brain, HSC&B-cell, Neurosph, ESC, iPSC, Heart. 
 24_ReprPC: Epithelial, Mesench, Mystat, IM90, Adipose.
 H3K27me3 IMR90, Epithelial, Myostat, Mesench with some class 1 acetylations and H3K4me1",polycomb repressed,polycomb repressed,#808080,23
@@ -112,9 +112,9 @@ Very weak enhancers  + transcription in others",weak enhancer; blood *,weak enha
 weaker enhancers in other cell types",enhancer; blood *,enhancers,#FFC000,51
 66,EnhA11,"Monoctyes, neutrophils, HSC&Bcells * enhancers ",enhancer; blood *,enhancers,#FFC000,52
 67,EnhWk7,HSC-Bcells weak enhancers (HSC H3K4me1*),weak enhancer; blood *,weak enhancers,#FFFF00,40
-68,Quies3,quiescent (very low non-specific signal),quiescent ,quiescent,#FFFFFF,5
+68,Quies3,quescient (very low non-specific signal),quescient ,quescient,#FFFFFF,5
 69,GapArtf1,No signal; unmappable - assembly gaps,assembly gap,others,#fff5ee,0
-70,Quies4,H3K9me3 very weak; LINE repeats; 25_ques in most ct. 21_Het in ESC-related,quiescent,quiescent,#FFFFFF,6
+70,Quies4,H3K9me3 very weak; LINE repeats; 25_ques in most ct. 21_Het in ESC-related,quescient,quescient,#FFFFFF,6
 71,HET3,H3K9me3 weak; LINE repeats,HET + LINE/satelite/LTR repeats,HET,#8A91D0,10
 72,HET4,"H3K9me3; LTR/LINE/satellite repeats; 
 Stronger in Adipose, Mesench, Neurosph, ESC, HSC &Bcells",HET + LINE/satelite/LTR repeats,HET,#8A91D0,11
@@ -152,7 +152,7 @@ some ESC-derived (ESC H3K4me1*); ERV1 repeats",enhancers; ESC-associated,enhance
 93,Acet8,"acetylations marks + enhancers in ESC-derived 
 (H1_BMP4_Derived_Trophoblast_Cultu#FF0000_Cells)",acetylations + enhancers; ESC-derived *,acetylations,#FFFFCC,33
 94,ReprPC8,H3K27me3/H3K9me3 weak. Mixed 25_Ques and 24_ReprPC,polycomb repressed,polycomb repressed,#808080,24
-95,Quies5,quiescent (H3K9me3/H3K27me3 very weak),quiescent (H3K9me3/H3K27me3 weak),quiescent,#FFFFFF,7
+95,Quies5,quescient (H3K9me3/H3K27me3 very weak),quescient (H3K9me3/H3K27me3 weak),quescient,#FFFFFF,7
 96,ReprPC9,H3k27me3  in es/ipsc; Weak H3K27me3 in others; 24_ReprPC in all ct,"polycomb repressed; ESC, iPSC",polycomb repressed,#808080,25
 97,BivProm4,"bivalent promoter in Blood & T-cells, HSC & B-cell, ESC. Prom_D2 in Brain, muscle, sm. Muscle, mesench, neurosph, myosate and adipose. 
 A mix of Prom_D2, bivalent promoter and 22_prom_p in ESC_derived, ENCODE 2012, iPSC, Digestive, Epithelia, Heath and other cell types",bivalent / downstream promoter,bivalent promoters,#7030A0,90
