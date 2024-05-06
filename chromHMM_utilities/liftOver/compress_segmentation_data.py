@@ -1,16 +1,8 @@
-import pandas as pd 
 import helper 
 import numpy as np 
+import pandas as pd 
 import os 
 import argparse
-parser = argparse.ArgumentParser(description = 'This code takes in a segmentation file and reaarranges the rows such that if consecutive genomic bins are annotated as the same state, they will be combined. At the same time, the output file will be sorted by chrom, start_bp such that it will be readily available to use for downstream analysis with bedtools or pybedtools')
-parser.add_argument('--segment_bed_fn', type = str, required = True,
-	help = 'input segment_bed_fn')
-parser.add_argument('--output_fn', type = str, required = True, help = 'output_fn')
-args = parser.parse_args()
-print(args)
-helper.check_file_exist(args.segment_bed_fn)
-helper.create_folder_for_file(args.output_fn)
 
 def get_compressed_state_segment_one_chrom_manual(chrom_segment_df, chrom):
 	# combine multiple rows with the same state into a row so that we can save space on the computer
@@ -37,19 +29,35 @@ def get_compressed_state_segment_one_chrom_manual(chrom_segment_df, chrom):
 	# now we are done producing
 	return result_df
 
+
+def qc_and_format_compressed_state(state):
+	'''
+	first it makes sure that input state is for the form state,state,state,... where state is unique
+	second it condense state,state,state,... to state
+	'''
+	state_list = state.split(',')
+	assert len(np.unique(state_list)) == 1, 'The state of {} is not unique'.format(state)
+	state = state_list[0]
+	return state 
+
 def get_compressed_state_segment_one_chrom_auto(chrom_df, chrom):
+	'''
+	This function has been tested so carefully on 04/01/2024. One should not modify this function at all
+	'''
 	chrom_df = chrom_df.sort_values('start')
 	chrom_df['state'] = chrom_df['state'].apply(lambda x: int(x[1:])) # convert E1 --> 1
 	# now we will calculate the distance between each line's end and the following line's start
-	chrom_df.loc[:, 'next_start'] = [np.NaN] + list(chrom_df['end'][1:]) 
+	chrom_df.loc[:, 'next_start'] = list(chrom_df['start'][1:]) + [np.NaN] 
 	chrom_df.loc[:, 'diff_with_next_row'] = chrom_df['next_start'] - chrom_df['end']
 	# now we will merge the rows of df such that the consecutive rows with the same value for state, and that they are consecutive in terms of genomic coordinates will be grouped into one row. References: https://stackoverflow.com/questions/26911851/how-to-use-pandas-to-find-consecutive-same-data-in-time-series
 	chrom_df.loc[:, 'start_grp'] = (chrom_df['diff_with_next_row'] != 0).cumsum()
+	chrom_df['start_grp'] = [0]+list(chrom_df['start_grp'][:-1])
 	chrom_df.loc[:, 'state_grp'] = (chrom_df['state'].diff(periods=1) != 0).astype('int').cumsum() 
+	chrom_df['state'] = chrom_df['state'].apply(lambda x: f'E{x}') # this conversion back to string is needed for the next line of code
 	group_grp = chrom_df.groupby(['start_grp', 'state_grp'])
-	result_df = pd.DataFrame({'start': group_grp.start.first(), 'end': group_grp.end.last(), 'state': group_grp.state.first()})
+	result_df = group_grp.agg({'start': 'first', 'end': 'last', 'state': lambda x: ','.join(x)}).reset_index(drop = True)
+	result_df['state'] = result_df['state'].apply(qc_and_format_compressed_state)
 	result_df.loc[:, 'chrom'] = chrom
-	result_df['state'] = result_df['state'].apply(lambda x: 'E{}'.format(x))
 	result_df = result_df [['chrom', 'start', 'end', 'state']]
 	return result_df 
 
@@ -68,5 +76,14 @@ def compress_segmentation(segment_bed_fn, output_fn):
 	result_df.to_csv(output_fn, header = False, index = False, sep = '\t', compression = 'gzip')
 	return 
 
+if __name__ == '__main__':
+	parser = argparse.ArgumentParser(description = 'This code takes in a segmentation file and reaarranges the rows such that if consecutive genomic bins are annotated as the same state, they will be combined. At the same time, the output file will be sorted by chrom, start_bp such that it will be readily available to use for downstream analysis with bedtools or pybedtools')
+	parser.add_argument('--segment_bed_fn', type = str, required = True,
+		help = 'input segment_bed_fn')
+	parser.add_argument('--output_fn', type = str, required = True, help = 'output_fn')
+	args = parser.parse_args()
+	print(args)
+	helper.check_file_exist(args.segment_bed_fn)
+	helper.create_folder_for_file(args.output_fn)
 
-compress_segmentation(args.segment_bed_fn, args.output_fn)
+	compress_segmentation(args.segment_bed_fn, args.output_fn)

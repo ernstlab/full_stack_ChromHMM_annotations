@@ -2,22 +2,8 @@ This folder contains files that are useful for liftOver the full-stack state ann
 If you try to reproduce the results of liftOver, we recommend running snakemake using a high-performance computer cluster in parallel. 
 |__Snakefile: specifying the pipeline used to liftOver full-stack state annotations from hg19 to a target assembly. Please modify 3 lines in this file to reproduce the results (see above and see the file itself). 
 |__change_segmentation_to_200bp_segmentation_for_liftOver.py: code used as part of the pipeline, called inside Snakefile. 
-|__find_overlapping_segments_from_liftOver_one_chrom.py: code used as part of the pipeline, called inside Snakefile.
+|__clean_overlapping_bases_and_compress.py: code used as part of the pipline to eradicate all bases in the destination assembly (such as hg38) that were mapped from multiple bases in the origin assembly (such as hg19)
+|__compress_segmentation_data.py: code used as part of the pipeline to compress the output segmentation file from 200-bp segments into multiple-bin segments such that consecutive bins of the same states are put together into one line in the output bed file. Called inside the file clean_overlapping_bases_and_compress.py
 |__liftOver: executable file used as part of the pipeline, called inside Snakefile. This tool was downloaded from ucsc genome browser (http://hgdownload.soe.ucsc.edu/admin/exe/)
 |__hg19ToHg38.over.chain.gz: chain file used by liftOver, downloaded from ucsc genome browser (https://hgdownload.soe.ucsc.edu/goldenPath/hg19/liftOver/)
 |__hg19ToMm10.over.chain.gz: chain file used by liftOver, downloaded from ucsc genome browser (https://hgdownload.soe.ucsc.edu/goldenPath/hg19/liftOver/)
-|__ compress_segmentation_data.py: if your segmentation is currently not compressed (if there are rows that represent consecutive segments on the genome, and get annotated to the same state), then this file will compress the segmentation data. 
-python compress_segmentation_data.py --help
-usage: compress_segmentation_data.py [-h] --segment_bed_fn SEGMENT_BED_FN --output_fn OUTPUT_FN
-
-This code takes in a segmentation file and reaarranges the rows such that if consecutive genomic bins
-are annotated as the same state, they will be combined. At the same time, the output file will be
-sorted by chrom, start_bp such that it will be readily available to use for downstream analysis with
-bedtools or pybedtools
-
-optional arguments:
-  -h, --help            show this help message and exit
-  --segment_bed_fn SEGMENT_BED_FN
-                        input segment_bed_fn
-  --output_fn OUTPUT_FN
-                        output_fn

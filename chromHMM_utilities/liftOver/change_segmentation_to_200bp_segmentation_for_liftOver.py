@@ -1,8 +1,6 @@
 import os
 import sys
-import time
 import gzip
-start_time = time.clock()
 NUM_BP_PER_BIN = 200
 CHR_COL_IND = 0 # column index that contains information about the chromosome
 START_COL_IND = 1
@@ -46,9 +44,9 @@ def main():
 		print ("org_seg_fn: "+ org_seg_fn + " does not exit")
 		usage()
 	output_fn = sys.argv[2]
-	print ("Done getting command line argument after: " + str(time.clock() - start_time))
+	print ("Done getting command line argument ")
 	split_segmentation_into_200bp(org_seg_fn, output_fn)
-	print ("Done after: " + str(time.clock() - start_time))
+	print ("Done !")
 
 def usage():
 	print ("python change_semgentation_to_200bp_segmentation_for_liftOver.py")
