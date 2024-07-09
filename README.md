@@ -30,7 +30,7 @@ chrom, start, end, full_stack state
 ├── state_annot_README.md: read me file for file state_annotation_processed_publish.csv
 └── trackDb.txt
 ```
-- Detailed description of states can be found at Additional File 3 in the  <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02572-z"> manuscript </a>. If you want a csv file outline similar information about the states' descriptions, you can also use file <a href="https://public.hoffman2.idre.ucla.edu/ernst/UUKP7/state_annotations_processed.csv">state_annotations_processed.csv</a> provided in this folder.
+- Detailed description of states can be found at Additional File 3 in the  <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02572-z"> manuscript </a>. If you want a csv file outline similar information about the states' descriptions, you can also use file <a href="https://github.com/ernstlab/full_stack_ChromHMM_annotations/blob/main/state_annotation_processed_publish.csv">state_annotations_processed.csv</a>.
 - An analogous annotation in mouse can be found on <a href="https://github.com/ernstlab/mouse_fullStack_annotations">this page</a>.
 # Notes about the versions of full-stack annotation:
 Since the publication of our data, the annotation of full-stack annotation in **hg19** have **NOT** been changed (__except for our state names being changed from 0-based indexing system 0_GapArtf1-99_TSS2 to 1_GapArtf1-100_TSS2__). The **hg38** annotation have been changed in 3 version**: 
